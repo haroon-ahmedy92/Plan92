@@ -88,6 +88,22 @@ enum class PlannerSectionKind {
     BULLET_LIFE_JOURNAL_BOARD,
     DEAR_DIARY_BOARD,
     DAILY_BULLET_BOARD,
+    PROJECT_PLANNER_BOARD,
+    PROJECT_PROGRESS_BOARD,
+    VACATION_BUDGET_BOARD,
+    BILL_PAYMENT_BOARD,
+    TRAVEL_PACKING_BOARD,
+    FAMILY_ORGANIZER_BOARD,
+    MOM_PLANNER_BOARD,
+    MOM_CHORES_BOARD,
+    CLASS_SCHEDULE_BOARD,
+    STUDY_PLANNER_BOARD,
+    TEACHER_PLANNER_BOARD,
+    MEDICAL_NOTES_BOARD,
+    NURSE_PLANNER_BOARD,
+    DOCTOR_LIST_BOARD,
+    EVENT_PLANNER_BOARD,
+    OFFICE_ORGANIZER_BOARD,
 }
 
 enum class PlannerDecorationStyle {
@@ -1468,6 +1484,262 @@ object PlannerTemplateSchema {
                     title = "Seasonal Layout",
                     kind = PlannerSectionKind.SEASONAL_YEARLY_BOARD,
                 ),
+            ),
+        )
+
+        "project_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING, PlannerCapability.SCHEDULE),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Project Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A project form with objective, resources, dates, brainstorm, and progress fields.",
+                    chips = listOf("Project", "Planner", "Workspace"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Project Layout", kind = PlannerSectionKind.PROJECT_PLANNER_BOARD),
+            ),
+        )
+
+        "project_progress" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Project Progress Overview",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Track several active projects with priorities, status, and milestone notes.",
+                    chips = listOf("Project", "Progress", "Overview"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Progress Layout", kind = PlannerSectionKind.PROJECT_PROGRESS_BOARD),
+            ),
+        )
+
+        "vacation_budget" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.BUDGET,
+            capabilities = setOf(PlannerCapability.BUDGETING, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Vacation Budget Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Track trip categories, total budget, savings, and spending notes.",
+                    chips = listOf("Travel", "Budget", "Vacation"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Vacation Budget Layout", kind = PlannerSectionKind.VACATION_BUDGET_BOARD),
+            ),
+        )
+
+        "monthly_bill" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.BUDGET,
+            capabilities = setOf(PlannerCapability.BUDGETING, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Monthly Bill Payment Tracker",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A ledger-style bill tracker with due dates, paid dates, amounts, balance, and notes.",
+                    chips = listOf("Bills", "Tracker", "Monthly"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Bill Tracker Layout", kind = PlannerSectionKind.BILL_PAYMENT_BOARD),
+            ),
+        )
+
+        "travel" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Travel Packing List",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A categorized packing page for documents, clothes, toiletries, electronics, and notes.",
+                    chips = listOf("Travel", "Packing", "Checklist"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Packing Layout", kind = PlannerSectionKind.TRAVEL_PACKING_BOARD),
+            ),
+        )
+
+        "family" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.SCHEDULE, PlannerCapability.MEALS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Family Organizer Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A household weekly organizer for schedules, meals, and reminders.",
+                    chips = listOf("Family", "Organizer", "Weekly"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Family Layout", kind = PlannerSectionKind.FAMILY_ORGANIZER_BOARD),
+            ),
+        )
+
+        "mom_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING, PlannerCapability.MEALS, PlannerCapability.WATER, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Mom Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A hybrid daily family planner with tasks, water, mood, meals, exercise, and savings.",
+                    chips = listOf("Mom", "Daily", "Family"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Mom Layout", kind = PlannerSectionKind.MOM_PLANNER_BOARD),
+            ),
+        )
+
+        "mom_chores" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Mom Chores Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly household spread with must-do and extra-time chores for each day.",
+                    chips = listOf("Mom", "Chores", "Weekly"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Mom Chores Layout", kind = PlannerSectionKind.MOM_CHORES_BOARD),
+            ),
+        )
+
+        "class_schedule" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.SCHEDULE, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Class Schedule",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly class timetable with editable periods and subjects.",
+                    chips = listOf("Class", "Schedule", "School"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Class Layout", kind = PlannerSectionKind.CLASS_SCHEDULE_BOARD),
+            ),
+        )
+
+        "student" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.SCHEDULE, PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Study Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Track assignments, due dates, focus sessions, and study notes.",
+                    chips = listOf("Study", "Planner", "Student"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Study Layout", kind = PlannerSectionKind.STUDY_PLANNER_BOARD),
+            ),
+        )
+
+        "teacher" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.SCHEDULE),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Teacher Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly teaching planner for lesson plans, materials, and classroom notes.",
+                    chips = listOf("Teacher", "Planner", "Weekly"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Teacher Layout", kind = PlannerSectionKind.TEACHER_PLANNER_BOARD),
+            ),
+        )
+
+        "medical_notes" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Medical Notes",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Capture symptoms, medications, diagnosis, and follow-up notes.",
+                    chips = listOf("Medical", "Notes", "Visit"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Medical Notes Layout", kind = PlannerSectionKind.MEDICAL_NOTES_BOARD),
+            ),
+        )
+
+        "nurse_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES, PlannerCapability.SCHEDULE),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Nurse Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A shift planner for medication tasks, patient checks, assessments, and hand-off notes.",
+                    chips = listOf("Nurse", "Shift", "Planner"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Nurse Layout", kind = PlannerSectionKind.NURSE_PLANNER_BOARD),
+            ),
+        )
+
+        "doctor_list" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CALENDAR),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Doctors List Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Store doctor contacts, specialties, next visits, and notes.",
+                    chips = listOf("Doctors", "Contacts", "Appointments"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Doctors Layout", kind = PlannerSectionKind.DOCTOR_LIST_BOARD),
+            ),
+        )
+
+        "event_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CHECKLISTS, PlannerCapability.SCHEDULE, PlannerCapability.BUDGETING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Event Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Organize the event overview, checklist, vendors, timeline, and notes.",
+                    chips = listOf("Event", "Planner", "Checklist"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Event Layout", kind = PlannerSectionKind.EVENT_PLANNER_BOARD),
+            ),
+        )
+
+        "office_organizer" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.SCHEDULE, PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Office Organizer Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A workday layout with goals, calls, emails, meetings, and a time schedule.",
+                    chips = listOf("Office", "Organizer", "Workday"),
+                ),
+                PlannerSectionDefinition(id = "board", title = "Office Layout", kind = PlannerSectionKind.OFFICE_ORGANIZER_BOARD),
             ),
         )
 

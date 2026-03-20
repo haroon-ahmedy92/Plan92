@@ -82,6 +82,22 @@ import com.example.plan92.ui.components.FeelingsJournalBoardSection
 import com.example.plan92.ui.components.FindBalanceJournalBoardSection
 import com.example.plan92.ui.components.JournalPromptsBoardSection
 import com.example.plan92.ui.components.ReadingLogBoardSection
+import com.example.plan92.ui.components.BillPaymentBoardSection
+import com.example.plan92.ui.components.ClassScheduleBoardSection
+import com.example.plan92.ui.components.DoctorListBoardSection
+import com.example.plan92.ui.components.EventPlannerBoardSection
+import com.example.plan92.ui.components.FamilyOrganizerBoardSection
+import com.example.plan92.ui.components.MedicalNotesBoardSection
+import com.example.plan92.ui.components.MomChoresBoardSection
+import com.example.plan92.ui.components.MomPlannerBoardSection
+import com.example.plan92.ui.components.NursePlannerBoardSection
+import com.example.plan92.ui.components.OfficeOrganizerBoardSection
+import com.example.plan92.ui.components.ProjectPlannerBoardSection
+import com.example.plan92.ui.components.ProjectProgressBoardSection
+import com.example.plan92.ui.components.StudyPlannerBoardSection
+import com.example.plan92.ui.components.TeacherPlannerBoardSection
+import com.example.plan92.ui.components.TravelPackingBoardSection
+import com.example.plan92.ui.components.VacationBudgetBoardSection
 import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
@@ -308,5 +324,21 @@ private fun PlannerSectionRenderer(
         PlannerSectionKind.BULLET_LIFE_JOURNAL_BOARD -> BulletLifeJournalBoardSection(title = section.title)
         PlannerSectionKind.DEAR_DIARY_BOARD -> DearDiaryBoardSection(title = section.title)
         PlannerSectionKind.DAILY_BULLET_BOARD -> DailyBulletBoardSection(title = section.title)
+        PlannerSectionKind.PROJECT_PLANNER_BOARD -> ProjectPlannerBoardSection(title = section.title)
+        PlannerSectionKind.PROJECT_PROGRESS_BOARD -> ProjectProgressBoardSection(title = section.title)
+        PlannerSectionKind.VACATION_BUDGET_BOARD -> VacationBudgetBoardSection(title = section.title)
+        PlannerSectionKind.BILL_PAYMENT_BOARD -> BillPaymentBoardSection(title = section.title)
+        PlannerSectionKind.TRAVEL_PACKING_BOARD -> TravelPackingBoardSection(title = section.title)
+        PlannerSectionKind.FAMILY_ORGANIZER_BOARD -> FamilyOrganizerBoardSection(title = section.title)
+        PlannerSectionKind.MOM_PLANNER_BOARD -> MomPlannerBoardSection(title = section.title)
+        PlannerSectionKind.MOM_CHORES_BOARD -> MomChoresBoardSection(title = section.title)
+        PlannerSectionKind.CLASS_SCHEDULE_BOARD -> ClassScheduleBoardSection(title = section.title)
+        PlannerSectionKind.STUDY_PLANNER_BOARD -> StudyPlannerBoardSection(title = section.title)
+        PlannerSectionKind.TEACHER_PLANNER_BOARD -> TeacherPlannerBoardSection(title = section.title)
+        PlannerSectionKind.MEDICAL_NOTES_BOARD -> MedicalNotesBoardSection(title = section.title)
+        PlannerSectionKind.NURSE_PLANNER_BOARD -> NursePlannerBoardSection(title = section.title)
+        PlannerSectionKind.DOCTOR_LIST_BOARD -> DoctorListBoardSection(title = section.title)
+        PlannerSectionKind.EVENT_PLANNER_BOARD -> EventPlannerBoardSection(title = section.title)
+        PlannerSectionKind.OFFICE_ORGANIZER_BOARD -> OfficeOrganizerBoardSection(title = section.title)
     }
 }

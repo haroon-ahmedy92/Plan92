@@ -151,8 +151,8 @@ Editable legend:
 |---|---|---|---|---|---|---|
 | Work Tasks To Do List | Work planners | `110837`, `110842` | Implemented | Yes | Editable six-bucket work-task board now supports must-do, if-time, projects, meetings, morning, and afternoon planning | Refine icon accents and bucket spacing |
 | Work Life Balance Planner | Work planners | `110800`, `110808` | Implemented | Yes | Editable work vs personal weekly split with wins and reset notes now renders through a dedicated board | Improve notebook-spread feel and weekday header styling |
-| Project Planner | Project planners | `110909`, `110916` | Engine family mapped | Partial | Needs objective, start/due/completed, brainstorm box, progress tracker | Add distinct project-form schema |
-| Project Progress Overview | Project planners | `111044`, `111049` | Engine family mapped | Partial | Needs repeated mini-project cards with priority and timeline cells | Add repeated project-card primitive |
+| Project Planner | Project planners | `110909`, `110916` | Implemented | Yes | Editable objective, resources, project dates, brainstorm area, and progress fields now render in a dedicated project board | Refine notebook-form ornament details and field density |
+| Project Progress Overview | Project planners | `111044`, `111049` | Implemented | Yes | Editable repeated project cards with priority, status, timeline, and notes now render through a dedicated progress board | Tighten card stacking and screenshot-like badge proportions |
 | Task Batching Planner | Project planners | `110956`, `111001` | Implemented | Yes | Editable four-quadrant batching board now matches the screenshot structure closely | Refine decorative banner and internal row density |
 | Task Breakdown Planner | Project planners | `111001`, `111005` | Implemented | Yes | Editable identification, prioritization, estimation, assignment, and conclusion blocks are now routed through the engine | Refine star/banner ornament styling |
 | Daily Task Management Guide | Project planners | `110746`, `110751` | Implemented | Yes | Editable quadrant matrix now supports do-first, plan, delegate, and eliminate task entry | Refine matrix heading treatment and quadrant proportions |
@@ -163,9 +163,9 @@ Editable legend:
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
-| Vacation Budget Planner | Budget planners | `111018`, `111025` | Engine family mapped | Partial | Needs category summary and notes grid | Add travel-budget variant |
+| Vacation Budget Planner | Budget planners | `111018`, `111025` | Implemented | Yes | Editable trip budget summary, category table, and notes now render through a dedicated vacation-budget board | Refine travel-banner styling and stat-box visuals |
 | Monthly Budget Overview | Budget planners | `111025`, `111029` | Implemented | Yes | Editable budget snapshot, category table, and notes now render through a dedicated monthly budget board | Refine spread proportions and money-stat styling |
-| Monthly Bill Payment Tracker | Budget planners | `111212` | Backlog - add template ID | No | Ledger with paid, due date, paid date, amount due/paid, balance, notes | Add bill-tracker template |
+| Monthly Bill Payment Tracker | Budget planners | `111212` | Implemented | Yes | Added as an editable ledger-style bill tracker with due dates, paid dates, amounts, balances, and notes | Refine ledger spacing and tighter financial table styling |
 | Mom Planner savings area | Budget planners | `110656` | Variant needs modeling | Partial | Embedded savings widget inside family planner | Add embedded stat block for mom planner |
 
 ### Meal / grocery / shopping planners
@@ -180,16 +180,29 @@ Editable legend:
 | Shopping To Do List | Grocery / shopping | `110820`, `110830` | Implemented | Yes | Added as a stable template ID with editable department checklist cells | Fine-tune category count, icon accents, and row density |
 | Shopping List | Grocery / shopping | `110927`, `110935` | Implemented | Yes | Editable 3x3 department grid now exists as a reusable category-grid variant | Add lighter title styling and softer card edge treatment |
 | Groceries Packing Checklist | Grocery / shopping | `111151` | Backlog - add template ID | No | Multi-category packing checklist with snack section and don't-forget area | Add groceries-packing variant |
-| Travel Packing List | Grocery / shopping | `111212` | Engine family mapped | Partial | Needs documents/clothes/toiletries/electronics/financial/medical/etc grid | Add exact packing-list schema |
+| Travel Packing List | Grocery / shopping | `111212` | Implemented | Yes | Editable packing categories for documents, clothes, toiletries, electronics, medical, and financial items now render in a dedicated travel board | Refine category iconography and denser packing-grid balance |
 
 ### Cleaning / chores / home / family
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | Daily Cleaning List | Cleaning / chores planners | `110723`, `110733` | Implemented | Yes | Editable room-grid checklist is now implemented with reusable categorized cells | Refine sticker/decor icon treatment and compact spacing |
-| Mom Planner | Family / mom planners | `110648`, `110656` | Backlog - add template ID | No | Hybrid daily family page with water, finances, exercise, meals, savings, mood, habits | Add mom-planner template |
-| Mom Chores Planner | Family / mom planners | `110901`, `110909` | Backlog - add template ID | No | Weekly chores split per day with must-do / extra time tasks | Add mom-chores template |
+| Mom Planner | Family / mom planners | `110648`, `110656` | Implemented | Yes | Added as an editable hybrid family planner with tasks, water, mood, meals, exercise, savings, and habits | Refine mom-specific decorative accents and compact tracker spacing |
+| Mom Chores Planner | Family / mom planners | `110901`, `110909` | Implemented | Yes | Added as an editable weekly chores spread with must-do and extra-time sections for each day | Tune day-card rhythm and weekend spacing |
 | Family organizer implied by search tags | Family / mom planners | `112326`, `112331` | Variant needs modeling | No | Search taxonomy exists, explicit card not shown | Add later if surfaced in cards |
+
+### Education / medical / event / office specialty planners
+
+| Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
+|---|---|---|---|---|---|---|
+| Class Schedule | Education / specialty | popular tags and screenshot taxonomy | Implemented | Yes | Added as an editable weekly class timetable with period-by-day cells | Refine school-grid styling and class-label proportions |
+| Study Planner | Education / specialty | search/taxonomy and student planner card set | Implemented | Yes | Assignments, due dates, focus sessions, and study notes now render in a dedicated study board | Improve academic accent details and tighter column rhythm |
+| Teacher Planner | Education / specialty | teacher planner cards/screens in screenshot set | Implemented | Yes | Weekly lesson plans, materials, notes, and prep fields now render in a dedicated teacher board | Refine notebook margins and teacher-header polish |
+| Medical Notes | Medical / specialty | medical notes search taxonomy and support screenshots | Implemented | Yes | Symptoms, medications, diagnosis, follow-up, and visit notes now render in a dedicated medical-notes board | Add closer clinical table feel and subtle section dividers |
+| Nurse Planner | Medical / specialty | nurse planner search taxonomy and work-support screenshots | Implemented | Yes | Shift planning, medication tasks, patient checks, assessments, and hand-off notes now render in a dedicated nurse board | Refine shift-header badges and task density |
+| Doctors List Planner | Medical / specialty | doctor-related planning taxonomy from search/support screenshots | Implemented | Yes | Added as an editable doctor-contact and appointment reference table | Improve contact-table proportions and appointment accent styling |
+| Event Planner | Event / specialty | event-planner taxonomy and organizer screenshot family | Implemented | Yes | Event overview, checklist, vendors, timeline, and budget/notes are now editable in a dedicated event board | Refine celebratory accents and vendor/timeline layout details |
+| Office Organizer Planner | Work / specialty | office organizer daily screenshots and work taxonomy | Implemented | Yes | Goals, calls, emails, meetings, and schedule now render in a dedicated office-organizer board | Tighten schedule column styling and closer screenshot spacing |
 
 ### Wellness / tracker / ADHD
 
