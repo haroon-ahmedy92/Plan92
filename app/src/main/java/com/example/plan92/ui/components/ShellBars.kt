@@ -34,8 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.plan92.R
 import com.example.plan92.navigation.MainTab
 import com.example.plan92.ui.theme.ApricotGlow
 import com.example.plan92.ui.theme.BurntOrange
@@ -62,7 +64,7 @@ fun Plan92TopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "PlanWiz",
+            text = stringResource(R.string.app_name),
             color = InkBlack,
             style = androidx.compose.material3.MaterialTheme.typography.displayMedium,
         )
