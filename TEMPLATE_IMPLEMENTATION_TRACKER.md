@@ -13,6 +13,9 @@ Editable legend:
 - `Partial`: editable in spirit, but not yet matching the screenshot structure closely.
 - `No`: not yet routed into the editor as its own template.
 
+Recent refinement pass:
+- `2026-03-20`: shared planner surfaces, section spacing, journal paper blocks, daily cards, weekly/monthly grids, and specialty tables were tightened for closer screenshot fidelity while keeping the templates fully editable.
+
 ## 1. Major Screen Types Found
 
 | Screen Type | Screenshot Evidence | Notes |

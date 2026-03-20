@@ -213,13 +213,13 @@ fun TaskBreakdownBoardSection(
         modifier = modifier,
     ) {
         Surface(
-            shape = RoundedCornerShape(18.dp),
+            shape = RoundedCornerShape(14.dp),
             color = MaterialTheme.plan92Palette.fieldSurface,
             border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
         ) {
             Column(
-                modifier = Modifier.padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(10.dp),
+                verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 Text(
                     text = blocks.getOrElse(0) { "Task Identification" },
@@ -301,13 +301,13 @@ fun MeetingNotesBoardSection(
 
         topics.forEach { topic ->
             Surface(
-                shape = RoundedCornerShape(18.dp),
+                shape = RoundedCornerShape(14.dp),
                 color = MaterialTheme.plan92Palette.fieldSurface,
                 border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
             ) {
                 Column(
-                    modifier = Modifier.padding(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
                     Text(
                         text = topic,
@@ -369,12 +369,12 @@ fun GoalsTrackerBoardSection(
             stepLabels.forEachIndexed { index, step ->
                 Surface(
                     modifier = Modifier.padding(start = (index * 18).dp),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(12.dp),
                     color = MaterialTheme.plan92Palette.fieldSurface,
                     border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
                 ) {
                     Column(
-                        modifier = Modifier.padding(10.dp),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         Text(
@@ -450,13 +450,13 @@ private fun BreakdownMiniCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -591,9 +591,9 @@ private fun MultilineCardEditor(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(RoundedCornerShape(12.dp))
+                    .clip(RoundedCornerShape(10.dp))
                     .background(Color.Transparent)
-                    .padding(4.dp),
+                    .padding(horizontal = 4.dp, vertical = 2.dp),
             ) {
                 if (text.isEmpty()) {
                     Text(
@@ -617,11 +617,12 @@ private fun LinedWritingSurface(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height((lines * 24).dp)
-            .clip(RoundedCornerShape(18.dp))
+            .height((lines * 22).dp)
+            .clip(RoundedCornerShape(14.dp))
             .background(MaterialTheme.plan92Palette.fieldSurface)
-            .padding(horizontal = 10.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
+            .padding(horizontal = 10.dp, vertical = 6.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         BasicTextField(
             value = text,
@@ -629,7 +630,7 @@ private fun LinedWritingSurface(
             textStyle = TextStyle(
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                lineHeight = 22.sp,
+                lineHeight = 20.sp,
             ),
             modifier = Modifier
                 .fillMaxSize()
@@ -638,7 +639,7 @@ private fun LinedWritingSurface(
                 Box(modifier = Modifier.fillMaxSize()) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(21.dp),
+                        verticalArrangement = Arrangement.spacedBy(19.dp),
                     ) {
                         repeat(lines) {
                             Box(

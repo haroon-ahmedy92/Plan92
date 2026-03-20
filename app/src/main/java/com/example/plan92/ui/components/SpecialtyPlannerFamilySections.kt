@@ -542,15 +542,15 @@ private fun SpecialtyTable(
     cellWidth: Dp,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 HeaderPill(header.first(), firstColumnWidth)
@@ -581,13 +581,13 @@ private fun SpecialtyCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -608,7 +608,7 @@ private fun TimePill(label: String) {
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.plan92Palette.secondaryAccent,
         )
@@ -622,13 +622,13 @@ private fun HeaderPill(
 ) {
     Surface(
         modifier = Modifier.width(width),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.12f),
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+            style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.plan92Palette.primaryAccent,
             fontWeight = FontWeight.Bold,
         )
@@ -663,8 +663,8 @@ private fun ToggleDotsRow(
                 var active by rememberSaveable("${keyPrefix}_$index") { mutableStateOf(false) }
                 Box(
                     modifier = Modifier
-                        .width(24.dp)
-                        .height(24.dp)
+                        .width(22.dp)
+                        .height(22.dp)
                         .clip(CircleShape)
                         .background(
                             if (active) MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.22f)
@@ -719,7 +719,7 @@ private fun SpecialtyField(
     var value by rememberSaveable(key) { mutableStateOf("") }
     Surface(
         modifier = if (fillWidth) modifier.fillMaxWidth() else modifier,
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -732,7 +732,7 @@ private fun SpecialtyField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 10.dp),
+                .padding(horizontal = 8.dp, vertical = 8.dp),
             minLines = minLines,
             decorationBox = { innerTextField ->
                 if (value.isBlank() && label.isNotBlank()) {

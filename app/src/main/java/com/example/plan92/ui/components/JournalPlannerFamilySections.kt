@@ -461,13 +461,13 @@ private fun MoodSelectorRow(
     var selected by rememberSaveable(title) { mutableStateOf(options.firstOrNull().orEmpty()) }
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -501,13 +501,13 @@ private fun RatingSelectorRow(
     var selected by rememberSaveable(title) { mutableStateOf("") }
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -537,13 +537,13 @@ private fun PromptEditorCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -571,13 +571,13 @@ private fun SinglePromptCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -601,13 +601,13 @@ private fun LinedWritingCard(
     lines: Int,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -629,13 +629,13 @@ private fun BulletWritingSpread(
     key: String,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -695,7 +695,7 @@ private fun JournalPromptField(
 ) {
     var value by rememberSaveable(key) { mutableStateOf("") }
     Surface(
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -708,7 +708,7 @@ private fun JournalPromptField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 10.dp),
+                .padding(horizontal = 8.dp, vertical = 8.dp),
             minLines = minLines,
             decorationBox = { innerTextField ->
                 if (value.isBlank()) {
@@ -731,7 +731,7 @@ private fun LinedWritingEditor(
 ) {
     var text by rememberSaveable(key) { mutableStateOf("") }
     Surface(
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -742,7 +742,7 @@ private fun LinedWritingEditor(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(18.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 repeat(lines) {
                     Box(
@@ -762,7 +762,7 @@ private fun LinedWritingEditor(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
+                    .padding(horizontal = 10.dp, vertical = 8.dp),
                 minLines = lines / 2,
             )
         }
@@ -775,7 +775,7 @@ private fun DotGridEditor(
 ) {
     var text by rememberSaveable(key) { mutableStateOf("") }
     Surface(
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -787,8 +787,8 @@ private fun DotGridEditor(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp),
+                    .padding(10.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 repeat(9) {
                     Row(
@@ -816,7 +816,7 @@ private fun DotGridEditor(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(12.dp),
                 minLines = 10,
             )
         }
@@ -838,8 +838,8 @@ private fun JournalChip(
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+            style = MaterialTheme.typography.labelMedium,
             color = if (selected) MaterialTheme.plan92Palette.primaryAccent else MaterialTheme.plan92Palette.bodyColor,
         )
     }
@@ -860,8 +860,8 @@ private fun RatingBubble(
     ) {
         Box(
             modifier = Modifier
-                .width(36.dp)
-                .height(36.dp),
+                .width(32.dp)
+                .height(32.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(

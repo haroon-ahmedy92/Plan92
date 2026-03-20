@@ -28,7 +28,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -70,8 +69,8 @@ fun PlannerPage(
         accent = accent,
     ) {
         Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
             content = content,
         )
     }
@@ -85,10 +84,10 @@ fun PlannerCardSurface(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(28.dp),
+        shape = RoundedCornerShape(22.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
-        border = BorderStroke(1.dp, accent.copy(alpha = 0.18f)),
-        shadowElevation = 8.dp,
+        border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        shadowElevation = 4.dp,
     ) {
         Column(content = content)
     }
@@ -102,19 +101,23 @@ fun DecorativeAccentContainer(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(18.dp),
         color = MaterialTheme.plan92Palette.sectionSurface,
-        border = BorderStroke(1.dp, accent.copy(alpha = 0.14f)),
+        border = BorderStroke(1.dp, accent.copy(alpha = 0.16f)),
     ) {
         Column(
             modifier = Modifier
                 .background(
-                    Brush.linearGradient(
-                        colors = listOf(accent.copy(alpha = 0.14f), Color.Transparent),
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            accent.copy(alpha = 0.1f),
+                            MaterialTheme.plan92Palette.warmAccent.copy(alpha = 0.05f),
+                            Color.Transparent,
+                        ),
                     ),
                 )
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(horizontal = 14.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             content = content,
         )
     }
@@ -155,9 +158,9 @@ fun PlannerHeader(
 
             Box(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(accent.copy(alpha = 0.16f)),
+                    .size(36.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(accent.copy(alpha = 0.14f)),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
@@ -170,7 +173,7 @@ fun PlannerHeader(
 
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             capabilities.forEach { capability ->
                 LabelChip(
@@ -222,20 +225,20 @@ fun SectionContainer(
 ) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
+        shape = RoundedCornerShape(18.dp),
         color = MaterialTheme.plan92Palette.sectionSurface,
-        border = BorderStroke(1.dp, accent.copy(alpha = 0.14f)),
+        border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 13.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.plan92Palette.titleColor,
                     fontWeight = FontWeight.SemiBold,
                 )
@@ -274,12 +277,13 @@ fun LabelChip(
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(999.dp),
-        color = accent.copy(alpha = 0.14f),
+        color = accent.copy(alpha = 0.1f),
+        border = BorderStroke(1.dp, accent.copy(alpha = 0.18f)),
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+            style = MaterialTheme.typography.labelMedium,
             color = accent,
             fontWeight = FontWeight.SemiBold,
         )
@@ -302,7 +306,7 @@ fun PlannerFieldLine(
         label = { Text(label) },
         singleLine = singleLine,
         minLines = minLines,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = plannerFieldColors(),
     )
 }
@@ -315,7 +319,7 @@ fun DateFieldRow(
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         PlannerFieldLine(
             label = leftLabel,
@@ -475,12 +479,13 @@ fun DayColumnsSection(
             days.forEach { day ->
                 Surface(
                     modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(18.dp),
+                    shape = RoundedCornerShape(14.dp),
                     color = MaterialTheme.plan92Palette.fieldSurface,
+                    border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
                 ) {
                     Column(
                         modifier = Modifier.padding(10.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         Text(
                             text = day,
@@ -550,13 +555,13 @@ fun MonthGridSection(
                     repeat(headers.size) { columnIndex ->
                         Surface(
                             modifier = Modifier.weight(1f),
-                            shape = RoundedCornerShape(14.dp),
+                            shape = RoundedCornerShape(10.dp),
                             color = MaterialTheme.plan92Palette.fieldSurface,
                             border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
                         ) {
                             Column(
-                                modifier = Modifier.padding(8.dp),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp),
+                                verticalArrangement = Arrangement.spacedBy(6.dp),
                             ) {
                                 Text(
                                     text = "${rowIndex * headers.size + columnIndex + 1}",
@@ -566,7 +571,7 @@ fun MonthGridSection(
                                 PlannerFieldLine(
                                     label = "Note",
                                     singleLine = false,
-                                    minLines = 2,
+                                    minLines = 1,
                                 )
                             }
                         }
@@ -593,12 +598,13 @@ fun BudgetGridSection(
         ) {
             rows.forEach { row ->
                 Surface(
-                    shape = RoundedCornerShape(18.dp),
+                    shape = RoundedCornerShape(14.dp),
                     color = MaterialTheme.plan92Palette.fieldSurface,
+                    border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
                 ) {
                     Column(
-                        modifier = Modifier.padding(12.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         Text(
                             text = row,
@@ -662,11 +668,11 @@ fun TrackerSection(
         modifier = modifier,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             stats.chunked(2).forEach { row ->
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     row.forEach { stat ->
                         PlannerStatBox(
@@ -695,7 +701,7 @@ fun WaterTrackerSection(
         modifier = modifier,
     ) {
         Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             keys.forEachIndexed { index, key ->
                 var checked by rememberSaveable(key) { mutableStateOf(false) }
@@ -712,8 +718,8 @@ fun WaterTrackerSection(
                 ) {
                     Box(
                         modifier = Modifier
-                            .height(44.dp)
-                            .wrapContentHeight(align = Alignment.CenterVertically),
+                        .height(38.dp)
+                        .wrapContentHeight(align = Alignment.CenterVertically),
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
@@ -740,15 +746,30 @@ fun MoodSelectorSection(
         modifier = modifier,
     ) {
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             moods.forEach { mood ->
-                FilterChip(
-                    selected = selected == mood,
+                Surface(
                     onClick = { selected = mood },
-                    label = { Text(mood) },
-                )
+                    shape = RoundedCornerShape(999.dp),
+                    color = if (selected == mood) {
+                        MaterialTheme.plan92Palette.tertiaryAccent.copy(alpha = 0.12f)
+                    } else {
+                        MaterialTheme.plan92Palette.fieldSurface
+                    },
+                    border = BorderStroke(
+                        1.dp,
+                        if (selected == mood) MaterialTheme.plan92Palette.tertiaryAccent else MaterialTheme.plan92Palette.lineColor,
+                    ),
+                ) {
+                    Text(
+                        text = mood,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = if (selected == mood) MaterialTheme.plan92Palette.tertiaryAccent else MaterialTheme.plan92Palette.bodyColor,
+                    )
+                }
             }
         }
     }
@@ -771,7 +792,7 @@ fun HabitTrackerSection(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Box(modifier = Modifier.width(96.dp))
+                Box(modifier = Modifier.width(88.dp))
                 days.forEach { day ->
                     Box(
                         modifier = Modifier.weight(1f),
@@ -793,7 +814,7 @@ fun HabitTrackerSection(
                 ) {
                     Text(
                         text = habit,
-                        modifier = Modifier.width(96.dp),
+                        modifier = Modifier.width(88.dp),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.plan92Palette.titleColor,
                     )
@@ -803,7 +824,7 @@ fun HabitTrackerSection(
                             modifier = Modifier
                                 .weight(1f)
                                 .clickable { checked = !checked },
-                            shape = RoundedCornerShape(10.dp),
+                            shape = RoundedCornerShape(8.dp),
                             color = if (checked) MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.18f) else MaterialTheme.plan92Palette.fieldSurface,
                             border = BorderStroke(
                                 1.dp,
@@ -811,7 +832,7 @@ fun HabitTrackerSection(
                             ),
                         ) {
                             Box(
-                                modifier = Modifier.height(32.dp),
+                                modifier = Modifier.height(28.dp),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 if (checked) {
@@ -842,12 +863,13 @@ fun MealPlannerSection(
         ) {
             mealTypes.forEach { meal ->
                 Surface(
-                    shape = RoundedCornerShape(18.dp),
+                    shape = RoundedCornerShape(14.dp),
                     color = MaterialTheme.plan92Palette.fieldSurface,
+                    border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
                 ) {
                     Column(
-                        modifier = Modifier.padding(12.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.padding(10.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                     ) {
                         Text(
                             text = meal,
@@ -888,7 +910,7 @@ fun ReflectionPromptSection(
         modifier = modifier,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             prompts.forEach { prompt ->
                 PlannerFieldLine(
@@ -925,16 +947,16 @@ fun ProgressTimelineSection(
         modifier = modifier,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             milestones.forEachIndexed { index, milestone ->
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.Top,
                 ) {
                     Box(
                         modifier = Modifier
-                            .size(28.dp)
+                            .size(24.dp)
                             .clip(CircleShape)
                             .background(MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.16f)),
                         contentAlignment = Alignment.Center,

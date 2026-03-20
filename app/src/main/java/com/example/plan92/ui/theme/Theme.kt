@@ -57,9 +57,9 @@ private val LightAppColorScheme = lightColorScheme(
 )
 
 private val AppShapes = Shapes(
-    small = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-    medium = androidx.compose.foundation.shape.RoundedCornerShape(22.dp),
-    large = androidx.compose.foundation.shape.RoundedCornerShape(30.dp),
+    small = androidx.compose.foundation.shape.RoundedCornerShape(12.dp),
+    medium = androidx.compose.foundation.shape.RoundedCornerShape(18.dp),
+    large = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
 )
 
 @Immutable
@@ -82,9 +82,9 @@ data class Plan92BrandPalette(
 private val LightBrandPalette = Plan92BrandPalette(
     appBackground = ShellWhite,
     pageSurface = Paper,
-    sectionSurface = PaperTint.copy(alpha = 0.72f),
-    fieldSurface = Color.White.copy(alpha = 0.92f),
-    lineColor = DividerSoft,
+    sectionSurface = PaperSection,
+    fieldSurface = PaperField,
+    lineColor = DividerStrong,
     titleColor = InkBlack,
     bodyColor = InkMuted,
     primaryAccent = BurntOrange,

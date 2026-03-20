@@ -600,13 +600,13 @@ private fun WeeklyDayCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -633,13 +633,13 @@ private fun MiniInfoCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -717,7 +717,7 @@ private fun SelectablePill(
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
             style = MaterialTheme.typography.labelLarge,
             color = if (selected) accent else MaterialTheme.plan92Palette.bodyColor,
         )
@@ -731,20 +731,20 @@ private fun ScheduleMatrixCard(
     rows: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                HeaderCell(text = "Time", width = 72.dp)
+                HeaderCell(text = "Time", width = 68.dp)
                 columns.forEach { column ->
-                    HeaderCell(text = column, width = 104.dp)
+                    HeaderCell(text = column, width = 96.dp)
                 }
             }
             rows.forEachIndexed { rowIndex, row ->
@@ -754,7 +754,7 @@ private fun ScheduleMatrixCard(
                         CompactEntryField(
                             key = "${keyPrefix}_${rowIndex}_$columnIndex",
                             placeholder = "",
-                            modifier = Modifier.width(104.dp),
+                            modifier = Modifier.width(96.dp),
                             minLines = 2,
                             fillWidth = false,
                         )
@@ -771,25 +771,25 @@ private fun HabitMatrixCard(
     habits: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                HeaderCell(text = "Habit", width = 112.dp)
+                HeaderCell(text = "Habit", width = 104.dp)
                 weeklyDays.forEach { day ->
-                    HeaderCell(text = day, width = 52.dp)
+                    HeaderCell(text = day, width = 46.dp)
                 }
             }
             habits.forEachIndexed { habitIndex, habit ->
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    HeaderCell(text = habit, width = 112.dp)
+                    HeaderCell(text = habit, width = 104.dp)
                     weeklyDays.forEachIndexed { dayIndex, _ ->
                         ToggleCell(key = "${keyPrefix}_${habitIndex}_$dayIndex")
                     }
@@ -805,30 +805,30 @@ private fun MealMatrixCard(
     mealTypes: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                HeaderCell(text = "Meal", width = 88.dp)
+                HeaderCell(text = "Meal", width = 82.dp)
                 weeklyDays.forEach { day ->
-                    HeaderCell(text = day, width = 116.dp)
+                    HeaderCell(text = day, width = 104.dp)
                 }
             }
             mealTypes.forEachIndexed { rowIndex, mealType ->
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    HeaderCell(text = mealType, width = 88.dp)
+                    HeaderCell(text = mealType, width = 82.dp)
                     weeklyDays.forEachIndexed { dayIndex, _ ->
                         CompactEntryField(
                             key = "${keyPrefix}_${rowIndex}_$dayIndex",
                             placeholder = "",
-                            modifier = Modifier.width(116.dp),
+                            modifier = Modifier.width(104.dp),
                             minLines = 2,
                             fillWidth = false,
                         )
@@ -849,19 +849,19 @@ private fun MonthCalendarCard(
     val paddedDates = List(4) { "" } + dates + List(42 - dates.size - 4) { "" }
 
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 headers.forEach { header ->
-                    HeaderCell(text = header, width = 92.dp)
+                    HeaderCell(text = header, width = 84.dp)
                 }
             }
             paddedDates.chunked(7).forEachIndexed { weekIndex, week ->
@@ -886,30 +886,30 @@ private fun BudgetTableCard(
     columns: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+                .padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                HeaderCell(text = "Category", width = 120.dp)
+                HeaderCell(text = "Category", width = 112.dp)
                 columns.forEach { column ->
-                    HeaderCell(text = column, width = 96.dp)
+                    HeaderCell(text = column, width = 90.dp)
                 }
             }
             rows.forEachIndexed { rowIndex, row ->
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    HeaderCell(text = row, width = 120.dp)
+                    HeaderCell(text = row, width = 112.dp)
                     columns.forEachIndexed { columnIndex, _ ->
                         CompactEntryField(
                             key = "${keyPrefix}_${rowIndex}_$columnIndex",
                             placeholder = "",
-                            modifier = Modifier.width(96.dp),
+                            modifier = Modifier.width(90.dp),
                             fillWidth = false,
                         )
                     }
@@ -966,13 +966,13 @@ private fun HeaderCell(
 ) {
     Surface(
         modifier = Modifier.width(width),
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.12f),
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
-            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+            style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.plan92Palette.primaryAccent,
             fontWeight = FontWeight.Bold,
         )
@@ -985,8 +985,8 @@ private fun ToggleCell(
 ) {
     var checked by rememberSaveable(key) { mutableStateOf(false) }
     Surface(
-        modifier = Modifier.width(52.dp),
-        shape = RoundedCornerShape(14.dp),
+        modifier = Modifier.width(46.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -1009,14 +1009,14 @@ private fun CalendarCell(
     showDateCircle: Boolean,
 ) {
     Surface(
-        modifier = Modifier.width(92.dp),
-        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.width(84.dp),
+        shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(6.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             if (showDateCircle) {
                 Box(
@@ -1064,7 +1064,7 @@ private fun CompactEntryField(
     var value by rememberSaveable(key) { mutableStateOf("") }
     Surface(
         modifier = if (fillWidth) modifier.fillMaxWidth() else modifier,
-        shape = RoundedCornerShape(14.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.plan92Palette.pageSurface,
         border = BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -1077,7 +1077,7 @@ private fun CompactEntryField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 9.dp),
+                .padding(horizontal = 8.dp, vertical = 7.dp),
             minLines = minLines,
             decorationBox = { innerTextField ->
                 if (value.isBlank() && placeholder.isNotBlank()) {

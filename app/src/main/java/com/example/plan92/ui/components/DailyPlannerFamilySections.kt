@@ -556,13 +556,13 @@ private fun ReflectionPromptCard(
     prompts: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = title,
@@ -583,13 +583,13 @@ private fun RoutineTimeCard(
     accent: Color,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = accent.copy(alpha = 0.14f),
         border = androidx.compose.foundation.BorderStroke(1.dp, accent.copy(alpha = 0.3f)),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -611,13 +611,13 @@ private fun MoodAndReminderCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = "Self-Care Reminder",
@@ -640,13 +640,13 @@ private fun FocusSelectorCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = "Exercise Focus",
@@ -671,12 +671,12 @@ private fun MetricFieldGroup(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
@@ -700,13 +700,13 @@ private fun MiniTrackerCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = title,
@@ -725,13 +725,13 @@ private fun ChoiceGroupCard(
     options: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -752,13 +752,13 @@ private fun TrackerTableCard(
     columns: List<String>,
 ) {
     Surface(
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -799,12 +799,12 @@ private fun QuadrantChecklist(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
@@ -828,13 +828,13 @@ private fun NumberedPriorityCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = title,
@@ -849,8 +849,8 @@ private fun NumberedPriorityCard(
                 ) {
                     Box(
                         modifier = Modifier
-                            .width(22.dp)
-                            .height(22.dp)
+                            .width(20.dp)
+                            .height(20.dp)
                             .background(MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.16f), CircleShape),
                         contentAlignment = Alignment.Center,
                     ) {
@@ -878,13 +878,13 @@ private fun PomodoroTrackerCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
                 text = title,
@@ -910,12 +910,12 @@ private fun DailyChecklistCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
@@ -939,12 +939,12 @@ private fun DailyNotesCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
@@ -971,12 +971,12 @@ private fun DailyScheduleCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
@@ -992,7 +992,7 @@ private fun DailyScheduleCard(
                 ) {
                     Text(
                         text = time,
-                        modifier = Modifier.width(52.dp),
+                        modifier = Modifier.width(48.dp),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.plan92Palette.bodyColor,
                     )
@@ -1014,12 +1014,12 @@ private fun WaterTrackerBar(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
@@ -1028,7 +1028,7 @@ private fun WaterTrackerBar(
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.Bold,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 repeat(count) { index ->
                     SelectionBubble(label = "${index + 1}")
                 }
@@ -1046,12 +1046,12 @@ private fun MoodTrackerBar(
     val moods = listOf("Low", "Sad", "Okay", "Good", "Happy", "Great").take(count)
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(18.dp),
+        shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
         Column(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
@@ -1060,7 +1060,7 @@ private fun MoodTrackerBar(
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.Bold,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 moods.forEach { mood -> SelectionBubble(label = mood) }
             }
         }
@@ -1074,7 +1074,7 @@ private fun MiniTextCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(12.dp),
         color = MaterialTheme.plan92Palette.fieldSurface,
         border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
@@ -1168,8 +1168,8 @@ private fun SelectionBubble(
     var selected by rememberSaveable(label) { mutableStateOf(false) }
     Box(
         modifier = Modifier
-            .width(36.dp)
-            .height(36.dp)
+            .width(if (label.length <= 3) 32.dp else 56.dp)
+            .height(32.dp)
             .clickable { selected = !selected }
             .border(
                 1.dp,
@@ -1184,7 +1184,7 @@ private fun SelectionBubble(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = if (label.length <= 3) label else label.take(3),
+            text = if (label.length <= 3) label else label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.plan92Palette.bodyColor,
             textAlign = TextAlign.Center,
