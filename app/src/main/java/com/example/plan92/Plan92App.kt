@@ -56,12 +56,21 @@ fun Plan92App() {
     var createdPlannerCount by rememberSaveable { mutableIntStateOf(0) }
     val templates = remember { MockPlannerRepository.templates }
 
-    fun createPlanner(templateId: String) {
+    fun createPlanner(
+        templateId: String,
+        customTitle: String? = null,
+        customTagline: String? = null,
+    ) {
         val template = MockPlannerRepository.templateById(templateId)
         createdPlannerCount += 1
         ownedPlanners.add(
             index = 0,
-            element = MockPlannerRepository.createOwnedPlanner(template, createdPlannerCount),
+            element = MockPlannerRepository.createOwnedPlanner(
+                template = template,
+                ordinal = createdPlannerCount,
+                customTitle = customTitle,
+                customTagline = customTagline,
+            ),
         )
     }
 
@@ -88,6 +97,13 @@ fun Plan92App() {
                     onOpenSettings = { navController.navigate(AppRoute.Settings) },
                     onOpenReminderOnboarding = { navController.navigate(AppRoute.ReminderOnboarding) },
                     onCreatePlannerFromTemplate = { templateId -> createPlanner(templateId) },
+                    onCreateBookPlanner = { title, tagline ->
+                        createPlanner(
+                            templateId = MockPlannerRepository.bookTemplate().id,
+                            customTitle = title,
+                            customTagline = tagline,
+                        )
+                    },
                     onOpenPlanner = { templateId ->
                         navController.navigate(AppRoute.plannerDetail(templateId))
                     },
@@ -168,6 +184,7 @@ private fun ShellScreen(
     onOpenReminderOnboarding: () -> Unit,
     onOpenPlanner: (String) -> Unit,
     onCreatePlannerFromTemplate: (String) -> Unit = {},
+    onCreateBookPlanner: (String, String) -> Unit,
     onOpenWidgetPromo: () -> Unit,
     onOpenImportPdf: () -> Unit,
     onOpenPageStyle: () -> Unit,
@@ -214,7 +231,7 @@ private fun ShellScreen(
                         featuredTemplates = templates,
                         readyToUseExpanded = homeReadyToUseExpanded,
                         onReadyToUseExpandedChange = { homeReadyToUseExpanded = it },
-                        onCreateNew = onOpenPageStyle,
+                        onCreateNew = { activeModal = ShellModal.Create },
                         onOpenPlanner = onOpenPlanner,
                         onUseTemplate = { templateId ->
                             onCreatePlannerFromTemplate(templateId)
@@ -249,20 +266,25 @@ private fun ShellScreen(
             )
 
             ShellModal.Create -> CreateNewDialog(
+                templates = templates,
                 onDismiss = { activeModal = null },
                 onBlankPage = {
                     activeModal = null
                     onOpenPageStyle()
                 },
-                onBook = {
+                onCreateBook = { title, tagline ->
                     activeModal = null
-                    onCreatePlannerFromTemplate(MockPlannerRepository.bookTemplate().id)
+                    onCreateBookPlanner(title, tagline)
                     onOpenPlanner(MockPlannerRepository.bookTemplate().id)
                 },
-                onReadyToUse = {
+                onUseTemplate = { templateId ->
                     activeModal = null
-                    selectedTab = MainTab.Planners
-                    homeReadyToUseExpanded = true
+                    onCreatePlannerFromTemplate(templateId)
+                    onOpenPlanner(templateId)
+                },
+                onBrowseTemplates = {
+                    activeModal = null
+                    selectedTab = MainTab.Templates
                 },
                 onImportPdf = {
                     activeModal = null

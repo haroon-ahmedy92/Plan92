@@ -193,10 +193,12 @@ object MockPlannerRepository {
     fun createOwnedPlanner(
         template: PlannerTemplate,
         ordinal: Int,
+        customTitle: String? = null,
+        customTagline: String? = null,
     ): OwnedPlanner = OwnedPlanner(
         id = "owned_${template.id}_$ordinal",
-        title = template.title,
-        tagline = template.subtitle,
+        title = customTitle ?: template.title,
+        tagline = customTagline ?: template.subtitle,
         accent = template.accent,
         secondaryAccent = template.secondaryAccent,
         templateId = template.id,
