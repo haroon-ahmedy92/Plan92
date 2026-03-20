@@ -11,25 +11,50 @@ import com.example.plan92.planner.engine.PlannerSectionKind
 import com.example.plan92.planner.engine.PlannerTemplateDefinition
 import com.example.plan92.ui.components.BudgetGridSection
 import com.example.plan92.ui.components.ChecklistSection
+import com.example.plan92.ui.components.CategoryGridSection
+import com.example.plan92.ui.components.DailyAgendaBoardSection
+import com.example.plan92.ui.components.DailyBrainDumpBoardSection
+import com.example.plan92.ui.components.DailyClassicBoardSection
+import com.example.plan92.ui.components.DailyDevotionalBoardSection
+import com.example.plan92.ui.components.DailyGoalBoardSection
+import com.example.plan92.ui.components.DailyReflectionBoardSection
+import com.example.plan92.ui.components.DailyReflectionJournalBoardSection
+import com.example.plan92.ui.components.DailyTaskBoardSection
+import com.example.plan92.ui.components.DailyWorkBoardSection
+import com.example.plan92.ui.components.ExerciseDailyBoardSection
 import com.example.plan92.ui.components.DateFieldRow
 import com.example.plan92.ui.components.DayColumnsSection
 import com.example.plan92.ui.components.EditableTextSection
+import com.example.plan92.ui.components.FullDayHourlyBoardSection
+import com.example.plan92.ui.components.GoalsTrackerBoardSection
 import com.example.plan92.ui.components.HabitTrackerSection
 import com.example.plan92.ui.components.HourlyScheduleSection
 import com.example.plan92.ui.components.JournalPromptSection
+import com.example.plan92.ui.components.LinedNotesSection
 import com.example.plan92.ui.components.MealPlannerSection
+import com.example.plan92.ui.components.MeetingNotesBoardSection
 import com.example.plan92.ui.components.MonthGridSection
 import com.example.plan92.ui.components.MoodSelectorSection
 import com.example.plan92.ui.components.NotesSection
 import com.example.plan92.ui.components.PlannerHeader
 import com.example.plan92.ui.components.PlannerPage
 import com.example.plan92.ui.components.PlannerTitleBlock
+import com.example.plan92.ui.components.ProductiveDayBoardSection
 import com.example.plan92.ui.components.ProgressTimelineSection
+import com.example.plan92.ui.components.QuadrantChecklistSection
 import com.example.plan92.ui.components.ReflectionPromptSection
+import com.example.plan92.ui.components.RoutineBoardSection
 import com.example.plan92.ui.components.ScheduleSection
+import com.example.plan92.ui.components.SelfCareDailyBoardSection
+import com.example.plan92.ui.components.TaskBreakdownBoardSection
+import com.example.plan92.ui.components.TaskManagementBoardSection
 import com.example.plan92.ui.components.TrackerSection
+import com.example.plan92.ui.components.WorkTasksBoardSection
 import com.example.plan92.ui.components.WaterTrackerSection
+import com.example.plan92.ui.components.WeekListWithSideChecklistSection
 import com.example.plan92.ui.components.WeekGridSection
+import com.example.plan92.ui.components.AdhdDailyBoardSection
+import com.example.plan92.ui.components.DailyManifestBoardSection
 import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
@@ -82,6 +107,12 @@ private fun PlannerSectionRenderer(
         PlannerSectionKind.NOTES -> NotesSection(
             title = section.title,
             subtitle = section.subtitle,
+        )
+
+        PlannerSectionKind.LINED_NOTES -> LinedNotesSection(
+            title = section.title,
+            dateLabel = section.fields.firstOrNull()?.label ?: "Date",
+            lines = section.cellLines.takeIf { it > 0 } ?: 14,
         )
 
         PlannerSectionKind.CHECKLIST -> ChecklistSection(
@@ -162,5 +193,66 @@ private fun PlannerSectionRenderer(
             title = section.title,
             milestones = section.rowLabels.ifEmpty { listOf("Milestone 1", "Milestone 2", "Milestone 3") },
         )
+
+        PlannerSectionKind.CATEGORY_GRID -> CategoryGridSection(
+            title = section.title,
+            categories = section.rowLabels,
+            columns = section.columns.takeIf { it > 0 } ?: 2,
+            checkable = section.checkable,
+            cellLines = section.cellLines.takeIf { it > 0 } ?: 4,
+        )
+
+        PlannerSectionKind.WEEK_LIST_WITH_SIDE_CHECKLIST -> WeekListWithSideChecklistSection(
+            title = section.title,
+            headerLeftLabel = section.fields.getOrNull(0)?.label ?: "Week Of",
+            headerRightLabel = section.fields.getOrNull(1)?.label ?: "List",
+            weekdays = section.rowLabels.ifEmpty { listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday") },
+            checkable = section.checkable,
+            listLines = section.cellLines.takeIf { it > 0 } ?: 6,
+        )
+
+        PlannerSectionKind.QUADRANT_CHECKLIST -> QuadrantChecklistSection(
+            title = section.title,
+            quadrantTitles = section.rowLabels.ifEmpty { listOf("Category 1", "Category 2", "Category 3", "Category 4") },
+            checkable = section.checkable,
+            lines = section.cellLines.takeIf { it > 0 } ?: 6,
+        )
+
+        PlannerSectionKind.TASK_BREAKDOWN_BOARD -> TaskBreakdownBoardSection(
+            title = section.title,
+            blocks = section.rowLabels.ifEmpty { listOf("Task Identification", "Prioritization", "Estimation", "Task Assignment", "Conclusion") },
+        )
+
+        PlannerSectionKind.MEETING_NOTES_BOARD -> MeetingNotesBoardSection(
+            title = section.title,
+            headerFields = section.fields.map { it.label },
+            topics = section.rowLabels.ifEmpty { listOf("Topic 1", "Topic 2") },
+        )
+
+        PlannerSectionKind.GOALS_TRACKER_BOARD -> GoalsTrackerBoardSection(
+            title = section.title,
+            monthLabel = section.fields.firstOrNull()?.label ?: "Month",
+            stepLabels = section.columnLabels.ifEmpty { listOf("Step 1", "Step 2", "Step 3", "Step 4", "Step 5") },
+            rewardLabels = section.stats.ifEmpty { listOf("Reward 1", "Reward 2", "Reward 3", "Reward 4") },
+        )
+
+        PlannerSectionKind.DAILY_CLASSIC_BOARD -> DailyClassicBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_AGENDA_BOARD -> DailyAgendaBoardSection(title = section.title)
+        PlannerSectionKind.PRODUCTIVE_DAY_BOARD -> ProductiveDayBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_TASK_BOARD -> DailyTaskBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_WORK_BOARD -> DailyWorkBoardSection(title = section.title)
+        PlannerSectionKind.FULL_DAY_HOURLY_BOARD -> FullDayHourlyBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_GOAL_BOARD -> DailyGoalBoardSection(title = section.title)
+        PlannerSectionKind.ROUTINE_BOARD -> RoutineBoardSection(title = section.title)
+        PlannerSectionKind.WORK_TASKS_BOARD -> WorkTasksBoardSection(title = section.title)
+        PlannerSectionKind.TASK_MANAGEMENT_BOARD -> TaskManagementBoardSection(title = section.title)
+        PlannerSectionKind.ADHD_DAILY_BOARD -> AdhdDailyBoardSection(title = section.title)
+        PlannerSectionKind.EXERCISE_DAILY_BOARD -> ExerciseDailyBoardSection(title = section.title)
+        PlannerSectionKind.SELF_CARE_DAILY_BOARD -> SelfCareDailyBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_REFLECTION_BOARD -> DailyReflectionBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_REFLECTION_JOURNAL_BOARD -> DailyReflectionJournalBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_DEVOTIONAL_BOARD -> DailyDevotionalBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_MANIFEST_BOARD -> DailyManifestBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_BRAIN_DUMP_BOARD -> DailyBrainDumpBoardSection(title = section.title)
     }
 }

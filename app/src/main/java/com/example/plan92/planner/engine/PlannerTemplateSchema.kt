@@ -20,6 +20,7 @@ enum class PlannerSectionKind {
     DATE_ROW,
     EDITABLE_TEXT,
     NOTES,
+    LINED_NOTES,
     CHECKLIST,
     SCHEDULE,
     HOURLY_SCHEDULE,
@@ -36,6 +37,30 @@ enum class PlannerSectionKind {
     JOURNAL_PROMPT,
     PROGRESS_TIMELINE,
     STATS,
+    CATEGORY_GRID,
+    WEEK_LIST_WITH_SIDE_CHECKLIST,
+    QUADRANT_CHECKLIST,
+    TASK_BREAKDOWN_BOARD,
+    MEETING_NOTES_BOARD,
+    GOALS_TRACKER_BOARD,
+    DAILY_CLASSIC_BOARD,
+    DAILY_AGENDA_BOARD,
+    PRODUCTIVE_DAY_BOARD,
+    DAILY_TASK_BOARD,
+    DAILY_WORK_BOARD,
+    FULL_DAY_HOURLY_BOARD,
+    DAILY_GOAL_BOARD,
+    ROUTINE_BOARD,
+    WORK_TASKS_BOARD,
+    TASK_MANAGEMENT_BOARD,
+    ADHD_DAILY_BOARD,
+    EXERCISE_DAILY_BOARD,
+    SELF_CARE_DAILY_BOARD,
+    DAILY_REFLECTION_BOARD,
+    DAILY_REFLECTION_JOURNAL_BOARD,
+    DAILY_DEVOTIONAL_BOARD,
+    DAILY_MANIFEST_BOARD,
+    DAILY_BRAIN_DUMP_BOARD,
 }
 
 enum class PlannerDecorationStyle {
@@ -81,6 +106,9 @@ data class PlannerSectionDefinition(
     val columnLabels: List<String> = emptyList(),
     val chips: List<String> = emptyList(),
     val stats: List<String> = emptyList(),
+    val columns: Int = 0,
+    val checkable: Boolean = false,
+    val cellLines: Int = 0,
     val decoration: PlannerDecorationDefinition? = null,
 )
 
@@ -97,6 +125,8 @@ data class PlannerTemplateDefinition(
 
 object PlannerTemplateSchema {
     fun definitionFor(template: PlannerTemplate): PlannerTemplateDefinition {
+        exactStructuredTemplate(template)?.let { return it }
+
         val archetype = when (template.family) {
             PlannerFamily.BLANK_PAGE -> blankPageSections()
             PlannerFamily.BOOK_PLANNER -> bookSections()
@@ -159,6 +189,738 @@ object PlannerTemplateSchema {
             sections = archetype.third,
         )
     }
+
+    private fun exactStructuredTemplate(
+        template: PlannerTemplate,
+    ): PlannerTemplateDefinition? = when (template.id) {
+        "notes_page" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Notes",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A clean writing page based on the lined notes sheet from the screenshots.",
+                    chips = listOf("Notes", "Lined Page"),
+                    decoration = PlannerDecorationDefinition("Write Freely", PlannerDecorationStyle.CORNER_GLOW),
+                ),
+                PlannerSectionDefinition(
+                    id = "lined_notes",
+                    title = "Lined Notes",
+                    kind = PlannerSectionKind.LINED_NOTES,
+                    fields = listOf(PlannerFieldDefinition("date", "Date")),
+                    cellLines = 16,
+                ),
+            ),
+        )
+
+        "shopping" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Shopping List",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A department-based shopping board with editable category blocks.",
+                    chips = listOf("Shopping", "Departments"),
+                ),
+                PlannerSectionDefinition(
+                    id = "shopping_grid",
+                    title = "Departments",
+                    kind = PlannerSectionKind.CATEGORY_GRID,
+                    rowLabels = listOf(
+                        "Fruit & Veg",
+                        "Meat & Fish",
+                        "Dairy",
+                        "Pantry",
+                        "Frozen",
+                        "Toiletries",
+                        "Beverages",
+                        "Bakery",
+                        "Other",
+                    ),
+                    columns = 3,
+                    checkable = false,
+                    cellLines = 4,
+                ),
+            ),
+        )
+
+        "shopping_todo" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Shopping To Do List",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A larger shopping board with many store sections and checklist rows.",
+                    chips = listOf("Shopping", "Checklist"),
+                ),
+                PlannerSectionDefinition(
+                    id = "week",
+                    title = "Trip Header",
+                    kind = PlannerSectionKind.DATE_ROW,
+                    fields = listOf(
+                        PlannerFieldDefinition("week", "Week Of"),
+                        PlannerFieldDefinition("store", "Store / Plan"),
+                    ),
+                ),
+                PlannerSectionDefinition(
+                    id = "shopping_todo_grid",
+                    title = "Store Sections",
+                    kind = PlannerSectionKind.CATEGORY_GRID,
+                    rowLabels = listOf(
+                        "Groceries",
+                        "Fashion & Accessories",
+                        "Personal Care",
+                        "Home Essentials",
+                        "Electronics & Gadgets",
+                        "Gift & Stationary",
+                        "Fitness Gear",
+                        "Kitchenware",
+                        "Office & Study",
+                        "Miscellaneous",
+                    ),
+                    columns = 2,
+                    checkable = true,
+                    cellLines = 5,
+                ),
+            ),
+        )
+
+        "grocery" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Grocery Checklist",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A categorized grocery sheet with editable check items.",
+                    chips = listOf("Groceries", "Checklist"),
+                ),
+                PlannerSectionDefinition(
+                    id = "grocery_categories",
+                    title = "Categories",
+                    kind = PlannerSectionKind.CATEGORY_GRID,
+                    rowLabels = listOf(
+                        "Produce",
+                        "Breads & Grains",
+                        "Meats & Seafood",
+                        "Frozen Food",
+                        "Condiments & Cans",
+                        "Deli",
+                        "Beverages",
+                        "Spices & Baking",
+                        "Dairy Protein",
+                    ),
+                    columns = 3,
+                    checkable = true,
+                    cellLines = 5,
+                ),
+            ),
+        )
+
+        "grocery_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Grocery Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly grocery planning sheet with daily prompts and a running list.",
+                    chips = listOf("Weekly", "Groceries"),
+                ),
+                PlannerSectionDefinition(
+                    id = "grocery_board",
+                    title = "Week Plan",
+                    kind = PlannerSectionKind.WEEK_LIST_WITH_SIDE_CHECKLIST,
+                    rowLabels = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"),
+                    fields = listOf(
+                        PlannerFieldDefinition("week", "Week Of"),
+                        PlannerFieldDefinition("list", "Grocery List"),
+                    ),
+                    checkable = true,
+                    cellLines = 6,
+                ),
+            ),
+        )
+
+        "cleaning" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Cleaning List",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Room-based chores laid out as an editable checklist grid.",
+                    chips = listOf("Cleaning", "Rooms"),
+                ),
+                PlannerSectionDefinition(
+                    id = "date",
+                    title = "Cleaning Day",
+                    kind = PlannerSectionKind.DATE_ROW,
+                    fields = listOf(
+                        PlannerFieldDefinition("date", "Date"),
+                        PlannerFieldDefinition("focus", "Main Focus"),
+                    ),
+                ),
+                PlannerSectionDefinition(
+                    id = "rooms",
+                    title = "Room Checklists",
+                    kind = PlannerSectionKind.CATEGORY_GRID,
+                    rowLabels = listOf(
+                        "Kitchen",
+                        "Living Room",
+                        "Bedrooms",
+                        "Dining Room",
+                        "Bathrooms",
+                        "Laundry Area",
+                        "Outside",
+                        "Grocery",
+                        "Misc",
+                    ),
+                    columns = 3,
+                    checkable = true,
+                    cellLines = 5,
+                ),
+            ),
+        )
+
+        "task_batching" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Task Batching Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Four editable batching categories modeled after the screenshot layout.",
+                    chips = listOf("Tasks", "Batching"),
+                ),
+                PlannerSectionDefinition(
+                    id = "date",
+                    title = "Batch Header",
+                    kind = PlannerSectionKind.DATE_ROW,
+                    fields = listOf(
+                        PlannerFieldDefinition("date", "Date"),
+                        PlannerFieldDefinition("theme", "Theme"),
+                    ),
+                ),
+                PlannerSectionDefinition(
+                    id = "batching_grid",
+                    title = "Batch Categories",
+                    kind = PlannerSectionKind.QUADRANT_CHECKLIST,
+                    rowLabels = listOf("Category 1", "Category 2", "Category 3", "Category 4"),
+                    checkable = true,
+                    cellLines = 8,
+                ),
+            ),
+        )
+
+        "task_breakdown" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Task Breakdown Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A structured breakdown sheet with identification, planning, and conclusion blocks.",
+                    chips = listOf("Breakdown", "Task Plan"),
+                ),
+                PlannerSectionDefinition(
+                    id = "header",
+                    title = "Task Header",
+                    kind = PlannerSectionKind.DATE_ROW,
+                    fields = listOf(
+                        PlannerFieldDefinition("name", "Name"),
+                        PlannerFieldDefinition("date", "Date"),
+                    ),
+                ),
+                PlannerSectionDefinition(
+                    id = "breakdown",
+                    title = "Break It Down",
+                    kind = PlannerSectionKind.TASK_BREAKDOWN_BOARD,
+                    rowLabels = listOf("Task Identification", "Prioritization", "Estimation", "Task Assignment", "Conclusion"),
+                ),
+            ),
+        )
+
+        "meeting" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Meeting Note-Taking",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Meeting metadata followed by repeated topic note blocks.",
+                    chips = listOf("Meeting", "Notes"),
+                ),
+                PlannerSectionDefinition(
+                    id = "meeting_board",
+                    title = "Meeting Notes",
+                    kind = PlannerSectionKind.MEETING_NOTES_BOARD,
+                    fields = listOf(
+                        PlannerFieldDefinition("date", "Date"),
+                        PlannerFieldDefinition("start", "Start Time"),
+                        PlannerFieldDefinition("end", "End Time"),
+                        PlannerFieldDefinition("purpose", "Purpose of Meeting"),
+                        PlannerFieldDefinition("attendees", "Attendees"),
+                        PlannerFieldDefinition("agenda", "Agenda & Topics"),
+                    ),
+                    rowLabels = listOf("Topic 1", "Topic 2"),
+                ),
+            ),
+        )
+
+        "goals_tracker" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.TRACKING, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Goals Tracker",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A top-goals worksheet with steps and rewards inspired by the screenshots.",
+                    chips = listOf("Goals", "Tracker"),
+                ),
+                PlannerSectionDefinition(
+                    id = "tracker",
+                    title = "Goal Actions",
+                    kind = PlannerSectionKind.GOALS_TRACKER_BOARD,
+                    fields = listOf(PlannerFieldDefinition("month", "Month")),
+                    rowLabels = listOf("My Top Five Goals", "To-Do List"),
+                    columnLabels = listOf("Step 1", "Step 2", "Step 3", "Step 4", "Step 5"),
+                    stats = listOf("Reward 1", "Reward 2", "Reward 3", "Reward 4"),
+                ),
+            ),
+        )
+
+        "daily_classic" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(
+                PlannerCapability.CHECKLISTS,
+                PlannerCapability.SCHEDULE,
+                PlannerCapability.NOTES,
+                PlannerCapability.WATER,
+                PlannerCapability.MOOD,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Weather, priorities, schedule, money, water, and mood in one daily sheet.",
+                    chips = listOf("Daily", "Classic"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Plan the Day",
+                    kind = PlannerSectionKind.DAILY_CLASSIC_BOARD,
+                ),
+            ),
+        )
+
+        "daily_agenda" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(
+                PlannerCapability.CHECKLISTS,
+                PlannerCapability.SCHEDULE,
+                PlannerCapability.MEALS,
+                PlannerCapability.WATER,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Today's Agenda",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Top priorities, agenda, to-do list, meals, and hydration.",
+                    chips = listOf("Agenda", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Agenda Layout",
+                    kind = PlannerSectionKind.DAILY_AGENDA_BOARD,
+                ),
+            ),
+        )
+
+        "daily_focus" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(
+                PlannerCapability.CHECKLISTS,
+                PlannerCapability.SCHEDULE,
+                PlannerCapability.NOTES,
+                PlannerCapability.TRACKING,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "The Productive Day Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Goal, main tasks, appointments, time trackers, and must-do buckets.",
+                    chips = listOf("Productive", "Focus"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Productive Day",
+                    kind = PlannerSectionKind.PRODUCTIVE_DAY_BOARD,
+                ),
+            ),
+        )
+
+        "daily_task" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Task Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Task list, urgent box, priorities, expenses, and notes.",
+                    chips = listOf("Tasks", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Task Layout",
+                    kind = PlannerSectionKind.DAILY_TASK_BOARD,
+                ),
+            ),
+        )
+
+        "daily_work" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Work Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Priorities, to-do, meetings, reminders, and project notes.",
+                    chips = listOf("Work", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Work Day",
+                    kind = PlannerSectionKind.DAILY_WORK_BOARD,
+                ),
+            ),
+        )
+
+        "hourly_day" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.SCHEDULE),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Full-Day Hourly Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A long full-day timeline matching the hourly planner screenshot.",
+                    chips = listOf("Hourly", "Timeline"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Hourly Schedule",
+                    kind = PlannerSectionKind.FULL_DAY_HOURLY_BOARD,
+                ),
+            ),
+        )
+
+        "goal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.SCHEDULE, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Goal Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Today's goal, goal breakdown, to-do list, schedule, and notes.",
+                    chips = listOf("Goal", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Goal Layout",
+                    kind = PlannerSectionKind.DAILY_GOAL_BOARD,
+                ),
+            ),
+        )
+
+        "routine" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.SCHEDULE),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Routine Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Morning, afternoon, and evening blocks with priorities and extras.",
+                    chips = listOf("Routine", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Routine Sections",
+                    kind = PlannerSectionKind.ROUTINE_BOARD,
+                ),
+            ),
+        )
+
+        "work_tasks" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Work Tasks To Do List",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Must do, do if time, projects, meetings, morning, and afternoon task groups.",
+                    chips = listOf("Work", "Buckets"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Task Buckets",
+                    kind = PlannerSectionKind.WORK_TASKS_BOARD,
+                ),
+            ),
+        )
+
+        "task_management" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.PROJECT,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Task Management Guide",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Important tasks with do first, plan, delegate, and eliminate quadrants.",
+                    chips = listOf("Daily", "Matrix"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Task Management",
+                    kind = PlannerSectionKind.TASK_MANAGEMENT_BOARD,
+                ),
+            ),
+        )
+
+        "adhd" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(
+                PlannerCapability.CHECKLISTS,
+                PlannerCapability.SCHEDULE,
+                PlannerCapability.NOTES,
+                PlannerCapability.MOOD,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "ADHD Daily Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Focus, self-care reminders, do now/later/delegate, routines, and brain dump.",
+                    chips = listOf("ADHD", "Support"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "ADHD Support Layout",
+                    kind = PlannerSectionKind.ADHD_DAILY_BOARD,
+                ),
+            ),
+        )
+
+        "daily_exercise" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.TRACKER,
+            capabilities = setOf(
+                PlannerCapability.TRACKING,
+                PlannerCapability.WATER,
+                PlannerCapability.NOTES,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Exercise Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Food, hydration, vitamins, sleep, exercise focus, and workout log.",
+                    chips = listOf("Exercise", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Exercise Board",
+                    kind = PlannerSectionKind.EXERCISE_DAILY_BOARD,
+                ),
+            ),
+        )
+
+        "self_care" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.TRACKER,
+            capabilities = setOf(
+                PlannerCapability.CHECKLISTS,
+                PlannerCapability.WATER,
+                PlannerCapability.MOOD,
+                PlannerCapability.TRACKING,
+            ),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Self Care Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Checklist, workout, sleep, water, and mood laid out like the screenshot.",
+                    chips = listOf("Self Care", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Self Care Board",
+                    kind = PlannerSectionKind.SELF_CARE_DAILY_BOARD,
+                ),
+            ),
+        )
+
+        "reflection" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.REFLECTION, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Reflection",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Gratitude, affirmation, review, tomorrow planning, and checklist actions.",
+                    chips = listOf("Reflection", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Reflection Board",
+                    kind = PlannerSectionKind.DAILY_REFLECTION_BOARD,
+                ),
+            ),
+        )
+
+        "reflection_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.REFLECTION, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Reflection Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Mindset and growth check-ins with coaching prompts.",
+                    chips = listOf("Reflection", "Coaching"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Coaching Reflection",
+                    kind = PlannerSectionKind.DAILY_REFLECTION_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "devotional" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.REFLECTION, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Devotional Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Prayer list, scripture, observation, application, and notes.",
+                    chips = listOf("Devotional", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Devotional Layout",
+                    kind = PlannerSectionKind.DAILY_DEVOTIONAL_BOARD,
+                ),
+            ),
+        )
+
+        "manifest" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.REFLECTION, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Manifest Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Journaling, gratitude, affirmation, and visualization prompts.",
+                    chips = listOf("Manifest", "Journal"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Manifest Layout",
+                    kind = PlannerSectionKind.DAILY_MANIFEST_BOARD,
+                ),
+            ),
+        )
+
+        "brain_dump" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_DAY,
+            capabilities = setOf(PlannerCapability.CHECKLISTS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Brain Dump",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "To-do list, priorities, big goals, and what can wait.",
+                    chips = listOf("Brain Dump", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Brain Dump Layout",
+                    kind = PlannerSectionKind.DAILY_BRAIN_DUMP_BOARD,
+                ),
+            ),
+        )
+
+        else -> null
+    }
+
+    private fun structuredDefinition(
+        template: PlannerTemplate,
+        editorType: PlannerEditorKind,
+        capabilities: Set<PlannerCapability>,
+        sections: List<PlannerSectionDefinition>,
+    ) = PlannerTemplateDefinition(
+        id = template.id,
+        name = template.title,
+        family = template.family,
+        category = template.categoryId,
+        layoutKind = template.layoutKind.name,
+        editorType = editorType,
+        capabilities = capabilities,
+        sections = sections,
+    )
 
     private fun blankPageSections() = Triple(
         PlannerEditorKind.FLEXIBLE_PAGE,
