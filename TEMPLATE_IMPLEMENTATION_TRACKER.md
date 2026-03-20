@@ -108,23 +108,25 @@ Editable legend:
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
-| Weekly Schedule Planner | Weekly planners | `111056` | Engine family mapped | Partial | Needs full hourly week matrix with notes strip | Add dense week-time-grid primitive |
+| Weekly Planner | Weekly planners | `110707`, `110713`, weekly home/template cards | Implemented | Yes | Editable week-at-a-glance planner now includes appointments, wins, day cards, habits, and notes | Refine top summary proportions and day-card ornament details |
+| Weekly Schedule Planner | Weekly planners | `111056` | Implemented | Yes | Editable weekly timetable grid with notes strip now renders through a dedicated schedule board | Tighten matrix density and add closer time-grid styling |
 | Weekly Work Schedule Planner | Weekly planners | `111242` | Backlog - add template ID | No | Seven vertical columns with goal footer row | Add work-week schema |
-| Weekly Dashboard | Weekly planners | `111242` | Backlog - add template ID | No | Highlights row + goals per day + heart tracker + notes | Add dashboard variant |
-| Weekly Goals Plan | Weekly planners | `111242` | Backlog - add template ID | No | Curved day path + goals/top priorities/appointments/notes | Needs path/timeline primitive |
+| Weekly Dashboard | Weekly planners | `111242` | Implemented | Yes | Editable highlights, top goals, per-day goal cards, mood tracker, and notes now render in a dedicated dashboard board | Refine heart-tracker visuals and section ornamentation |
+| Weekly Goals Plan | Weekly planners | `111242` | Implemented | Yes | Editable priorities, goals, daily appointment blocks, weekly notes, and next-week preview now render in a dedicated weekly-goals board | Closer path-like daily composition still needed |
 | Weekly Goal Planner | Weekly planners | `111242` | Backlog - add template ID | No | Visible only partially; family confirmed | Capture lower structure when implementing |
 | Mom Chores Planner | Weekly planners | `110909` | Backlog - add template ID | No | Day cards with must-do and extra time tasks | Add family-mom weekly chores variant |
-| The Organized Weekly Bullet Journal | Weekly planners | `110648` | Engine family mapped | Partial | Needs asymmetric weekly boxes + gratitude/notes/next-week side boxes | Add bullet-week layout |
-| Weekly Projects Work Journal | Weekly planners | `111151` | Backlog - add template ID | No | Weekly work goals/projects/activities/challenges/highlights | Add project-journal weekly variant |
+| The Organized Weekly Bullet Journal | Weekly planners | `110648` | Implemented | Yes | Editable asymmetrical weekly bullet spread with gratitude, favorites, notes, and next-week blocks is now routed through the engine | Refine asymmetry and decorative divider treatment |
+| Weekly Projects Work Journal | Weekly planners | `111151` | Implemented | Yes | Editable weekly work goals, projects, activities, challenges, highlights, and next steps now render through a dedicated board | Tune work-journal proportions and badge styling |
 
 ### Monthly and yearly planners
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
-| Monthly Planner | Monthly planners | `110733` | Engine family mapped | Partial | Needs minimal blank month grid with small corner accents | Tune month-card spacing |
-| Monthly Appointment Planner | Monthly planners | `111118` | Engine family mapped | Partial | Needs ring-bound look and date circles in each cell | Add appointment-cell decorations |
-| 2026 Yearly Calendar Planner | Yearly planners | `110634`, `110642` | Cover only | No | Currently represented only indirectly | Add cover + interior pairing |
-| Seasonal 2026 Yearly Planner | Yearly planners | `110623`, `110634` | Engine family mapped | Partial | Needs seasonal cover treatment + year-at-glance mapping | Add seasonal cover variant |
+| Monthly Planner | Monthly planners | `110733` | Implemented | Yes | Editable month grid, goals, and important dates now render through a dedicated monthly board | Refine corner accents and grid proportions |
+| Monthly Appointment Planner | Monthly planners | `111118` | Implemented | Yes | Editable appointment calendar now includes date-focused cells plus appointment and follow-up sections | Add closer ring-bound and date-circle styling |
+| 2026 Yearly Planner | Yearly planners | yearly search/taxonomy and yearly card set | Implemented | Yes | Editable yearly goals and month-by-month overview cards are now available through a dedicated yearly planner template | Refine yearly cover pairing and month-card ornament accents |
+| 2026 Yearly Calendar Planner | Yearly planners | `110634`, `110642` | Implemented | Yes | Editable year-at-a-glance monthly summary cards now render through a dedicated yearly-calendar board | Add closer mini-calendar styling and cover pairing |
+| Seasonal 2026 Yearly Planner | Yearly planners | `110623`, `110634` | Implemented | Yes | Editable seasonal focus cards and month summaries now render through a dedicated seasonal yearly board | Refine seasonal illustration treatment and quarter framing |
 
 ### Journals / reflection / devotional
 
@@ -147,7 +149,7 @@ Editable legend:
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | Work Tasks To Do List | Work planners | `110837`, `110842` | Implemented | Yes | Editable six-bucket work-task board now supports must-do, if-time, projects, meetings, morning, and afternoon planning | Refine icon accents and bucket spacing |
-| Work Life Balance Planner | Work planners | `110800`, `110808` | Engine family mapped | Partial | Needs work/personal/notes columns across week | Add exact weekly work-life split |
+| Work Life Balance Planner | Work planners | `110800`, `110808` | Implemented | Yes | Editable work vs personal weekly split with wins and reset notes now renders through a dedicated board | Improve notebook-spread feel and weekday header styling |
 | Project Planner | Project planners | `110909`, `110916` | Engine family mapped | Partial | Needs objective, start/due/completed, brainstorm box, progress tracker | Add distinct project-form schema |
 | Project Progress Overview | Project planners | `111044`, `111049` | Engine family mapped | Partial | Needs repeated mini-project cards with priority and timeline cells | Add repeated project-card primitive |
 | Task Batching Planner | Project planners | `110956`, `111001` | Implemented | Yes | Editable four-quadrant batching board now matches the screenshot structure closely | Refine decorative banner and internal row density |
@@ -161,7 +163,7 @@ Editable legend:
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | Vacation Budget Planner | Budget planners | `111018`, `111025` | Engine family mapped | Partial | Needs category summary and notes grid | Add travel-budget variant |
-| Monthly Budget Overview | Budget planners | `111025`, `111029` | Engine family mapped | Partial | Needs notebook spread with income/savings and category tables | Add spread-style budget primitive |
+| Monthly Budget Overview | Budget planners | `111025`, `111029` | Implemented | Yes | Editable budget snapshot, category table, and notes now render through a dedicated monthly budget board | Refine spread proportions and money-stat styling |
 | Monthly Bill Payment Tracker | Budget planners | `111212` | Backlog - add template ID | No | Ledger with paid, due date, paid date, amount due/paid, balance, notes | Add bill-tracker template |
 | Mom Planner savings area | Budget planners | `110656` | Variant needs modeling | Partial | Embedded savings widget inside family planner | Add embedded stat block for mom planner |
 
@@ -169,7 +171,7 @@ Editable legend:
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
-| Weekly Meal Planner | Meal planners | `110707`, `110713` | Engine family mapped | Partial | Needs breakfast/lunch/snacks/dinner columns plus grocery list and servings tracker | Add meal-week + grocery sidecar |
+| Weekly Meal Planner | Meal planners | `110707`, `110713` | Implemented | Yes | Editable weekly meal grid with grocery list and prep notes now renders through a dedicated meal-planner board | Refine servings/protein accents and tighter meal-cell spacing |
 | High-Protein Weekly Meal Planner | Meal planners | `110916`, `110922` | Backlog - add template ID | No | Simpler protein-focused weekly grid | Add high-protein meal variant |
 | Recipe Journal | Meal planners | `111125`, `111137` | Backlog - add template ID | No | Ingredient metadata + method large area + tips block | Add recipe template |
 | Grocery Checklist | Grocery / shopping | `111151` and grocery checklist taxonomy | Implemented | Yes | Editable categorized grocery checklist is implemented as a reusable checkable category grid | Add optional snack/household overflow categories and tighter cell heights |
@@ -196,8 +198,8 @@ Editable legend:
 | Self-Care Journal | Self-care / wellness planners | `111151` | Backlog - add template ID | No | Weekly reflective self-care prompts by weekday | Add self-care-journal variant |
 | Routine Planner | Self-care / wellness planners | `110713` | Implemented | Yes | Editable morning, afternoon, and evening routine cards now sit alongside priorities and to-dos in a dedicated routine board | Improve time-card ornament styling and internal line rhythm |
 | Daily Exercise Planner | Self-care / wellness planners | `111056`, `111103` | Implemented | Yes | Editable food, calories, hydration, sleep, focus, workout log, and daily stats are now rendered in a dedicated exercise board | Add vitamins row and closer table styling |
-| Monthly Weight Loss Planner | Habit / tracker planners | `111103`, `111110` | Engine family mapped | Partial | Needs monthly goal vs actual cells | Add weight-loss year grid |
-| My Weekly Habits | Habit / tracker planners | `110922`, `110927` | Engine family mapped | Partial | Needs goals, notes & reminders, weekly self-assessment | Add habit variant details |
+| Monthly Weight Loss Planner | Habit / tracker planners | `111103`, `111110` | Implemented | Yes | Editable month-by-month goal, actual, and notes cards now render through a dedicated progress board | Refine numeric tracker styling and month-card density |
+| My Weekly Habits | Habit / tracker planners | `110922`, `110927` | Implemented | Yes | Editable goals, notes & reminders, habit grid, and weekly self-assessment now render through a dedicated weekly-habits board | Add closer iconography and self-assessment ornament details |
 | 75 Hard Challenge | Habit / tracker planners | `111110`, `111118` | Backlog - add template ID | No | 75-day dense challenge matrix with rule checklist | Add challenge tracker template |
 | ADHD Daily Planner | ADHD planners | `110642`, `110648` | Implemented | Yes | Editable focus, reminders, action buckets, routine, schedule, to-do, and brain-dump sections now render in a dedicated ADHD daily board | Refine reward/reminder ornament details and row density |
 | ADHD Planner (checklist / water / sleep) | ADHD planners | `111212` | Backlog - add template ID | No | Self-care-heavy ADHD wellness sheet | Add second ADHD variant |
@@ -209,7 +211,7 @@ Editable legend:
 |---|---|---|---|---|---|---|
 | Notes | Notes / bullet planners | `110842`, `110847` | Implemented | Yes | Editable lined notes page with dedicated writing surface is now routed through the engine | Refine quote-corner ornament treatment and page margins |
 | Daily Bullet Journal | Notes / bullet planners | `111242` | Backlog - add template ID | No | Open spread with hourly edges and blank bullet center | Add bullet-day spread primitive |
-| Organized Weekly Bullet Journal | Notes / bullet planners | `110648`, `110656` | Engine family mapped | Partial | Needs multi-box weekly spread with gratitude/favorites/notes | Add weekly bullet schema |
+| Organized Weekly Bullet Journal | Notes / bullet planners | `110648`, `110656` | Implemented | Yes | Editable multi-box weekly bullet spread with gratitude, favorites, notes, and next-week sections now routes through the engine | Refine asymmetrical spacing and decorative corner accents |
 | To Do List | Notes / bullet planners | `111242` | Backlog - add template ID | No | Urgent vs non-urgent split list | Add to-do split variant |
 
 ### Covers / book-style products

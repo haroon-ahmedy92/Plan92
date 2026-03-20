@@ -55,6 +55,22 @@ import com.example.plan92.ui.components.WeekListWithSideChecklistSection
 import com.example.plan92.ui.components.WeekGridSection
 import com.example.plan92.ui.components.AdhdDailyBoardSection
 import com.example.plan92.ui.components.DailyManifestBoardSection
+import com.example.plan92.ui.components.MonthlyAppointmentBoardSection
+import com.example.plan92.ui.components.MonthlyBudgetBoardSection
+import com.example.plan92.ui.components.MonthlyPlannerBoardSection
+import com.example.plan92.ui.components.MonthlyWeightLossBoardSection
+import com.example.plan92.ui.components.SeasonalYearlyBoardSection
+import com.example.plan92.ui.components.WeeklyBulletBoardSection
+import com.example.plan92.ui.components.WeeklyDashboardBoardSection
+import com.example.plan92.ui.components.WeeklyGoalsBoardSection
+import com.example.plan92.ui.components.WeeklyHabitsBoardSection
+import com.example.plan92.ui.components.WeeklyMealBoardSection
+import com.example.plan92.ui.components.WeeklyPlannerBoardSection
+import com.example.plan92.ui.components.WeeklyProjectsBoardSection
+import com.example.plan92.ui.components.WeeklyScheduleBoardSection
+import com.example.plan92.ui.components.WorkLifeBalanceBoardSection
+import com.example.plan92.ui.components.YearlyCalendarBoardSection
+import com.example.plan92.ui.components.YearlyPlannerBoardSection
 import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
@@ -254,5 +270,21 @@ private fun PlannerSectionRenderer(
         PlannerSectionKind.DAILY_DEVOTIONAL_BOARD -> DailyDevotionalBoardSection(title = section.title)
         PlannerSectionKind.DAILY_MANIFEST_BOARD -> DailyManifestBoardSection(title = section.title)
         PlannerSectionKind.DAILY_BRAIN_DUMP_BOARD -> DailyBrainDumpBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_PLANNER_BOARD -> WeeklyPlannerBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_SCHEDULE_BOARD -> WeeklyScheduleBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_DASHBOARD_BOARD -> WeeklyDashboardBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_HABITS_BOARD -> WeeklyHabitsBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_GOALS_BOARD -> WeeklyGoalsBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_MEAL_BOARD -> WeeklyMealBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_PROJECTS_BOARD -> WeeklyProjectsBoardSection(title = section.title)
+        PlannerSectionKind.WEEKLY_BULLET_BOARD -> WeeklyBulletBoardSection(title = section.title)
+        PlannerSectionKind.WORK_LIFE_BALANCE_BOARD -> WorkLifeBalanceBoardSection(title = section.title)
+        PlannerSectionKind.MONTHLY_PLANNER_BOARD -> MonthlyPlannerBoardSection(title = section.title)
+        PlannerSectionKind.MONTHLY_APPOINTMENT_BOARD -> MonthlyAppointmentBoardSection(title = section.title)
+        PlannerSectionKind.MONTHLY_BUDGET_BOARD -> MonthlyBudgetBoardSection(title = section.title)
+        PlannerSectionKind.MONTHLY_WEIGHT_LOSS_BOARD -> MonthlyWeightLossBoardSection(title = section.title)
+        PlannerSectionKind.YEARLY_PLANNER_BOARD -> YearlyPlannerBoardSection(title = section.title)
+        PlannerSectionKind.YEARLY_CALENDAR_BOARD -> YearlyCalendarBoardSection(title = section.title)
+        PlannerSectionKind.SEASONAL_YEARLY_BOARD -> SeasonalYearlyBoardSection(title = section.title)
     }
 }

@@ -61,6 +61,22 @@ enum class PlannerSectionKind {
     DAILY_DEVOTIONAL_BOARD,
     DAILY_MANIFEST_BOARD,
     DAILY_BRAIN_DUMP_BOARD,
+    WEEKLY_PLANNER_BOARD,
+    WEEKLY_SCHEDULE_BOARD,
+    WEEKLY_DASHBOARD_BOARD,
+    WEEKLY_HABITS_BOARD,
+    WEEKLY_GOALS_BOARD,
+    WEEKLY_MEAL_BOARD,
+    WEEKLY_PROJECTS_BOARD,
+    WEEKLY_BULLET_BOARD,
+    WORK_LIFE_BALANCE_BOARD,
+    MONTHLY_PLANNER_BOARD,
+    MONTHLY_APPOINTMENT_BOARD,
+    MONTHLY_BUDGET_BOARD,
+    MONTHLY_WEIGHT_LOSS_BOARD,
+    YEARLY_PLANNER_BOARD,
+    YEARLY_CALENDAR_BOARD,
+    SEASONAL_YEARLY_BOARD,
 }
 
 enum class PlannerDecorationStyle {
@@ -899,6 +915,327 @@ object PlannerTemplateSchema {
                     id = "board",
                     title = "Brain Dump Layout",
                     kind = PlannerSectionKind.DAILY_BRAIN_DUMP_BOARD,
+                ),
+            ),
+        )
+
+        "weekly_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.SCHEDULE, PlannerCapability.NOTES, PlannerCapability.HABITS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A week-at-a-glance board with appointments, habits, daily plans, and notes.",
+                    chips = listOf("Weekly", "Appointments", "Wins"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Weekly Layout",
+                    kind = PlannerSectionKind.WEEKLY_PLANNER_BOARD,
+                ),
+            ),
+        )
+
+        "weekly_schedule" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.SCHEDULE, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Schedule Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A dense weekly schedule table inspired by the screenshot timetable layouts.",
+                    chips = listOf("Weekly", "Schedule", "Timeline"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Week Timeline",
+                    kind = PlannerSectionKind.WEEKLY_SCHEDULE_BOARD,
+                ),
+            ),
+        )
+
+        "weekly_dashboard" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Dashboard",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Highlights, day goals, mood tracking, and notes in a dashboard-style spread.",
+                    chips = listOf("Weekly", "Dashboard", "Highlights"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Dashboard Layout",
+                    kind = PlannerSectionKind.WEEKLY_DASHBOARD_BOARD,
+                ),
+            ),
+        )
+
+        "weekly_goals" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.SCHEDULE, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Goals Plan",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A goal-focused weekly spread with priorities, appointments, and notes.",
+                    chips = listOf("Weekly", "Goals", "Priorities"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Goals Layout",
+                    kind = PlannerSectionKind.WEEKLY_GOALS_BOARD,
+                ),
+            ),
+        )
+
+        "weekly_projects" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Projects Work Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Track goals, projects, activities, challenges, and next steps for the week.",
+                    chips = listOf("Weekly", "Projects", "Work"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Project Journal Layout",
+                    kind = PlannerSectionKind.WEEKLY_PROJECTS_BOARD,
+                ),
+            ),
+        )
+
+        "habit" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.TRACKER,
+            capabilities = setOf(PlannerCapability.HABITS, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Habits",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly tracker page with goals, reminders, habits, and self-assessment.",
+                    chips = listOf("Weekly", "Habits", "Tracker"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Habit Layout",
+                    kind = PlannerSectionKind.WEEKLY_HABITS_BOARD,
+                ),
+            ),
+        )
+
+        "meal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.MEALS, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Weekly Meal Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly meal grid with grocery and prep sections.",
+                    chips = listOf("Weekly", "Meals", "Prep"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Meal Layout",
+                    kind = PlannerSectionKind.WEEKLY_MEAL_BOARD,
+                ),
+            ),
+        )
+
+        "bullet_weekly" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Organized Weekly Bullet Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "An asymmetric weekly bullet spread with gratitude, favorites, and next-week blocks.",
+                    chips = listOf("Weekly", "Bullet", "Journal"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Bullet Layout",
+                    kind = PlannerSectionKind.WEEKLY_BULLET_BOARD,
+                ),
+            ),
+        )
+
+        "work_balance" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.STRUCTURED_WEEK,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Work Life Balance Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A weekly split planner for work obligations, personal reset, and notes.",
+                    chips = listOf("Weekly", "Work", "Balance"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Balance Layout",
+                    kind = PlannerSectionKind.WORK_LIFE_BALANCE_BOARD,
+                ),
+            ),
+        )
+
+        "monthly_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.CALENDAR,
+            capabilities = setOf(PlannerCapability.CALENDAR, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Monthly Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A clean month-at-a-glance calendar with editable cells, goals, and important dates.",
+                    chips = listOf("Monthly", "Calendar", "Overview"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Month Layout",
+                    kind = PlannerSectionKind.MONTHLY_PLANNER_BOARD,
+                ),
+            ),
+        )
+
+        "monthly_appointment",
+        "appointments" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.CALENDAR,
+            capabilities = setOf(PlannerCapability.CALENDAR, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Monthly Appointment Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A monthly appointment view with date-focused cells and follow-up areas.",
+                    chips = listOf("Monthly", "Appointments", "Calendar"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Appointment Layout",
+                    kind = PlannerSectionKind.MONTHLY_APPOINTMENT_BOARD,
+                ),
+            ),
+        )
+
+        "monthly_budget" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.BUDGET,
+            capabilities = setOf(PlannerCapability.BUDGETING, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Monthly Budget Overview",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A monthly finance spread with snapshot totals, category budgeting, and notes.",
+                    chips = listOf("Monthly", "Budget", "Overview"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Budget Layout",
+                    kind = PlannerSectionKind.MONTHLY_BUDGET_BOARD,
+                ),
+            ),
+        )
+
+        "weight_loss" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.TRACKER,
+            capabilities = setOf(PlannerCapability.TRACKING, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Monthly Weight Loss Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A month-by-month progress tracker for goal, actual progress, and notes.",
+                    chips = listOf("Monthly", "Progress", "Wellness"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Weight Loss Layout",
+                    kind = PlannerSectionKind.MONTHLY_WEIGHT_LOSS_BOARD,
+                ),
+            ),
+        )
+
+        "yearly_planner" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.CALENDAR,
+            capabilities = setOf(PlannerCapability.CALENDAR, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "2026 Yearly Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A yearly planning spread with goals, highlights, and a month-by-month overview.",
+                    chips = listOf("Yearly", "Goals", "Overview"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Year Layout",
+                    kind = PlannerSectionKind.YEARLY_PLANNER_BOARD,
+                ),
+            ),
+        )
+
+        "yearly_calendar" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.CALENDAR,
+            capabilities = setOf(PlannerCapability.CALENDAR, PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "2026 Yearly Calendar Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A year-at-a-glance layout with editable monthly summary cards.",
+                    chips = listOf("Yearly", "Calendar", "At a Glance"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Calendar Layout",
+                    kind = PlannerSectionKind.YEARLY_CALENDAR_BOARD,
+                ),
+            ),
+        )
+
+        "seasonal_yearly" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.CALENDAR,
+            capabilities = setOf(PlannerCapability.CALENDAR, PlannerCapability.NOTES, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Seasonal 2026 Yearly Planner",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A seasonal yearly spread with quarterly focus cards and editable month summaries.",
+                    chips = listOf("Yearly", "Seasonal", "Planner"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Seasonal Layout",
+                    kind = PlannerSectionKind.SEASONAL_YEARLY_BOARD,
                 ),
             ),
         )
