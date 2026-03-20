@@ -132,17 +132,18 @@ Editable legend:
 
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
-| Daily Journal (blue reflective) | Journals / reflection | `110550`, `110556` | Engine family mapped | Partial | Needs to-do, reflection questions, priorities, productivity legend | Add reflective journal variant |
-| Daily Journal (gratitude/affirmations/mood) | Journals / reflection | `110613` | Engine family mapped | Partial | Needs gratitude, affirmations, for tomorrow, mood list | Add gratitude journal variant |
-| My Daily Journal | Journals / reflection | `110830`, `110837` | Cover only | No | Cover-style simple lined diary card | Add diary-cover template |
-| Feelings Journal | Journals / reflection | `110556`, `110607` | Engine family mapped | Partial | Needs feeling sidebar, self-love, gratitude, rate today, water row | Add feelings-specific schema |
+| Daily Journal (blue reflective) | Journals / reflection | `110550`, `110556` | Implemented | Yes | Editable priorities, to-do, mood/productivity check-ins, reflection prompts, and free writing now render in a dedicated daily-journal board | Refine productivity legend styling and tighter reflective spacing |
+| Daily Journal (gratitude/affirmations/mood) | Journals / reflection | `110613` | Implemented | Yes | Gratitude, affirmation, tomorrow focus, and diary writing now render through the `My Daily Journal` variant | Tune mood-list presentation and header ornament details |
+| My Daily Journal | Journals / reflection | `110830`, `110837` | Implemented | Yes | Added as its own editable diary-style template with gratitude, affirmation, prompts, and long-form writing | Add closer cover-to-interior transition styling |
+| Feelings Journal | Journals / reflection | `110556`, `110607` | Implemented | Yes | Editable feelings chips, rating selector, self-love, gratitude, care prompts, and writing area now render in a dedicated board | Refine sidebar feel and water-row ornament treatment |
 | Daily Reflection | Journals / reflection | `111137`, `111151` | Implemented | Yes | Editable gratitude, affirmation, achieved/not-achieved, review, and tomorrow-plan blocks are now in a dedicated board | Refine inner card spacing and prompt typography |
 | Daily Reflection Journal | Journals / reflection | `111018` | Implemented | Yes | Guided coaching prompts are now editable through a dedicated reflection-journal board | Add closer banner styling and prompt-line density |
-| Journal Prompts for Reflecting on Your Day | Journals / reflection | `110607`, `110613` | Cover only | No | Cover/book asset, not interior page | Add cover asset type |
+| Journal Prompts for Reflecting on Your Day | Journals / reflection | `110607`, `110613` | Implemented | Yes | Added as an editable prompt-led journal page with long-form response space | Improve starry-cover-inspired framing and prompt density |
 | Daily Manifest Journal | Journals / reflection | `111151` | Implemented | Yes | Editable journaling, gratitude, affirmation, and visualization sections are now rendered in a dedicated manifest board | Refine ornamental accents and text-area proportions |
 | Daily Devotional Planner | Journals / reflection | `111125` | Implemented | Yes | Editable prayer, answered prayers, scripture, observation, application, and notes sections now match the screenshot structure closely | Add more devotional-specific decorative accents |
-| SOAP Bible Study | Journals / reflection | `111005`, `111012` | Engine family mapped | Partial | Needs scripture/observe/application/prayer quadrants | Add SOAP-specific schema |
-| Daily Thoughts Dear Diary | Journals / reflection | `110847`, `110853` | Cover only | No | Decorative diary cover | Add diary cover asset |
+| SOAP Bible Study | Journals / reflection | `111005`, `111012` | Implemented | Yes | Scripture, observation, application, prayer, and notes now render as an editable guided study page | Refine quadrant proportions and devotional accent details |
+| Reading Log Journal | Journals / reflection | screenshot family audit | Implemented | Yes | Editable book details, stats, favorite quotes, and reading reflections now render in a dedicated journal board | Refine quote card styling and metadata layout density |
+| Daily Thoughts Dear Diary | Journals / reflection | `110847`, `110853` | Implemented | Yes | Added as an editable diary-writing page with gentle prompt blocks and long-form notes | Improve floral-diary-inspired ornament accents |
 
 ### Work / project planners
 
@@ -195,7 +196,7 @@ Editable legend:
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | Self Care Planner | Self-care / wellness planners | `110713`, `110723` | Implemented | Yes | Editable checklist, workout, sleep, water, mood, and happiness-note sections now render in a dedicated board | Refine tracker iconography and card sizing |
-| Self-Care Journal | Self-care / wellness planners | `111151` | Backlog - add template ID | No | Weekly reflective self-care prompts by weekday | Add self-care-journal variant |
+| Self-Care Journal | Self-care / wellness planners | `111151` | Implemented | Yes | Added as an editable weekly reflective self-care page with weekday prompts and weekly reflection | Refine weekday card proportions and softer journal framing |
 | Routine Planner | Self-care / wellness planners | `110713` | Implemented | Yes | Editable morning, afternoon, and evening routine cards now sit alongside priorities and to-dos in a dedicated routine board | Improve time-card ornament styling and internal line rhythm |
 | Daily Exercise Planner | Self-care / wellness planners | `111056`, `111103` | Implemented | Yes | Editable food, calories, hydration, sleep, focus, workout log, and daily stats are now rendered in a dedicated exercise board | Add vitamins row and closer table styling |
 | Monthly Weight Loss Planner | Habit / tracker planners | `111103`, `111110` | Implemented | Yes | Editable month-by-month goal, actual, and notes cards now render through a dedicated progress board | Refine numeric tracker styling and month-card density |
@@ -210,7 +211,7 @@ Editable legend:
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | Notes | Notes / bullet planners | `110842`, `110847` | Implemented | Yes | Editable lined notes page with dedicated writing surface is now routed through the engine | Refine quote-corner ornament treatment and page margins |
-| Daily Bullet Journal | Notes / bullet planners | `111242` | Backlog - add template ID | No | Open spread with hourly edges and blank bullet center | Add bullet-day spread primitive |
+| Daily Bullet Journal | Notes / bullet planners | `111242` | Implemented | Yes | Added as an editable daily bullet spread with top tasks, quick notes, and dot-grid writing space | Refine edge markers and whitespace balance |
 | Organized Weekly Bullet Journal | Notes / bullet planners | `110648`, `110656` | Implemented | Yes | Editable multi-box weekly bullet spread with gratitude, favorites, notes, and next-week sections now routes through the engine | Refine asymmetrical spacing and decorative corner accents |
 | To Do List | Notes / bullet planners | `111242` | Backlog - add template ID | No | Urgent vs non-urgent split list | Add to-do split variant |
 
@@ -219,11 +220,11 @@ Editable legend:
 | Template | Family | Source Screenshot(s) | Implementation Status | Editable Status | Fidelity Notes | Pending Work |
 |---|---|---|---|---|---|---|
 | 2026 All-in-One Productivity Planner | Cover / book-style planners | `110519` | Cover only | No | Hero cover on home screen | Add cover template + linked interior |
-| Find Your Balance Journal | Cover / book-style planners | `110540` | Cover only | No | Stacked-stones cover | Add cover asset |
-| Organize Your Life with a Bullet Journal | Cover / book-style planners | `110550` | Cover only | No | Blue book cover | Add cover asset |
-| Daily Thoughts Dear Diary | Cover / book-style planners | `110847`, `110853` | Cover only | No | Floral green diary cover | Add cover asset |
+| Find Your Balance Journal | Cover / book-style planners | `110540` | Implemented | Yes | Home and cover-style journal now route to an editable balance-focused interior page | Add richer cover-shell presentation around the editor entry |
+| Organize Your Life with a Bullet Journal | Cover / book-style planners | `110550` | Implemented | Yes | Home and cover-style bullet journal now route to an editable guided bullet-journal interior | Add stronger spine and notebook framing |
+| Daily Thoughts Dear Diary | Cover / book-style planners | `110847`, `110853` | Implemented | Yes | Decorative diary product now opens into a writable diary page instead of a static cover concept | Improve floral-cover-to-page transition styling |
 | 2026 Weekly Plan Diary | Cover / book-style planners | `110853`, `110901` | Cover only | No | Leather-style diary cover | Add cover asset |
-| Journal Prompts for Reflecting on Your Day | Cover / book-style planners | `110607`, `110613` | Cover only | No | Night-sky journal cover | Add cover asset |
+| Journal Prompts for Reflecting on Your Day | Cover / book-style planners | `110607`, `110613` | Implemented | Yes | Branded journal product now opens into an editable prompt-led reflection page | Add closer night-sky cover treatment on entry |
 | Seasonal 2026 Yearly Planner | Cover / book-style planners | `110623`, `110634` | Cover only | No | Seasonal illustration cover | Pair with yearly interior |
 | 2026 Yearly Calendar Planner | Cover / book-style planners | `110634`, `110642` | Cover only | No | Abstract geometric cover | Pair with yearly interior |
 

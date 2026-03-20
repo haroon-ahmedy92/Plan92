@@ -77,6 +77,17 @@ enum class PlannerSectionKind {
     YEARLY_PLANNER_BOARD,
     YEARLY_CALENDAR_BOARD,
     SEASONAL_YEARLY_BOARD,
+    DAILY_JOURNAL_BOARD,
+    MY_DAILY_JOURNAL_BOARD,
+    FEELINGS_JOURNAL_BOARD,
+    JOURNAL_PROMPTS_BOARD,
+    SELF_CARE_JOURNAL_BOARD,
+    READING_LOG_BOARD,
+    SOAP_BIBLE_BOARD,
+    FIND_BALANCE_JOURNAL_BOARD,
+    BULLET_LIFE_JOURNAL_BOARD,
+    DEAR_DIARY_BOARD,
+    DAILY_BULLET_BOARD,
 }
 
 enum class PlannerDecorationStyle {
@@ -228,6 +239,226 @@ object PlannerTemplateSchema {
                     kind = PlannerSectionKind.LINED_NOTES,
                     fields = listOf(PlannerFieldDefinition("date", "Date")),
                     cellLines = 16,
+                ),
+            ),
+        )
+
+        "daily_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A reflective daily writing page with priorities, prompts, and free writing.",
+                    chips = listOf("Journal", "Daily", "Reflection"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Journal Layout",
+                    kind = PlannerSectionKind.DAILY_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "my_daily_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "My Daily Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A softer diary page with gratitude, affirmations, reflection, and writing space.",
+                    chips = listOf("Journal", "Diary", "Daily"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Daily Diary Layout",
+                    kind = PlannerSectionKind.MY_DAILY_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "feelings_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD, PlannerCapability.WATER),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Feelings Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "An emotional check-in journal with feelings, ratings, self-love, and reflection.",
+                    chips = listOf("Feelings", "Journal", "Mood"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Feelings Layout",
+                    kind = PlannerSectionKind.FEELINGS_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "journal_prompts" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Journal Prompts for Reflecting on Your Day",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A prompt-based journaling page with long-form writing space.",
+                    chips = listOf("Prompts", "Reflection", "Journal"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Prompt Layout",
+                    kind = PlannerSectionKind.JOURNAL_PROMPTS_BOARD,
+                ),
+            ),
+        )
+
+        "self_care_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Self-Care Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A reflective self-care spread with weekly prompts and gentle check-ins.",
+                    chips = listOf("Self Care", "Journal", "Reflection"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Self-Care Layout",
+                    kind = PlannerSectionKind.SELF_CARE_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "reading_log" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Reading Log Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Track what you're reading, favorite quotes, and reflections.",
+                    chips = listOf("Reading", "Log", "Journal"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Reading Layout",
+                    kind = PlannerSectionKind.READING_LOG_BOARD,
+                ),
+            ),
+        )
+
+        "soap_bible" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "SOAP Bible Study",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "Scripture, observation, application, prayer, and notes in a guided study layout.",
+                    chips = listOf("SOAP", "Bible", "Study"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "SOAP Layout",
+                    kind = PlannerSectionKind.SOAP_BIBLE_BOARD,
+                ),
+            ),
+        )
+
+        "find_balance_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Find Your Balance Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A balance-focused journal page with self-checks, resets, and room to write.",
+                    chips = listOf("Balance", "Journal", "Growth"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Balance Layout",
+                    kind = PlannerSectionKind.FIND_BALANCE_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "bullet_life_journal" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CHECKLISTS, PlannerCapability.TRACKING),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Organize Your Life with a Bullet Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A guided bullet-journal spread with collections, key, migration, and open bullet notes.",
+                    chips = listOf("Bullet", "Journal", "Collections"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Bullet Journal Layout",
+                    kind = PlannerSectionKind.BULLET_LIFE_JOURNAL_BOARD,
+                ),
+            ),
+        )
+
+        "dear_diary" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.REFLECTION, PlannerCapability.MOOD),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Thoughts Dear Diary",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A decorative diary writing page with gentle prompts and long-form notes.",
+                    chips = listOf("Diary", "Thoughts", "Writing"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Diary Layout",
+                    kind = PlannerSectionKind.DEAR_DIARY_BOARD,
+                ),
+            ),
+        )
+
+        "daily_bullet" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.JOURNAL,
+            capabilities = setOf(PlannerCapability.NOTES, PlannerCapability.CHECKLISTS),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Daily Bullet Journal",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A daily bullet spread with top tasks, quick notes, and open bullet writing space.",
+                    chips = listOf("Bullet", "Daily", "Notes"),
+                ),
+                PlannerSectionDefinition(
+                    id = "board",
+                    title = "Daily Bullet Layout",
+                    kind = PlannerSectionKind.DAILY_BULLET_BOARD,
                 ),
             ),
         )

@@ -59,7 +59,10 @@ import com.example.plan92.ui.components.MonthlyAppointmentBoardSection
 import com.example.plan92.ui.components.MonthlyBudgetBoardSection
 import com.example.plan92.ui.components.MonthlyPlannerBoardSection
 import com.example.plan92.ui.components.MonthlyWeightLossBoardSection
+import com.example.plan92.ui.components.MyDailyJournalBoardSection
 import com.example.plan92.ui.components.SeasonalYearlyBoardSection
+import com.example.plan92.ui.components.SelfCareJournalBoardSection
+import com.example.plan92.ui.components.SoapBibleBoardSection
 import com.example.plan92.ui.components.WeeklyBulletBoardSection
 import com.example.plan92.ui.components.WeeklyDashboardBoardSection
 import com.example.plan92.ui.components.WeeklyGoalsBoardSection
@@ -71,6 +74,14 @@ import com.example.plan92.ui.components.WeeklyScheduleBoardSection
 import com.example.plan92.ui.components.WorkLifeBalanceBoardSection
 import com.example.plan92.ui.components.YearlyCalendarBoardSection
 import com.example.plan92.ui.components.YearlyPlannerBoardSection
+import com.example.plan92.ui.components.BulletLifeJournalBoardSection
+import com.example.plan92.ui.components.DailyBulletBoardSection
+import com.example.plan92.ui.components.DailyJournalBoardSection
+import com.example.plan92.ui.components.DearDiaryBoardSection
+import com.example.plan92.ui.components.FeelingsJournalBoardSection
+import com.example.plan92.ui.components.FindBalanceJournalBoardSection
+import com.example.plan92.ui.components.JournalPromptsBoardSection
+import com.example.plan92.ui.components.ReadingLogBoardSection
 import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
@@ -286,5 +297,16 @@ private fun PlannerSectionRenderer(
         PlannerSectionKind.YEARLY_PLANNER_BOARD -> YearlyPlannerBoardSection(title = section.title)
         PlannerSectionKind.YEARLY_CALENDAR_BOARD -> YearlyCalendarBoardSection(title = section.title)
         PlannerSectionKind.SEASONAL_YEARLY_BOARD -> SeasonalYearlyBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_JOURNAL_BOARD -> DailyJournalBoardSection(title = section.title)
+        PlannerSectionKind.MY_DAILY_JOURNAL_BOARD -> MyDailyJournalBoardSection(title = section.title)
+        PlannerSectionKind.FEELINGS_JOURNAL_BOARD -> FeelingsJournalBoardSection(title = section.title)
+        PlannerSectionKind.JOURNAL_PROMPTS_BOARD -> JournalPromptsBoardSection(title = section.title)
+        PlannerSectionKind.SELF_CARE_JOURNAL_BOARD -> SelfCareJournalBoardSection(title = section.title)
+        PlannerSectionKind.READING_LOG_BOARD -> ReadingLogBoardSection(title = section.title)
+        PlannerSectionKind.SOAP_BIBLE_BOARD -> SoapBibleBoardSection(title = section.title)
+        PlannerSectionKind.FIND_BALANCE_JOURNAL_BOARD -> FindBalanceJournalBoardSection(title = section.title)
+        PlannerSectionKind.BULLET_LIFE_JOURNAL_BOARD -> BulletLifeJournalBoardSection(title = section.title)
+        PlannerSectionKind.DEAR_DIARY_BOARD -> DearDiaryBoardSection(title = section.title)
+        PlannerSectionKind.DAILY_BULLET_BOARD -> DailyBulletBoardSection(title = section.title)
     }
 }
