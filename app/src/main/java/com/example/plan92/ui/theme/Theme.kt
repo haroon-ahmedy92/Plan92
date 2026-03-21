@@ -1,9 +1,7 @@
 package com.example.plan92.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -12,48 +10,26 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-private val DarkAppColorScheme = darkColorScheme(
-    primary = ApricotGlow,
-    secondary = AzureDepth,
-    tertiary = OrchidBurst,
-    background = InkBlack,
-    surface = NightShade,
-    surfaceVariant = RoyalIndigo,
-    primaryContainer = BurntOrange,
-    secondaryContainer = Amethyst,
-    tertiaryContainer = BrickRed,
-    onPrimary = InkBlack,
-    onSecondary = Paper,
-    onTertiary = Paper,
-    onBackground = Paper,
-    onSurface = Paper,
-    onSurfaceVariant = Paper,
-    onPrimaryContainer = Paper,
-    onSecondaryContainer = Paper,
-    onTertiaryContainer = Paper,
-    outline = Mist.copy(alpha = 0.5f),
-)
-
-private val LightAppColorScheme = lightColorScheme(
-    primary = BurntOrange,
-    secondary = AzureDepth,
-    tertiary = Amethyst,
+private val AppColorScheme = lightColorScheme(
+    primary = CoralAccent,
+    secondary = Gray600,
+    tertiary = Gray300,
     background = ShellWhite,
     surface = Paper,
-    surfaceVariant = PaperTint,
-    primaryContainer = ApricotGlow,
-    secondaryContainer = AzureDepth.copy(alpha = 0.12f),
-    tertiaryContainer = OrchidBurst.copy(alpha = 0.14f),
-    onPrimary = InkBlack,
-    onSecondary = Paper,
-    onTertiary = Paper,
+    surfaceVariant = PaperSection,
+    primaryContainer = Gray300,
+    secondaryContainer = Gray200,
+    tertiaryContainer = Gray100,
+    onPrimary = Color.White,
+    onSecondary = InkBlack,
+    onTertiary = InkBlack,
     onBackground = InkBlack,
     onSurface = InkBlack,
     onSurfaceVariant = InkMuted,
     onPrimaryContainer = InkBlack,
     onSecondaryContainer = InkBlack,
     onTertiaryContainer = InkBlack,
-    outline = Amethyst.copy(alpha = 0.25f),
+    outline = DividerStrong,
 )
 
 private val AppShapes = Shapes(
@@ -65,9 +41,12 @@ private val AppShapes = Shapes(
 @Immutable
 data class Plan92BrandPalette(
     val appBackground: Color,
+    val barSurface: Color,
     val pageSurface: Color,
     val sectionSurface: Color,
+    val surfaceMuted: Color,
     val fieldSurface: Color,
+    val plannerPaper: Color,
     val lineColor: Color,
     val titleColor: Color,
     val bodyColor: Color,
@@ -75,38 +54,29 @@ data class Plan92BrandPalette(
     val secondaryAccent: Color,
     val tertiaryAccent: Color,
     val warmAccent: Color,
+    val chipSelected: Color,
+    val chipUnselected: Color,
     val heroBrush: Brush,
     val warmBrush: Brush,
 )
 
 private val LightBrandPalette = Plan92BrandPalette(
     appBackground = ShellWhite,
+    barSurface = Color.White.copy(alpha = 0.84f),
     pageSurface = Paper,
     sectionSurface = PaperSection,
+    surfaceMuted = SurfaceTone,
     fieldSurface = PaperField,
+    plannerPaper = Paper,
     lineColor = DividerStrong,
     titleColor = InkBlack,
     bodyColor = InkMuted,
-    primaryAccent = BurntOrange,
-    secondaryAccent = AzureDepth,
-    tertiaryAccent = Amethyst,
+    primaryAccent = CoralAccent,
+    secondaryAccent = Gray600,
+    tertiaryAccent = Gray300,
     warmAccent = ApricotGlow,
-    heroBrush = HeroBrush,
-    warmBrush = WarmAccentBrush,
-)
-
-private val DarkBrandPalette = Plan92BrandPalette(
-    appBackground = InkBlack,
-    pageSurface = SurfaceTone,
-    sectionSurface = SurfaceToneHigh,
-    fieldSurface = RoyalIndigo.copy(alpha = 0.66f),
-    lineColor = Mist.copy(alpha = 0.22f),
-    titleColor = Paper,
-    bodyColor = Paper.copy(alpha = 0.78f),
-    primaryAccent = ApricotGlow,
-    secondaryAccent = AzureDepth,
-    tertiaryAccent = OrchidBurst,
-    warmAccent = BurntOrange,
+    chipSelected = Gray200,
+    chipUnselected = Paper,
     heroBrush = HeroBrush,
     warmBrush = WarmAccentBrush,
 )
@@ -120,15 +90,13 @@ val MaterialTheme.plan92Palette: Plan92BrandPalette
 fun Plan92Theme(
     content: @Composable () -> Unit,
 ) {
-    val isDark = isSystemInDarkTheme()
-    val brandPalette = if (isDark) DarkBrandPalette else LightBrandPalette
     MaterialTheme(
-        colorScheme = if (isDark) DarkAppColorScheme else LightAppColorScheme,
+        colorScheme = AppColorScheme,
         typography = Plan92Typography,
         shapes = AppShapes,
     ) {
         androidx.compose.runtime.CompositionLocalProvider(
-            LocalPlan92BrandPalette provides brandPalette,
+            LocalPlan92BrandPalette provides LightBrandPalette,
             content = content,
         )
     }

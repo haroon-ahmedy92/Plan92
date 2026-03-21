@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.example.plan92.planner.engine.PlannerSectionDefinition
 import com.example.plan92.planner.engine.PlannerSectionKind
 import com.example.plan92.planner.engine.PlannerTemplateDefinition
@@ -27,6 +26,7 @@ import com.example.plan92.ui.components.DayColumnsSection
 import com.example.plan92.ui.components.EditableTextSection
 import com.example.plan92.ui.components.FullDayHourlyBoardSection
 import com.example.plan92.ui.components.GoalsTrackerBoardSection
+import com.example.plan92.ui.components.GridNotesSection
 import com.example.plan92.ui.components.HabitTrackerSection
 import com.example.plan92.ui.components.HourlyScheduleSection
 import com.example.plan92.ui.components.JournalPromptSection
@@ -36,8 +36,8 @@ import com.example.plan92.ui.components.MeetingNotesBoardSection
 import com.example.plan92.ui.components.MonthGridSection
 import com.example.plan92.ui.components.MoodSelectorSection
 import com.example.plan92.ui.components.NotesSection
-import com.example.plan92.ui.components.PlannerHeader
 import com.example.plan92.ui.components.PlannerPage
+import com.example.plan92.ui.components.PlannerSheetMetrics
 import com.example.plan92.ui.components.PlannerTitleBlock
 import com.example.plan92.ui.components.ProductiveDayBoardSection
 import com.example.plan92.ui.components.ProgressTimelineSection
@@ -55,6 +55,7 @@ import com.example.plan92.ui.components.WeekListWithSideChecklistSection
 import com.example.plan92.ui.components.WeekGridSection
 import com.example.plan92.ui.components.AdhdDailyBoardSection
 import com.example.plan92.ui.components.DailyManifestBoardSection
+import com.example.plan92.ui.components.DotGridWritingSection
 import com.example.plan92.ui.components.MonthlyAppointmentBoardSection
 import com.example.plan92.ui.components.MonthlyBudgetBoardSection
 import com.example.plan92.ui.components.MonthlyPlannerBoardSection
@@ -110,14 +111,8 @@ fun PlannerTemplateEditor(
         accent = MaterialTheme.plan92Palette.primaryAccent,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(14.dp),
+            verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.PageSpacing),
         ) {
-            PlannerHeader(
-                label = definition.name,
-                editorKind = definition.editorType.name,
-                capabilities = definition.capabilities.map { it.name.replace('_', ' ') },
-            )
-
             definition.sections.forEach { section ->
                 PlannerSectionRenderer(section = section)
             }
@@ -156,6 +151,18 @@ private fun PlannerSectionRenderer(
             title = section.title,
             dateLabel = section.fields.firstOrNull()?.label ?: "Date",
             lines = section.cellLines.takeIf { it > 0 } ?: 14,
+        )
+
+        PlannerSectionKind.GRID_NOTES -> GridNotesSection(
+            title = section.title,
+            dateLabel = section.fields.firstOrNull()?.label ?: "Date",
+            lines = section.cellLines.takeIf { it > 0 } ?: 18,
+        )
+
+        PlannerSectionKind.DOT_GRID_NOTES -> DotGridWritingSection(
+            title = section.title,
+            dateLabel = section.fields.firstOrNull()?.label ?: "Date",
+            lines = section.cellLines.takeIf { it > 0 } ?: 18,
         )
 
         PlannerSectionKind.CHECKLIST -> ChecklistSection(

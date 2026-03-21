@@ -21,6 +21,8 @@ enum class PlannerSectionKind {
     EDITABLE_TEXT,
     NOTES,
     LINED_NOTES,
+    GRID_NOTES,
+    DOT_GRID_NOTES,
     CHECKLIST,
     SCHEDULE,
     HOURLY_SCHEDULE,
@@ -255,6 +257,52 @@ object PlannerTemplateSchema {
                     kind = PlannerSectionKind.LINED_NOTES,
                     fields = listOf(PlannerFieldDefinition("date", "Date")),
                     cellLines = 16,
+                ),
+            ),
+        )
+
+        "grid_page" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Grid Page",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A clean square-grid page for sketching layouts, wireframes, and flexible notes.",
+                    chips = listOf("Grid", "Flexible", "Writing"),
+                    decoration = PlannerDecorationDefinition("Grid", PlannerDecorationStyle.CORNER_GLOW),
+                ),
+                PlannerSectionDefinition(
+                    id = "grid_notes",
+                    title = "Grid Canvas",
+                    kind = PlannerSectionKind.GRID_NOTES,
+                    fields = listOf(PlannerFieldDefinition("date", "Date")),
+                    cellLines = 18,
+                ),
+            ),
+        )
+
+        "dot_grid_page" -> structuredDefinition(
+            template = template,
+            editorType = PlannerEditorKind.FLEXIBLE_PAGE,
+            capabilities = setOf(PlannerCapability.NOTES),
+            sections = listOf(
+                PlannerSectionDefinition(
+                    id = "title",
+                    title = "Dot Grid Page",
+                    kind = PlannerSectionKind.TITLE_BLOCK,
+                    subtitle = "A dot-grid page for bullet journaling, sketching, and open writing.",
+                    chips = listOf("Dot Grid", "Bullet", "Flexible"),
+                    decoration = PlannerDecorationDefinition("Dots", PlannerDecorationStyle.CORNER_GLOW),
+                ),
+                PlannerSectionDefinition(
+                    id = "dot_notes",
+                    title = "Dot Grid Canvas",
+                    kind = PlannerSectionKind.DOT_GRID_NOTES,
+                    fields = listOf(PlannerFieldDefinition("date", "Date")),
+                    cellLines = 18,
                 ),
             ),
         )

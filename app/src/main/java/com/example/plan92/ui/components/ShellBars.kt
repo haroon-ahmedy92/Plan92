@@ -39,12 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.plan92.R
 import com.example.plan92.navigation.MainTab
-import com.example.plan92.ui.theme.ApricotGlow
-import com.example.plan92.ui.theme.BurntOrange
-import com.example.plan92.ui.theme.DividerSoft
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.OrchidBurst
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun Plan92TopBar(
@@ -65,7 +60,7 @@ fun Plan92TopBar(
     ) {
         Text(
             text = stringResource(R.string.app_name),
-            color = InkBlack,
+            color = androidx.compose.material3.MaterialTheme.plan92Palette.titleColor,
             style = androidx.compose.material3.MaterialTheme.typography.displayMedium,
         )
 
@@ -78,12 +73,20 @@ fun Plan92TopBar(
                     .clip(RoundedCornerShape(14.dp))
                     .background(
                         Brush.horizontalGradient(
-                            listOf(BurntOrange.copy(alpha = 0.16f), OrchidBurst.copy(alpha = 0.16f)),
+                            listOf(
+                                androidx.compose.material3.MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.14f),
+                                androidx.compose.material3.MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.18f),
+                            ),
                         ),
                     )
                     .border(
                         width = 1.2.dp,
-                        brush = Brush.horizontalGradient(listOf(BurntOrange, OrchidBurst)),
+                        brush = Brush.horizontalGradient(
+                            listOf(
+                                androidx.compose.material3.MaterialTheme.plan92Palette.primaryAccent,
+                                androidx.compose.material3.MaterialTheme.plan92Palette.secondaryAccent,
+                            ),
+                        ),
                         shape = RoundedCornerShape(14.dp),
                     ),
             ) {
@@ -100,12 +103,12 @@ fun Plan92TopBar(
                         Icon(
                             imageVector = Icons.Outlined.AutoAwesome,
                             contentDescription = null,
-                            tint = ApricotGlow,
+                            tint = androidx.compose.material3.MaterialTheme.plan92Palette.primaryAccent,
                             modifier = Modifier.size(16.dp),
                         )
                         Text(
                             text = "PRO",
-                            color = InkBlack,
+                            color = androidx.compose.material3.MaterialTheme.plan92Palette.titleColor,
                             style = androidx.compose.material3.MaterialTheme.typography.labelLarge,
                             fontWeight = FontWeight.Bold,
                         )
@@ -132,7 +135,7 @@ private fun AppIconAction(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color(0xFF6E6877),
+            tint = androidx.compose.material3.MaterialTheme.plan92Palette.bodyColor,
             modifier = Modifier.size(28.dp),
         )
     }
@@ -146,7 +149,7 @@ fun Plan92BottomBar(
 ) {
     NavigationBar(
         windowInsets = WindowInsets(0.dp),
-        containerColor = Color.White,
+        containerColor = androidx.compose.material3.MaterialTheme.plan92Palette.barSurface,
         tonalElevation = 2.dp,
         modifier = Modifier.navigationBarsPadding(),
     ) {
@@ -171,10 +174,14 @@ fun Plan92BottomBar(
                     modifier = Modifier
                         .size(36.dp)
                         .clip(CircleShape)
-                        .border(1.5.dp, Color(0xFF8F879A), CircleShape),
+                        .border(1.5.dp, androidx.compose.material3.MaterialTheme.plan92Palette.lineColor, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Outlined.Add, contentDescription = "Create New", tint = Color(0xFF7E7887))
+                    Icon(
+                        Icons.Outlined.Add,
+                        contentDescription = "Create New",
+                        tint = androidx.compose.material3.MaterialTheme.plan92Palette.bodyColor,
+                    )
                 }
             },
             label = { Text("Create New") },
@@ -198,9 +205,9 @@ fun Plan92BottomBar(
 
 @Composable
 private fun navigationColors() = NavigationBarItemDefaults.colors(
-    selectedIconColor = BurntOrange,
-    selectedTextColor = BurntOrange,
+    selectedIconColor = androidx.compose.material3.MaterialTheme.plan92Palette.primaryAccent,
+    selectedTextColor = androidx.compose.material3.MaterialTheme.plan92Palette.primaryAccent,
     indicatorColor = Color.Transparent,
-    unselectedIconColor = Color(0xFF7E7887),
-    unselectedTextColor = Color(0xFF7E7887),
+    unselectedIconColor = androidx.compose.material3.MaterialTheme.plan92Palette.bodyColor,
+    unselectedTextColor = androidx.compose.material3.MaterialTheme.plan92Palette.bodyColor,
 )

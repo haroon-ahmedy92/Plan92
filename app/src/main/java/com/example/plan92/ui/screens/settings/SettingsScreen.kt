@@ -44,11 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.plan92.ui.theme.ApricotGlow
-import com.example.plan92.ui.theme.AzureDepth
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun SettingsScreen(
@@ -64,7 +60,7 @@ fun SettingsScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite,
+        color = MaterialTheme.plan92Palette.appBackground,
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -90,7 +86,7 @@ fun SettingsScreen(
                         Text(
                             text = "Settings",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = InkBlack,
+                            color = MaterialTheme.plan92Palette.titleColor,
                         )
                     }
                 }
@@ -106,7 +102,10 @@ fun SettingsScreen(
                             .fillMaxWidth()
                             .background(
                                 brush = Brush.horizontalGradient(
-                                    colors = listOf(CoralAccent, ApricotGlow),
+                                    colors = listOf(
+                                        MaterialTheme.plan92Palette.primaryAccent,
+                                        MaterialTheme.plan92Palette.secondaryAccent,
+                                    ),
                                 ),
                             )
                             .padding(18.dp),
@@ -117,12 +116,12 @@ fun SettingsScreen(
                             Text(
                                 text = "Unlock Premium Features!",
                                 style = MaterialTheme.typography.headlineMedium,
-                                color = InkBlack,
+                                color = MaterialTheme.colorScheme.onPrimary,
                             )
                             Text(
                                 text = "Unlock the full planner experience with premium covers, templates, and polished export tools later on.",
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = InkBlack.copy(alpha = 0.72f),
+                                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.78f),
                             )
                             Row(
                                 horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -194,10 +193,10 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
                     ) {
                         listOf(
-                            "f" to Color(0xFF1877F2),
-                            "ig" to Color(0xFFE4405F),
-                            "x" to Color(0xFF111111),
-                            "in" to Color(0xFF0A66C2),
+                            "f" to MaterialTheme.plan92Palette.primaryAccent,
+                            "ig" to MaterialTheme.plan92Palette.secondaryAccent,
+                            "x" to MaterialTheme.plan92Palette.surfaceMuted,
+                            "in" to MaterialTheme.plan92Palette.tertiaryAccent,
                         ).forEach { (label, color) ->
                             Box(
                                 modifier = Modifier
@@ -232,11 +231,11 @@ private fun SettingsSection(
         Text(
             text = title.uppercase(),
             style = MaterialTheme.typography.labelLarge,
-            color = Color(0xFF8D859C),
+            color = MaterialTheme.plan92Palette.bodyColor,
         )
         Surface(
             shape = RoundedCornerShape(24.dp),
-            color = Color.White,
+            color = MaterialTheme.plan92Palette.pageSurface,
         ) {
             Column(
                 modifier = Modifier.padding(vertical = 6.dp),
@@ -270,10 +269,10 @@ private fun SettingsArrowRow(
                 modifier = Modifier
                     .size(34.dp)
                     .clip(CircleShape)
-                    .background(CoralAccent.copy(alpha = 0.12f)),
+                    .background(MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(icon, contentDescription = null, tint = CoralAccent)
+                Icon(icon, contentDescription = null, tint = MaterialTheme.plan92Palette.primaryAccent)
             }
             Row(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -282,18 +281,18 @@ private fun SettingsArrowRow(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                 )
                 if (badge != null) {
                     Surface(
                         shape = RoundedCornerShape(999.dp),
-                        color = AzureDepth.copy(alpha = 0.12f),
+                        color = MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.18f),
                     ) {
                         Text(
                             text = badge,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                             style = MaterialTheme.typography.bodySmall,
-                            color = AzureDepth,
+                            color = MaterialTheme.plan92Palette.titleColor,
                         )
                     }
                 }
@@ -302,7 +301,7 @@ private fun SettingsArrowRow(
         Icon(
             imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
             contentDescription = null,
-            tint = Color(0xFF8D859C),
+            tint = MaterialTheme.plan92Palette.bodyColor,
         )
     }
 }
@@ -329,15 +328,15 @@ private fun SettingsToggleRow(
                 modifier = Modifier
                     .size(34.dp)
                     .clip(CircleShape)
-                    .background(CoralAccent.copy(alpha = 0.12f)),
+                    .background(MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.12f)),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(icon, contentDescription = null, tint = CoralAccent)
+                Icon(icon, contentDescription = null, tint = MaterialTheme.plan92Palette.primaryAccent)
             }
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = InkBlack,
+                color = MaterialTheme.plan92Palette.titleColor,
             )
         }
         Switch(
@@ -351,13 +350,13 @@ private fun SettingsToggleRow(
 private fun PromoBadge(text: String) {
     Surface(
         shape = RoundedCornerShape(999.dp),
-        color = Color.White.copy(alpha = 0.22f),
+        color = MaterialTheme.plan92Palette.pageSurface.copy(alpha = 0.48f),
     ) {
         Text(
             text = text,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             style = MaterialTheme.typography.labelLarge,
-            color = InkBlack,
+            color = MaterialTheme.plan92Palette.titleColor,
         )
     }
 }

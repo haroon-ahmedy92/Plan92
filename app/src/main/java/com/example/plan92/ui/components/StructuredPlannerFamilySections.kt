@@ -71,6 +71,78 @@ fun LinedNotesSection(
 }
 
 @Composable
+fun GridNotesSection(
+    title: String,
+    dateLabel: String,
+    lines: Int,
+    modifier: Modifier = Modifier,
+) {
+    SectionContainer(
+        title = title,
+        subtitle = "A flexible square-grid page for open writing and structured sketching.",
+        modifier = modifier,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = dateLabel,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.plan92Palette.bodyColor,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(1.dp)
+                    .background(MaterialTheme.plan92Palette.lineColor),
+            )
+        }
+        GridWritingSurface(
+            key = title,
+            lines = lines,
+        )
+    }
+}
+
+@Composable
+fun DotGridWritingSection(
+    title: String,
+    dateLabel: String,
+    lines: Int,
+    modifier: Modifier = Modifier,
+) {
+    SectionContainer(
+        title = title,
+        subtitle = "A dot-grid canvas for bullet journaling, notes, and diagrams.",
+        modifier = modifier,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = dateLabel,
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.plan92Palette.bodyColor,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(1.dp)
+                    .background(MaterialTheme.plan92Palette.lineColor),
+            )
+        }
+        DotGridWritingSurface(
+            key = title,
+            lines = lines,
+        )
+    }
+}
+
+@Composable
 fun CategoryGridSection(
     title: String,
     categories: List<String>,
@@ -653,6 +725,114 @@ private fun LinedWritingSurface(
                     innerTextField()
                 }
             },
+        )
+    }
+}
+
+@Composable
+private fun GridWritingSurface(
+    key: String,
+    lines: Int,
+) {
+    var text by rememberSaveable(key) { mutableStateOf("") }
+    val height = (lines * 22).dp
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(height)
+            .clip(RoundedCornerShape(14.dp))
+            .background(MaterialTheme.plan92Palette.fieldSurface)
+            .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
+            .padding(10.dp),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,
+        ) {
+            repeat(lines) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.55f)),
+                )
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            repeat(10) {
+                Box(
+                    modifier = Modifier
+                        .width(1.dp)
+                        .fillMaxSize()
+                        .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.35f)),
+                )
+            }
+        }
+        BasicTextField(
+            value = text,
+            onValueChange = { text = it },
+            textStyle = TextStyle(
+                color = MaterialTheme.plan92Palette.titleColor,
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                lineHeight = 20.sp,
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        )
+    }
+}
+
+@Composable
+private fun DotGridWritingSurface(
+    key: String,
+    lines: Int,
+) {
+    var text by rememberSaveable(key) { mutableStateOf("") }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height((lines * 22).dp)
+            .clip(RoundedCornerShape(14.dp))
+            .background(MaterialTheme.plan92Palette.fieldSurface)
+            .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
+            .padding(10.dp),
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            repeat(lines) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    repeat(12) {
+                        Box(
+                            modifier = Modifier
+                                .width(3.dp)
+                                .height(3.dp)
+                                .clip(RoundedCornerShape(999.dp))
+                                .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.75f)),
+                        )
+                    }
+                }
+            }
+        }
+        BasicTextField(
+            value = text,
+            onValueChange = { text = it },
+            textStyle = TextStyle(
+                color = MaterialTheme.plan92Palette.titleColor,
+                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                lineHeight = 20.sp,
+            ),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
         )
     }
 }

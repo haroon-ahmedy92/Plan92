@@ -61,12 +61,8 @@ import androidx.compose.ui.unit.dp
 import com.example.plan92.data.mock.MockPlannerRepository
 import com.example.plan92.data.mock.OwnedPlanner
 import com.example.plan92.data.mock.PlannerTemplate
-import com.example.plan92.ui.theme.BurntOrange
-import com.example.plan92.ui.theme.DividerSoft
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.Paper
 import com.example.plan92.ui.theme.Plan92Theme
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun PlannersHomeScreen(
@@ -80,7 +76,7 @@ fun PlannersHomeScreen(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite,
+        color = MaterialTheme.plan92Palette.appBackground,
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
@@ -120,7 +116,7 @@ fun PlannersHomeScreen(
                         text = "Choose any template to add it here and start planning.",
                         modifier = Modifier.padding(top = 4.dp),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFF7D7886),
+                        color = MaterialTheme.plan92Palette.bodyColor,
                     )
                 }
 
@@ -143,6 +139,7 @@ private fun CreatePlannerTile(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
+    val lineColor = MaterialTheme.plan92Palette.lineColor
     Box(
         modifier = modifier
             .height(286.dp)
@@ -153,7 +150,7 @@ private fun CreatePlannerTile(
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             drawRoundRect(
-                color = Color(0xFFC8C2CC),
+                color = lineColor,
                 cornerRadius = CornerRadius(24.dp.toPx(), 24.dp.toPx()),
                 style = Stroke(
                     width = 2.4.dp.toPx(),
@@ -171,19 +168,19 @@ private fun CreatePlannerTile(
                 modifier = Modifier
                     .size(42.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.White.copy(alpha = 0.7f)),
+                    .background(MaterialTheme.plan92Palette.fieldSurface),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
                     contentDescription = null,
-                    tint = Color(0xFF7D7886),
+                    tint = MaterialTheme.plan92Palette.bodyColor,
                 )
             }
             Text(
                 text = "Create New",
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color(0xFF7D7886),
+                color = MaterialTheme.plan92Palette.bodyColor,
                 textAlign = TextAlign.Center,
             )
         }
@@ -203,7 +200,7 @@ private fun PlannerPageCard(
             .height(286.dp)
             .clickable(onClick = onOpenPlanner),
         shape = RoundedCornerShape(18.dp),
-        color = Color.White,
+        color = MaterialTheme.plan92Palette.pageSurface,
         shadowElevation = 3.dp,
     ) {
         Box(
@@ -214,7 +211,7 @@ private fun PlannerPageCard(
                     .fillMaxSize()
                     .padding(10.dp)
                     .clip(RoundedCornerShape(14.dp))
-                    .background(Paper),
+                    .background(MaterialTheme.plan92Palette.plannerPaper),
             ) {
                 Column(
                     modifier = Modifier
@@ -227,7 +224,7 @@ private fun PlannerPageCard(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(1.dp)
-                                .background(Color(0xFFD2CFD8)),
+                                .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.65f)),
                         )
                     }
                 }
@@ -246,7 +243,7 @@ private fun PlannerPageCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.labelLarge,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                     fontWeight = FontWeight.SemiBold,
                 )
             }
@@ -290,7 +287,7 @@ private fun ReadyToUseRow(
         modifier = Modifier.fillMaxWidth(),
         onClick = onToggle,
         shape = RoundedCornerShape(14.dp),
-        color = Color.White,
+        color = MaterialTheme.plan92Palette.pageSurface,
         shadowElevation = 2.dp,
     ) {
         Row(
@@ -303,12 +300,12 @@ private fun ReadyToUseRow(
             Text(
                 text = "Ready to Use",
                 style = MaterialTheme.typography.headlineMedium,
-                color = InkBlack,
+                color = MaterialTheme.plan92Palette.titleColor,
             )
             Icon(
                 imageVector = if (expanded) Icons.Outlined.ExpandMore else Icons.Outlined.KeyboardArrowRight,
                 contentDescription = null,
-                tint = InkBlack,
+                tint = MaterialTheme.plan92Palette.titleColor,
             )
         }
     }
@@ -325,7 +322,7 @@ private fun ReadyTemplateCard(
             .height(188.dp)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(18.dp),
-        color = Color.White,
+        color = MaterialTheme.plan92Palette.pageSurface,
         shadowElevation = 2.dp,
     ) {
         Column(
@@ -373,7 +370,7 @@ private fun ReadyTemplateCard(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.titleMedium,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
@@ -381,7 +378,7 @@ private fun ReadyTemplateCard(
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color(0xFF787282),
+                    color = MaterialTheme.plan92Palette.bodyColor,
                 )
             }
         }
@@ -398,7 +395,7 @@ private fun ActionMiniButton(
         modifier = modifier,
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
-        color = Color.White.copy(alpha = 0.95f),
+        color = MaterialTheme.plan92Palette.fieldSurface,
         shadowElevation = 4.dp,
     ) {
         Box(
@@ -408,7 +405,7 @@ private fun ActionMiniButton(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = Color(0xFF66616F),
+                tint = MaterialTheme.plan92Palette.bodyColor,
                 modifier = Modifier.size(18.dp),
             )
         }
@@ -425,7 +422,7 @@ private fun PlannerPageMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
         modifier = Modifier
-            .background(Color.White, RoundedCornerShape(20.dp))
+            .background(MaterialTheme.plan92Palette.pageSurface, RoundedCornerShape(20.dp))
             .width(260.dp),
     ) {
         val items = listOf(
@@ -445,11 +442,11 @@ private fun PlannerPageMenu(
                     Text(
                         text = label,
                         style = MaterialTheme.typography.titleMedium,
-                        color = InkBlack,
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                 },
                 leadingIcon = {
-                    Icon(icon, contentDescription = null, tint = InkBlack)
+                    Icon(icon, contentDescription = null, tint = MaterialTheme.plan92Palette.titleColor)
                 },
                 onClick = action,
             )
@@ -459,12 +456,12 @@ private fun PlannerPageMenu(
                 Text(
                     text = "Delete",
                     style = MaterialTheme.typography.titleMedium,
-                    color = BurntOrange,
+                    color = MaterialTheme.plan92Palette.primaryAccent,
                     fontWeight = FontWeight.SemiBold,
                 )
             },
             leadingIcon = {
-                Icon(Icons.Outlined.DeleteOutline, contentDescription = null, tint = BurntOrange)
+                Icon(Icons.Outlined.DeleteOutline, contentDescription = null, tint = MaterialTheme.plan92Palette.primaryAccent)
             },
             onClick = onDismiss,
         )

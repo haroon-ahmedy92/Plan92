@@ -13,6 +13,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,12 +22,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.plan92.data.mock.MockPlannerRepository
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun SearchScreen(
@@ -39,7 +38,7 @@ fun SearchScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite.copy(alpha = 0.97f),
+        color = MaterialTheme.plan92Palette.appBackground,
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
     ) {
         LazyColumn(
@@ -63,6 +62,18 @@ fun SearchScreen(
                             contentDescription = null,
                         )
                     },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.plan92Palette.pageSurface,
+                        unfocusedContainerColor = MaterialTheme.plan92Palette.pageSurface,
+                        focusedBorderColor = MaterialTheme.plan92Palette.primaryAccent,
+                        unfocusedBorderColor = MaterialTheme.plan92Palette.lineColor,
+                        focusedTextColor = MaterialTheme.plan92Palette.titleColor,
+                        unfocusedTextColor = MaterialTheme.plan92Palette.titleColor,
+                        focusedLeadingIconColor = MaterialTheme.plan92Palette.primaryAccent,
+                        unfocusedLeadingIconColor = MaterialTheme.plan92Palette.bodyColor,
+                        focusedPlaceholderColor = MaterialTheme.plan92Palette.bodyColor,
+                        unfocusedPlaceholderColor = MaterialTheme.plan92Palette.bodyColor,
+                    ),
                 )
             }
 
@@ -73,12 +84,12 @@ fun SearchScreen(
                     Text(
                         text = "Popular Tags",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = Color(0xFF171321),
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                     Text(
                         text = "Fast-jump into the most common planner searches from the screenshots.",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFF5B5568),
+                        color = MaterialTheme.plan92Palette.bodyColor,
                     )
                 }
             }
@@ -86,7 +97,7 @@ fun SearchScreen(
             items(filteredTags) { tag ->
                 Surface(
                     shape = RoundedCornerShape(18.dp),
-                    color = Color.White,
+                    color = MaterialTheme.plan92Palette.pageSurface,
                     tonalElevation = 2.dp,
                 ) {
                     RowItem(tag = tag)
@@ -107,12 +118,12 @@ private fun RowItem(tag: String) {
         Icon(
             imageVector = Icons.Outlined.Search,
             contentDescription = null,
-            tint = CoralAccent,
+            tint = MaterialTheme.plan92Palette.primaryAccent,
         )
         Text(
             text = tag,
             style = MaterialTheme.typography.bodyLarge,
-            color = Color(0xFF171321),
+            color = MaterialTheme.plan92Palette.titleColor,
         )
     }
 }
@@ -122,4 +133,3 @@ private fun RowItem(tag: String) {
 private fun SearchPreview() {
     SearchScreen(popularTags = MockPlannerRepository.popularTags)
 }
-

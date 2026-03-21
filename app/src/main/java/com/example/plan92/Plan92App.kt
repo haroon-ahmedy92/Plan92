@@ -144,15 +144,13 @@ fun Plan92App() {
             composable(AppRoute.PageStyle) {
                 PageStyleScreen(
                     onBack = { navController.popBackStack() },
-                    onBeginBlank = {
-                        createPlanner(MockPlannerRepository.blankTemplate().id)
-                        navController.navigate(AppRoute.plannerDetail(MockPlannerRepository.blankTemplate().id)) {
-                            popUpTo(AppRoute.PageStyle) { inclusive = true }
-                        }
-                    },
-                    onBeginLined = {
-                        createPlanner("notes_page")
-                        navController.navigate(AppRoute.plannerDetail("notes_page")) {
+                    onBeginPlanner = { result ->
+                        createPlanner(
+                            templateId = result.templateId,
+                            customTitle = result.title,
+                            customTagline = result.tagline,
+                        )
+                        navController.navigate(AppRoute.plannerDetail(result.templateId)) {
                             popUpTo(AppRoute.PageStyle) { inclusive = true }
                         }
                     },

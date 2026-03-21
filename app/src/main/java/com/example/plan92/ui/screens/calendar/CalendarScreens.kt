@@ -47,13 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.plan92.ui.theme.ApricotGlow
-import com.example.plan92.ui.theme.AzureDepth
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.Paper
 import com.example.plan92.ui.theme.Plan92Theme
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun CalendarScreen(
@@ -76,7 +71,7 @@ fun CalendarScreen(
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = ShellWhite.copy(alpha = 0.97f),
+            color = MaterialTheme.plan92Palette.appBackground,
             shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
         ) {
             Column(
@@ -93,14 +88,14 @@ fun CalendarScreen(
                         Surface(
                             modifier = Modifier.weight(1f),
                             shape = RoundedCornerShape(18.dp),
-                            color = if (index == 3) CoralAccent else Color.White,
+                            color = if (index == 3) MaterialTheme.plan92Palette.chipSelected else MaterialTheme.plan92Palette.pageSurface,
                             tonalElevation = 2.dp,
                         ) {
                             Text(
                                 text = day,
                                 modifier = Modifier.padding(vertical = 10.dp),
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                                color = if (index == 3) InkBlack else Color(0xFF534D61),
+                                color = if (index == 3) MaterialTheme.plan92Palette.titleColor else MaterialTheme.plan92Palette.bodyColor,
                                 style = MaterialTheme.typography.labelLarge,
                             )
                         }
@@ -110,13 +105,13 @@ fun CalendarScreen(
                 Text(
                     text = "Today",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                 )
 
                 Surface(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(28.dp),
-                    color = Color.White,
+                    color = MaterialTheme.plan92Palette.pageSurface,
                 ) {
                     Column(
                         modifier = Modifier
@@ -131,7 +126,10 @@ fun CalendarScreen(
                                 .clip(RoundedCornerShape(28.dp))
                                 .background(
                                     brush = Brush.verticalGradient(
-                                        colors = listOf(CoralAccent.copy(alpha = 0.25f), ApricotGlow.copy(alpha = 0.12f)),
+                                        colors = listOf(
+                                            MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.22f),
+                                            MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.1f),
+                                        ),
                                     ),
                                 ),
                             contentAlignment = Alignment.Center,
@@ -139,19 +137,19 @@ fun CalendarScreen(
                             Icon(
                                 imageVector = Icons.Outlined.NotificationsActive,
                                 contentDescription = null,
-                                tint = CoralAccent,
+                                tint = MaterialTheme.plan92Palette.primaryAccent,
                                 modifier = Modifier.size(56.dp),
                             )
                         }
                         Text(
                             text = "Achieve More with Reminders!",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = InkBlack,
+                            color = MaterialTheme.plan92Palette.titleColor,
                         )
                         Text(
                             text = "Tap the add button to schedule planner reminders and manage your day efficiently.",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = InkBlack.copy(alpha = 0.68f),
+                            color = MaterialTheme.plan92Palette.bodyColor,
                         )
                     }
                 }
@@ -179,7 +177,7 @@ fun ReminderOnboardingScreen(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite,
+        color = MaterialTheme.plan92Palette.appBackground,
     ) {
         Column(
             modifier = Modifier
@@ -206,7 +204,10 @@ fun ReminderOnboardingScreen(
                     .clip(RoundedCornerShape(30.dp))
                     .background(
                         brush = Brush.verticalGradient(
-                            colors = listOf(CoralAccent.copy(alpha = 0.18f), Color.White),
+                            colors = listOf(
+                                MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.18f),
+                                MaterialTheme.plan92Palette.pageSurface,
+                            ),
                         ),
                     ),
                 contentAlignment = Alignment.Center,
@@ -214,7 +215,7 @@ fun ReminderOnboardingScreen(
                 Icon(
                     imageVector = Icons.Outlined.Alarm,
                     contentDescription = null,
-                    tint = CoralAccent,
+                    tint = MaterialTheme.plan92Palette.primaryAccent,
                     modifier = Modifier.size(86.dp),
                 )
             }
@@ -224,13 +225,13 @@ fun ReminderOnboardingScreen(
             Text(
                 text = "Stay on Track Effortlessly",
                 style = MaterialTheme.typography.headlineLarge,
-                color = InkBlack,
+                color = MaterialTheme.plan92Palette.titleColor,
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "We'll remind you at the right time, so you don't have to remember everything.",
                 style = MaterialTheme.typography.bodyLarge,
-                color = InkBlack.copy(alpha = 0.68f),
+                color = MaterialTheme.plan92Palette.bodyColor,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -252,12 +253,12 @@ fun ReminderOnboardingScreen(
                     Icon(
                         imageVector = Icons.Outlined.CheckCircle,
                         contentDescription = null,
-                        tint = CoralAccent,
+                        tint = MaterialTheme.plan92Palette.primaryAccent,
                     )
                     Text(
                         text = item,
                         style = MaterialTheme.typography.titleMedium,
-                        color = InkBlack,
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                 }
             }
@@ -267,7 +268,7 @@ fun ReminderOnboardingScreen(
             Text(
                 text = "Maybe later",
                 style = MaterialTheme.typography.bodyMedium,
-                color = InkBlack.copy(alpha = 0.52f),
+                color = MaterialTheme.plan92Palette.bodyColor.copy(alpha = 0.82f),
             )
             Spacer(modifier = Modifier.height(14.dp))
             Button(
@@ -290,7 +291,7 @@ fun ReminderScheduleScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite,
+        color = MaterialTheme.plan92Palette.appBackground,
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -316,7 +317,7 @@ fun ReminderScheduleScreen(
                         Text(
                             text = "Schedule Reminders",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = InkBlack,
+                            color = MaterialTheme.plan92Palette.titleColor,
                         )
                     }
                 }
@@ -326,14 +327,14 @@ fun ReminderScheduleScreen(
                 Text(
                     text = "Most people start with one daily reminder in the morning.",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = InkBlack.copy(alpha = 0.66f),
+                    color = MaterialTheme.plan92Palette.bodyColor,
                 )
             }
 
             item {
                 Surface(
                     shape = RoundedCornerShape(22.dp),
-                    color = Color.White,
+                    color = MaterialTheme.plan92Palette.pageSurface,
                 ) {
                     Row(
                         modifier = Modifier
@@ -350,19 +351,19 @@ fun ReminderScheduleScreen(
                                 modifier = Modifier
                                     .size(38.dp)
                                     .clip(CircleShape)
-                                    .background(CoralAccent.copy(alpha = 0.14f)),
+                                    .background(MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.14f)),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Icon(
                                     imageVector = Icons.Outlined.NotificationsActive,
                                     contentDescription = null,
-                                    tint = CoralAccent,
+                                    tint = MaterialTheme.plan92Palette.primaryAccent,
                                 )
                             }
                             Text(
                                 text = "Get Reminders",
                                 style = MaterialTheme.typography.titleMedium,
-                                color = InkBlack,
+                                color = MaterialTheme.plan92Palette.titleColor,
                             )
                         }
                         Switch(
@@ -380,12 +381,12 @@ fun ReminderScheduleScreen(
                     Text(
                         text = "Reminder Frequency",
                         style = MaterialTheme.typography.titleLarge,
-                        color = InkBlack,
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                     listOf("Daily", "Three times a week", "Once a week", "Manually selected days").forEach { option ->
                         Surface(
                             shape = RoundedCornerShape(20.dp),
-                            color = Color.White,
+                            color = MaterialTheme.plan92Palette.pageSurface,
                         ) {
                             Row(
                                 modifier = Modifier
@@ -400,7 +401,7 @@ fun ReminderScheduleScreen(
                                 Text(
                                     text = option,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = InkBlack,
+                                    color = MaterialTheme.plan92Palette.titleColor,
                                 )
                             }
                         }
@@ -415,7 +416,7 @@ fun ReminderScheduleScreen(
                     Text(
                         text = "Choose your reminder time",
                         style = MaterialTheme.typography.titleLarge,
-                        color = InkBlack,
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -425,7 +426,7 @@ fun ReminderScheduleScreen(
                             Surface(
                                 modifier = Modifier.weight(1f),
                                 shape = RoundedCornerShape(24.dp),
-                                color = Color.White,
+                                color = MaterialTheme.plan92Palette.pageSurface,
                             ) {
                                 Column(
                                     modifier = Modifier.padding(vertical = 12.dp),
@@ -441,9 +442,9 @@ fun ReminderScheduleScreen(
                                                 MaterialTheme.typography.bodyLarge
                                             },
                                             color = if ((columnIndex != 2 && index == 1) || (columnIndex == 2 && index == 0)) {
-                                                InkBlack
+                                                MaterialTheme.plan92Palette.titleColor
                                             } else {
-                                                InkBlack.copy(alpha = 0.35f)
+                                                MaterialTheme.plan92Palette.bodyColor.copy(alpha = 0.6f)
                                             },
                                         )
                                     }
@@ -458,7 +459,7 @@ fun ReminderScheduleScreen(
                 Text(
                     text = "We'll only send the reminders you choose.",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = InkBlack.copy(alpha = 0.54f),
+                    color = MaterialTheme.plan92Palette.bodyColor.copy(alpha = 0.84f),
                 )
             }
 
@@ -481,4 +482,3 @@ private fun CalendarPreview() {
         CalendarScreen(onAddReminder = {})
     }
 }
-

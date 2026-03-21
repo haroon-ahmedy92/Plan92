@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,6 +39,57 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.plan92.ui.theme.plan92Palette
 
+private val DailyCardShape = RoundedCornerShape(PlannerSheetMetrics.SectionRadius)
+private val DailyCardBorder
+    @Composable get() = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.72f))
+
+private enum class DailyCardTone {
+    Primary,
+    Secondary,
+}
+
+@Composable
+private fun DailyCardFrame(
+    title: String,
+    modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
+    titleColor: Color = MaterialTheme.plan92Palette.titleColor,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val palette = MaterialTheme.plan92Palette
+    val background = when (tone) {
+        DailyCardTone.Primary -> palette.fieldSurface
+        DailyCardTone.Secondary -> palette.sectionSurface.copy(alpha = 0.78f)
+    }
+    val borderColor = when (tone) {
+        DailyCardTone.Primary -> palette.lineColor.copy(alpha = 0.72f)
+        DailyCardTone.Secondary -> palette.lineColor.copy(alpha = 0.5f)
+    }
+
+    Surface(
+        modifier = modifier,
+        shape = DailyCardShape,
+        color = background,
+        border = androidx.compose.foundation.BorderStroke(1.dp, borderColor),
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                horizontal = PlannerSheetMetrics.SectionPaddingHorizontal,
+                vertical = PlannerSheetMetrics.SectionPaddingVertical,
+            ),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 10.5.sp, lineHeight = 12.sp),
+                color = titleColor,
+                fontWeight = FontWeight.SemiBold,
+            )
+            content()
+        }
+    }
+}
+
 @Composable
 fun DailyClassicBoardSection(
     title: String,
@@ -53,45 +104,55 @@ fun DailyClassicBoardSection(
             rightLabel = "Weather",
         )
         FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             listOf("Sunny", "Cloudy", "Rain", "Wind", "Snow", "Hot").forEach { weather ->
                 SelectionBubble(label = weather)
             }
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(
                 title = "3 Priorities",
                 lines = 3,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(0.84f),
             )
             DailyScheduleCard(
                 title = "Plans & Schedules",
                 times = listOf("6 AM", "7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM", "7 PM", "8 PM"),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.16f),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(
                 title = "To Do List",
                 lines = 7,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(0.92f),
             )
             DailyNotesCard(
                 title = "Things to Get Done",
                 lines = 7,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.08f),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            MiniTextCard("Money In", modifier = Modifier.weight(1f))
-            MiniTextCard("Money Out", modifier = Modifier.weight(1f))
-            MiniTextCard("Comment", modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            Column(
+                modifier = Modifier.weight(0.78f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
+            ) {
+                MiniTextCard("Money In", tone = DailyCardTone.Secondary)
+                MiniTextCard("Money Out", tone = DailyCardTone.Secondary)
+            }
+            DailyNotesCard(
+                title = "Comment",
+                lines = 3,
+                modifier = Modifier.weight(1.22f),
+                tone = DailyCardTone.Secondary,
+            )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            WaterTrackerBar(title = "Water", modifier = Modifier.weight(1f))
-            MoodTrackerBar(title = "Mood", modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            WaterTrackerBar(title = "Water", modifier = Modifier.weight(1.08f), tone = DailyCardTone.Secondary)
+            MoodTrackerBar(title = "Mood", modifier = Modifier.weight(0.92f), tone = DailyCardTone.Secondary)
         }
     }
 }
@@ -103,30 +164,30 @@ fun DailyAgendaBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             NumberedPriorityCard(
                 title = "Top 3 Priorities",
                 count = 3,
-                modifier = Modifier.weight(0.95f),
+                modifier = Modifier.weight(0.88f),
             )
             DailyScheduleCard(
                 title = "Agenda",
                 times = listOf("Morning", "Midday", "Afternoon", "Evening"),
-                modifier = Modifier.weight(1.05f),
+                modifier = Modifier.weight(1.12f),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(
                 title = "To-Do List",
                 lines = 10,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.02f),
             )
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(0.98f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
-                DailyNotesCard(title = "Meals", lines = 4)
-                WaterTrackerBar(title = "Water", count = 6)
+                DailyNotesCard(title = "Meals", lines = 4, tone = DailyCardTone.Secondary)
+                WaterTrackerBar(title = "Water", count = 6, tone = DailyCardTone.Secondary)
             }
         }
     }
@@ -139,30 +200,30 @@ fun ProductiveDayBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "No.1 Goal For The Day")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             NumberedPriorityCard(
                 title = "3 Main Tasks",
                 count = 3,
-                modifier = Modifier.weight(0.85f),
+                modifier = Modifier.weight(0.82f),
             )
             DailyScheduleCard(
                 title = "Scheduled Appointments/Calls",
                 times = listOf("10 AM", "11 AM", "2 PM", "5 PM", "7 PM"),
-                modifier = Modifier.weight(1.15f),
+                modifier = Modifier.weight(1.18f),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            PomodoroTrackerCard(title = "Time Tracker", modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Notes", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            PomodoroTrackerCard(title = "Time Tracker", modifier = Modifier.weight(0.84f), tone = DailyCardTone.Secondary)
+            DailyNotesCard(title = "Notes", lines = 5, modifier = Modifier.weight(1.16f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyNotesCard(title = "Must Do", lines = 5, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Can Wait", lines = 5, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Tomorrow", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyNotesCard(title = "Must Do", lines = 5, modifier = Modifier.weight(1.05f))
+            DailyNotesCard(title = "Can Wait", lines = 4, modifier = Modifier.weight(0.9f), tone = DailyCardTone.Secondary)
+            DailyNotesCard(title = "Tomorrow", lines = 4, modifier = Modifier.weight(1.05f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            PomodoroTrackerCard(title = "Time Tracker", modifier = Modifier.weight(1f))
-            PomodoroTrackerCard(title = "Time Tracker", modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            PomodoroTrackerCard(title = "Focus Sprint", modifier = Modifier.weight(0.96f), tone = DailyCardTone.Secondary)
+            PomodoroTrackerCard(title = "Reset", modifier = Modifier.weight(1.04f), tone = DailyCardTone.Secondary)
         }
     }
 }
@@ -174,20 +235,20 @@ fun DailyTaskBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(
                 title = "Task List",
                 lines = 12,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.04f),
             )
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(0.96f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 DailyNotesCard(title = "Urgent", lines = 4)
-                DailyChecklistCard(title = "Top Priorities", lines = 5)
-                DailyNotesCard(title = "Expenses", lines = 4)
-                DailyNotesCard(title = "Notes", lines = 4)
+                DailyChecklistCard(title = "Top Priorities", lines = 4, tone = DailyCardTone.Secondary)
+                DailyNotesCard(title = "Expenses", lines = 3, tone = DailyCardTone.Secondary)
+                DailyNotesCard(title = "Notes", lines = 4, tone = DailyCardTone.Secondary)
             }
         }
     }
@@ -200,14 +261,14 @@ fun DailyWorkBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "S M T W T F S")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Top Priorities", lines = 5, modifier = Modifier.weight(1f))
-            DailyChecklistCard(title = "To-Do List", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Top Priorities", lines = 4, modifier = Modifier.weight(0.9f))
+            DailyChecklistCard(title = "To-Do List", lines = 5, modifier = Modifier.weight(1.1f))
         }
-        DailyNotesCard(title = "Meetings & Deadlines", lines = 8)
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyNotesCard(title = "Reminders For Me", lines = 4, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Upcoming Projects", lines = 4, modifier = Modifier.weight(1f))
+        DailyNotesCard(title = "Meetings & Deadlines", lines = 9)
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyNotesCard(title = "Reminders For Me", lines = 3, modifier = Modifier.weight(0.88f), tone = DailyCardTone.Secondary)
+            DailyNotesCard(title = "Upcoming Projects", lines = 4, modifier = Modifier.weight(1.12f), tone = DailyCardTone.Secondary)
         }
     }
 }
@@ -219,16 +280,16 @@ fun FullDayHourlyBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyScheduleCard(
                 title = "AM",
                 times = listOf("5 AM", "6 AM", "7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM"),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.02f),
             )
             DailyScheduleCard(
                 title = "PM",
                 times = listOf("5 PM", "6 PM", "7 PM", "8 PM", "9 PM", "10 PM", "11 PM", "12 AM", "1 AM", "2 AM", "3 AM", "4 AM"),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(0.98f),
             )
         }
     }
@@ -242,19 +303,19 @@ fun DailyGoalBoardSection(
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
         SingleHeaderField(label = "Today's Goal")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(title = "Goal Breakdown", lines = 5, modifier = Modifier.weight(1f))
-            DailyChecklistCard(title = "Goal Breakdown", lines = 5, modifier = Modifier.weight(1f))
+            DailyChecklistCard(title = "Goal Breakdown", lines = 5, modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "To-Do List", lines = 8, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "To-Do List", lines = 8, modifier = Modifier.weight(0.94f))
             DailyScheduleCard(
                 title = "Schedule",
                 times = listOf("6:00 AM", "7:30 AM", "9:00 AM", "10:30 AM", "1:00 PM", "4:30 PM", "6:00 PM", "9:00 PM"),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.06f),
             )
         }
-        DailyNotesCard(title = "Notes", lines = 5)
+        DailyNotesCard(title = "Notes", lines = 4, tone = DailyCardTone.Secondary)
     }
 }
 
@@ -264,18 +325,18 @@ fun RoutineBoardSection(
     modifier: Modifier = Modifier,
 ) {
     SectionContainer(title = title, modifier = modifier) {
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             Column(
-                modifier = Modifier.weight(0.78f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(0.84f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 SingleHeaderField(label = "Best")
                 DailyChecklistCard(title = "Top Priorities", lines = 5)
-                DailyChecklistCard(title = "Other To-Dos", lines = 5)
+                DailyChecklistCard(title = "Other To-Dos", lines = 5, tone = DailyCardTone.Secondary)
             }
             Column(
-                modifier = Modifier.weight(1.22f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(1.16f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 RoutineTimeCard(title = "Good Morning", accent = MaterialTheme.plan92Palette.warmAccent)
                 RoutineTimeCard(title = "Good Afternoon", accent = MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.7f))
@@ -292,17 +353,17 @@ fun WorkTasksBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Must Do", lines = 5, modifier = Modifier.weight(1f))
-            DailyChecklistCard(title = "To Do (If Time)", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Must Do", lines = 5, modifier = Modifier.weight(1.08f))
+            DailyChecklistCard(title = "To Do (If Time)", lines = 4, modifier = Modifier.weight(0.92f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Projects", lines = 5, modifier = Modifier.weight(1f))
-            DailyChecklistCard(title = "Meetings", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Projects", lines = 5, modifier = Modifier.weight(1.06f))
+            DailyChecklistCard(title = "Meetings", lines = 4, modifier = Modifier.weight(0.94f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Morning Tasks", lines = 5, modifier = Modifier.weight(1f))
-            DailyChecklistCard(title = "Afternoon Tasks", lines = 5, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Morning Tasks", lines = 4, modifier = Modifier.weight(0.96f), tone = DailyCardTone.Secondary)
+            DailyChecklistCard(title = "Afternoon Tasks", lines = 4, modifier = Modifier.weight(1.04f), tone = DailyCardTone.Secondary)
         }
     }
 }
@@ -315,13 +376,13 @@ fun TaskManagementBoardSection(
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Most Important Tasks", rightLabel = "Date")
         QuadrantChecklist(title = "Do First", lines = 6, modifier = Modifier.fillMaxWidth())
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             QuadrantChecklist(title = "Do First", lines = 6, modifier = Modifier.weight(1f))
             QuadrantChecklist(title = "Plan", lines = 6, modifier = Modifier.weight(1f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            QuadrantChecklist(title = "Delegate", lines = 6, modifier = Modifier.weight(1f))
-            QuadrantChecklist(title = "Eliminate", lines = 6, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            QuadrantChecklist(title = "Delegate", lines = 6, modifier = Modifier.weight(0.94f))
+            QuadrantChecklist(title = "Eliminate", lines = 6, modifier = Modifier.weight(1.06f))
         }
     }
 }
@@ -333,27 +394,27 @@ fun AdhdDailyBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "M T W T F S S")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyNotesCard(title = "Today's Focus", lines = 4, modifier = Modifier.weight(1f))
-            MoodAndReminderCard(modifier = Modifier.weight(1f))
+            MoodAndReminderCard(modifier = Modifier.weight(0.96f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyNotesCard(title = "Do Immediately", lines = 4, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Do Later", lines = 4, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Delegate", lines = 4, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyNotesCard(title = "Do Immediately", lines = 4, modifier = Modifier.weight(1.04f))
+            DailyNotesCard(title = "Do Later", lines = 4, modifier = Modifier.weight(0.96f), tone = DailyCardTone.Secondary)
+            DailyNotesCard(title = "Delegate", lines = 4, modifier = Modifier.weight(0.96f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Morning Routine", lines = 4, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Morning Routine", lines = 4, modifier = Modifier.weight(0.92f), tone = DailyCardTone.Secondary)
             DailyScheduleCard(
                 title = "Time",
                 times = listOf("6:00 AM", "7:30 AM", "9:00 AM", "10:30 AM", "12:30 PM", "2:00 PM", "3:30 PM", "5:00 PM", "7:00 PM", "9:00 PM"),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1.18f),
             )
-            DailyChecklistCard(title = "To-Do", lines = 9, modifier = Modifier.weight(1f))
+            DailyChecklistCard(title = "To-Do", lines = 8, modifier = Modifier.weight(0.9f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "Evening Routine", lines = 4, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Brain Dump", lines = 6, modifier = Modifier.weight(2f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "Evening Routine", lines = 4, modifier = Modifier.weight(0.86f), tone = DailyCardTone.Secondary)
+            DailyNotesCard(title = "Brain Dump", lines = 6, modifier = Modifier.weight(1.14f))
         }
     }
 }
@@ -364,7 +425,7 @@ fun ExerciseDailyBoardSection(
     modifier: Modifier = Modifier,
 ) {
     SectionContainer(title = title, modifier = modifier) {
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             MetricFieldGroup(
                 title = "Food",
                 labels = listOf("1", "2", "3", "4", "5"),
@@ -381,24 +442,24 @@ fun ExerciseDailyBoardSection(
                 modifier = Modifier.weight(0.8f),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             MiniTrackerCard(title = "Hydration", entries = 6, modifier = Modifier.weight(1f))
             MiniTrackerCard(title = "Sleep", entries = 7, modifier = Modifier.weight(1f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyNotesCard(title = "Today's Goal", lines = 4, modifier = Modifier.weight(1f))
             FocusSelectorCard(modifier = Modifier.weight(1f))
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             TrackerTableCard(
                 title = "Exercise Log",
                 columns = listOf("Exercise", "Sets", "Reps", "Weight", "Time", "Distance"),
             )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            MiniTextCard("Daily Steps", modifier = Modifier.weight(1f))
-            MiniTextCard("Distance", modifier = Modifier.weight(1f))
-            MiniTextCard("Calories", modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            MiniTextCard("Daily Steps", modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
+            MiniTextCard("Distance", modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
+            MiniTextCard("Calories", modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
         }
     }
 }
@@ -410,19 +471,19 @@ fun SelfCareDailyBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "M T W T F S S")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyChecklistCard(title = "Checklist", lines = 8, modifier = Modifier.weight(1.4f))
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 ChoiceGroupCard(title = "Workout", options = listOf("Cardio", "Weight", "Stretch", "Rest Day", "Yoga", "Other"))
                 MiniTrackerCard(title = "Hours Of Sleep", entries = 7)
-                WaterTrackerBar(title = "Water Balance", count = 7)
-                MoodTrackerBar(title = "Mood", count = 5)
+                WaterTrackerBar(title = "Water Balance", count = 7, tone = DailyCardTone.Secondary)
+                MoodTrackerBar(title = "Mood", count = 5, tone = DailyCardTone.Secondary)
             }
         }
-        DailyNotesCard(title = "Things That Make Me Happy Today...", lines = 4)
+        DailyNotesCard(title = "Things That Make Me Happy Today...", lines = 4, tone = DailyCardTone.Secondary)
     }
 }
 
@@ -433,17 +494,17 @@ fun DailyReflectionBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyNotesCard(title = "Thing I'm Grateful For", lines = 3, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "Today's Affirmation", lines = 3, modifier = Modifier.weight(1f))
+            DailyNotesCard(title = "Today's Affirmation", lines = 3, modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             DailyNotesCard(title = "What I Achieved Today", lines = 4, modifier = Modifier.weight(1f))
-            DailyNotesCard(title = "What I Couldn't Achieve Today", lines = 4, modifier = Modifier.weight(1f))
+            DailyNotesCard(title = "What I Couldn't Achieve Today", lines = 4, modifier = Modifier.weight(1f), tone = DailyCardTone.Secondary)
         }
         DailyNotesCard(title = "Today Review", lines = 5)
-        DailyNotesCard(title = "What I'm Looking Forward To Tomorrow", lines = 4)
-        DailyChecklistCard(title = "Tomorrow Plan & To Do List", lines = 6)
+        DailyNotesCard(title = "What I'm Looking Forward To Tomorrow", lines = 4, tone = DailyCardTone.Secondary)
+        DailyChecklistCard(title = "Tomorrow Plan & To Do List", lines = 6, tone = DailyCardTone.Secondary)
     }
 }
 
@@ -492,22 +553,22 @@ fun DailyDevotionalBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "M T W T F S S", rightLabel = "")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 DailyChecklistCard(title = "Prayer List", lines = 8)
-                DailyNotesCard(title = "Answered Prayers", lines = 5)
-                DailyNotesCard(title = "Notes", lines = 4)
+                DailyNotesCard(title = "Answered Prayers", lines = 5, tone = DailyCardTone.Secondary)
+                DailyNotesCard(title = "Notes", lines = 4, tone = DailyCardTone.Secondary)
             }
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 DailyNotesCard(title = "Scripture", lines = 8)
-                DailyNotesCard(title = "Observation", lines = 5)
-                DailyNotesCard(title = "Application", lines = 5)
+                DailyNotesCard(title = "Observation", lines = 5, tone = DailyCardTone.Secondary)
+                DailyNotesCard(title = "Application", lines = 5, tone = DailyCardTone.Secondary)
             }
         }
     }
@@ -534,16 +595,16 @@ fun DailyBrainDumpBoardSection(
 ) {
     SectionContainer(title = title, modifier = modifier) {
         HeaderLineRow(leftLabel = "Date", rightLabel = "Time")
-        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            DailyChecklistCard(title = "To-Do List", lines = 14, modifier = Modifier.weight(1f))
+        Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
+            DailyChecklistCard(title = "To-Do List", lines = 14, modifier = Modifier.weight(1.02f))
             Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.weight(0.98f),
+                verticalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap),
             ) {
                 SingleLinePrompt(title = "Mood")
                 DailyChecklistCard(title = "Top Priorities", lines = 5)
-                DailyChecklistCard(title = "Big Goals", lines = 4)
-                DailyChecklistCard(title = "What Can Wait", lines = 4)
+                DailyChecklistCard(title = "Big Goals", lines = 4, tone = DailyCardTone.Secondary)
+                DailyChecklistCard(title = "What Can Wait", lines = 4, tone = DailyCardTone.Secondary)
                 SingleLinePrompt(title = "You've Got This!")
             }
         }
@@ -555,24 +616,12 @@ private fun ReflectionPromptCard(
     title: String,
     prompts: List<String>,
 ) {
-    Surface(
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+    DailyCardFrame(
+        title = title,
+        titleColor = MaterialTheme.plan92Palette.primaryAccent,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.primaryAccent,
-                fontWeight = FontWeight.Bold,
-            )
-            prompts.forEach { prompt ->
-                SingleLinePrompt(title = prompt)
-            }
+        prompts.forEach { prompt ->
+            SingleLinePrompt(title = prompt)
         }
     }
 }
@@ -583,17 +632,20 @@ private fun RoutineTimeCard(
     accent: Color,
 ) {
     Surface(
-        shape = RoundedCornerShape(14.dp),
+        shape = DailyCardShape,
         color = accent.copy(alpha = 0.14f),
         border = androidx.compose.foundation.BorderStroke(1.dp, accent.copy(alpha = 0.3f)),
     ) {
         Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(
+                horizontal = PlannerSheetMetrics.SectionPaddingHorizontal,
+                vertical = PlannerSheetMetrics.SectionPaddingVertical,
+            ),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 11.sp),
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.Bold,
             )
@@ -611,21 +663,24 @@ private fun MoodAndReminderCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
+        shape = DailyCardShape,
         color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        border = DailyCardBorder,
     ) {
         Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(
+                horizontal = PlannerSheetMetrics.SectionPaddingHorizontal,
+                vertical = PlannerSheetMetrics.SectionPaddingVertical,
+            ),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = "Self-Care Reminder",
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 11.sp),
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.Bold,
             )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 listOf("Sleep", "Water", "Food", "Walk", "Breathe", "Break").forEach { item ->
                     SelectionBubble(item)
                 }
@@ -640,21 +695,24 @@ private fun FocusSelectorCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
+        shape = DailyCardShape,
         color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        border = DailyCardBorder,
     ) {
         Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(
+                horizontal = PlannerSheetMetrics.SectionPaddingHorizontal,
+                vertical = PlannerSheetMetrics.SectionPaddingVertical,
+            ),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             Text(
                 text = "Exercise Focus",
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.labelLarge.copy(fontSize = 11.sp),
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.Bold,
             )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 listOf("Cardio", "Stretch", "Arms", "Legs", "Core", "Back", "Rest").forEach { focus ->
                     SelectionBubble(label = focus)
                 }
@@ -669,25 +727,12 @@ private fun MetricFieldGroup(
     labels: List<String>,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            labels.forEach { label ->
-                SingleLinePrompt(title = label)
-            }
+        labels.forEach { label ->
+            SingleLinePrompt(title = label)
         }
     }
 }
@@ -698,24 +743,12 @@ private fun MiniTrackerCard(
     entries: Int,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = DailyCardTone.Secondary,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            WaterTrackerBar(title = title, count = entries)
-        }
+        WaterTrackerBar(title = title, count = entries, tone = DailyCardTone.Secondary)
     }
 }
 
@@ -724,24 +757,12 @@ private fun ChoiceGroupCard(
     title: String,
     options: List<String>,
 ) {
-    Surface(
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+    DailyCardFrame(
+        title = title,
+        tone = DailyCardTone.Secondary,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                options.forEach { option -> SelectionBubble(label = option) }
-            }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            options.forEach { option -> SelectionBubble(label = option) }
         }
     }
 }
@@ -751,40 +772,25 @@ private fun TrackerTableCard(
     title: String,
     columns: List<String>,
 ) {
-    Surface(
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
-    ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                columns.forEach { column ->
-                    Text(
-                        text = column,
-                        modifier = Modifier.weight(1f),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.plan92Palette.bodyColor,
-                        textAlign = TextAlign.Center,
-                    )
-                }
+    DailyCardFrame(title = title) {
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            columns.forEach { column ->
+                Text(
+                    text = column,
+                    modifier = Modifier.weight(1f),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                    color = MaterialTheme.plan92Palette.bodyColor,
+                    textAlign = TextAlign.Center,
+                )
             }
-            repeat(5) { row ->
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    columns.forEachIndexed { index, _ ->
-                        BasicLineField(
-                            key = "${title}_${row}_$index",
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
+        }
+        repeat(5) { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                columns.forEachIndexed { index, _ ->
+                    BasicLineField(
+                        key = "${title}_${row}_$index",
+                        modifier = Modifier.weight(1f),
+                    )
                 }
             }
         }
@@ -797,25 +803,13 @@ private fun QuadrantChecklist(
     lines: Int,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        titleColor = MaterialTheme.plan92Palette.primaryAccent,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.primaryAccent,
-                fontWeight = FontWeight.Bold,
-            )
-            repeat(lines) { index ->
-                ChecklistRow("${title}_$index")
-            }
+        repeat(lines) { index ->
+            ChecklistRow("${title}_$index")
         }
     }
 }
@@ -825,47 +819,36 @@ private fun NumberedPriorityCard(
     title: String,
     count: Int,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            repeat(count) { index ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+        repeat(count) { index ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(18.dp)
+                        .height(18.dp)
+                        .background(MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.16f), CircleShape),
+                    contentAlignment = Alignment.Center,
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(20.dp)
-                            .background(MaterialTheme.plan92Palette.secondaryAccent.copy(alpha = 0.16f), CircleShape),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = "${index + 1}",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.plan92Palette.secondaryAccent,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    }
-                    BasicLineField(
-                        key = "${title}_$index",
-                        modifier = Modifier.weight(1f),
+                    Text(
+                        text = "${index + 1}",
+                        style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                        color = MaterialTheme.plan92Palette.secondaryAccent,
+                        fontWeight = FontWeight.Bold,
                     )
                 }
+                BasicLineField(
+                    key = "${title}_$index",
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
     }
@@ -875,28 +858,17 @@ private fun NumberedPriorityCard(
 private fun PomodoroTrackerCard(
     title: String,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            SingleLinePrompt(title = "Target")
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                repeat(5) { index ->
-                    SelectionBubble(label = "${index + 1}")
-                }
+        SingleLinePrompt(title = "Target")
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            repeat(5) { index ->
+                SelectionBubble(label = "${index + 1}")
             }
         }
     }
@@ -907,26 +879,15 @@ private fun DailyChecklistCard(
     title: String,
     lines: Int,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            repeat(lines) { index ->
-                ChecklistRow("${title}_$index")
-            }
+        repeat(lines) { index ->
+            ChecklistRow("${title}_$index")
         }
     }
 }
@@ -936,29 +897,18 @@ private fun DailyNotesCard(
     title: String,
     lines: Int,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
+        repeat(lines) { index ->
+            BasicLineField(
+                key = "${title}_$index",
+                modifier = Modifier.fillMaxWidth(),
             )
-            repeat(lines) { index ->
-                BasicLineField(
-                    key = "${title}_$index",
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
         }
     }
 }
@@ -968,39 +918,28 @@ private fun DailyScheduleCard(
     title: String,
     times: List<String>,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            times.forEachIndexed { index, time ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Text(
-                        text = time,
-                        modifier = Modifier.width(48.dp),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.plan92Palette.bodyColor,
-                    )
-                    BasicLineField(
-                        key = "${title}_$index",
-                        modifier = Modifier.weight(1f),
-                    )
-                }
+        times.forEachIndexed { index, time ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                Text(
+                    text = time,
+                    modifier = Modifier.width(PlannerSheetMetrics.TimeLabelWidth),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                    color = MaterialTheme.plan92Palette.bodyColor,
+                )
+                BasicLineField(
+                    key = "${title}_$index",
+                    modifier = Modifier.weight(1f),
+                )
             }
         }
     }
@@ -1011,27 +950,16 @@ private fun WaterTrackerBar(
     title: String,
     modifier: Modifier = Modifier,
     count: Int = 8,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                repeat(count) { index ->
-                    SelectionBubble(label = "${index + 1}")
-                }
+        Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+            repeat(count) { index ->
+                SelectionBubble(label = "${index + 1}")
             }
         }
     }
@@ -1042,27 +970,16 @@ private fun MoodTrackerBar(
     title: String,
     modifier: Modifier = Modifier,
     count: Int = 6,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
     val moods = listOf("Low", "Sad", "Okay", "Good", "Happy", "Great").take(count)
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(14.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.Bold,
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                moods.forEach { mood -> SelectionBubble(label = mood) }
-            }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(3.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+            moods.forEach { mood -> SelectionBubble(label = mood) }
         }
     }
 }
@@ -1071,28 +988,17 @@ private fun MoodTrackerBar(
 private fun MiniTextCard(
     title: String,
     modifier: Modifier = Modifier,
+    tone: DailyCardTone = DailyCardTone.Primary,
 ) {
-    Surface(
+    DailyCardFrame(
+        title = title,
         modifier = modifier,
-        shape = RoundedCornerShape(12.dp),
-        color = MaterialTheme.plan92Palette.fieldSurface,
-        border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.plan92Palette.lineColor),
+        tone = tone,
     ) {
-        Column(
-            modifier = Modifier.padding(10.dp),
-            verticalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontWeight = FontWeight.SemiBold,
-            )
-            BasicLineField(
-                key = title,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+        BasicLineField(
+            key = title,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 
@@ -1101,12 +1007,12 @@ private fun HeaderLineRow(
     leftLabel: String,
     rightLabel: String,
 ) {
-    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(PlannerSheetMetrics.RowGap)) {
         if (leftLabel.isNotBlank()) {
-            SingleLinePrompt(title = leftLabel, modifier = Modifier.weight(1f))
+            SingleLinePrompt(title = leftLabel, modifier = Modifier.weight(0.84f))
         }
         if (rightLabel.isNotBlank()) {
-            SingleLinePrompt(title = rightLabel, modifier = Modifier.weight(1f))
+            SingleLinePrompt(title = rightLabel, modifier = Modifier.weight(1.16f))
         }
     }
 }
@@ -1125,11 +1031,11 @@ private fun SingleLinePrompt(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.labelSmall.copy(fontSize = PlannerSheetMetrics.FieldLabelSize),
             color = MaterialTheme.plan92Palette.titleColor,
             fontWeight = FontWeight.SemiBold,
         )
@@ -1147,13 +1053,32 @@ private fun ChecklistRow(
     var checked by rememberSaveable("${key}_check") { mutableStateOf(false) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
     ) {
-        Checkbox(
-            checked = checked,
-            onCheckedChange = { checked = it },
-            modifier = Modifier.width(20.dp),
-        )
+        Box(
+            modifier = Modifier
+                .width(PlannerSheetMetrics.CheckboxSize)
+                .height(PlannerSheetMetrics.CheckboxSize)
+                .clickable { checked = !checked }
+                .border(
+                    width = 1.dp,
+                    color = if (checked) MaterialTheme.plan92Palette.primaryAccent else MaterialTheme.plan92Palette.lineColor,
+                    shape = RoundedCornerShape(3.dp),
+                )
+                .background(
+                    if (checked) MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.15f) else Color.Transparent,
+                    RoundedCornerShape(3.dp),
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (checked) {
+                Text(
+                    text = "✓",
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp),
+                    color = MaterialTheme.plan92Palette.primaryAccent,
+                )
+            }
+        }
         BasicLineField(
             key = key,
             modifier = Modifier.weight(1f),
@@ -1168,8 +1093,8 @@ private fun SelectionBubble(
     var selected by rememberSaveable(label) { mutableStateOf(false) }
     Box(
         modifier = Modifier
-            .width(if (label.length <= 3) 32.dp else 56.dp)
-            .height(32.dp)
+            .width(if (label.length <= 3) PlannerSheetMetrics.BubbleNarrowWidth else PlannerSheetMetrics.BubbleWideWidth)
+            .height(PlannerSheetMetrics.BubbleHeight)
             .clickable { selected = !selected }
             .border(
                 1.dp,
@@ -1185,7 +1110,7 @@ private fun SelectionBubble(
     ) {
         Text(
             text = if (label.length <= 3) label else label,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelSmall.copy(fontSize = 9.sp, lineHeight = 10.sp),
             color = MaterialTheme.plan92Palette.bodyColor,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxSize(),
@@ -1204,12 +1129,12 @@ private fun BasicLineField(
         onValueChange = { text = it },
         textStyle = TextStyle(
             color = MaterialTheme.plan92Palette.titleColor,
-            fontSize = 13.sp,
-            lineHeight = 18.sp,
+            fontSize = PlannerSheetMetrics.FieldTextSize,
+            lineHeight = PlannerSheetMetrics.FieldLineHeight,
         ),
         modifier = modifier,
         decorationBox = { innerTextField ->
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 innerTextField()
                 Box(
                     modifier = Modifier

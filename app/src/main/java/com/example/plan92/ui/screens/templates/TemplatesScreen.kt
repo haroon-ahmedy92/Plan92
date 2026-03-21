@@ -46,13 +46,8 @@ import com.example.plan92.data.mock.MockPlannerRepository
 import com.example.plan92.data.mock.PlannerCategory
 import com.example.plan92.data.mock.PlannerTemplate
 import com.example.plan92.ui.components.PlannerTemplateCard
-import com.example.plan92.ui.theme.ApricotGlow
-import com.example.plan92.ui.theme.AzureDepth
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.NightShade
 import com.example.plan92.ui.theme.Paper
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun TemplatesScreen(
@@ -65,7 +60,7 @@ fun TemplatesScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = ShellWhite.copy(alpha = 0.97f),
+        color = MaterialTheme.plan92Palette.appBackground,
         shape = RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp),
     ) {
         LazyColumn(
@@ -109,15 +104,15 @@ private fun CategoryChip(
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(16.dp),
-        color = if (selected) CoralAccent else Color.White,
+        color = if (selected) MaterialTheme.plan92Palette.chipSelected else MaterialTheme.plan92Palette.chipUnselected,
         border = androidx.compose.foundation.BorderStroke(
             1.dp,
-            if (selected) CoralAccent else Color(0xFFE5DAEC),
+            if (selected) MaterialTheme.plan92Palette.primaryAccent else MaterialTheme.plan92Palette.lineColor,
         ),
     ) {
         Text(
             text = text,
-            color = if (selected) InkBlack else Color(0xFF363041),
+            color = if (selected) MaterialTheme.plan92Palette.titleColor else MaterialTheme.plan92Palette.bodyColor,
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
             style = MaterialTheme.typography.labelLarge,
         )
@@ -134,7 +129,7 @@ fun WidgetPromoDialog(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(NightShade.copy(alpha = 0.92f)),
+                .background(MaterialTheme.plan92Palette.titleColor.copy(alpha = 0.2f)),
             contentAlignment = Alignment.Center,
         ) {
             WidgetPromoCard(
@@ -164,7 +159,7 @@ private fun WidgetPromoCard(
         modifier = Modifier
             .fillMaxWidth(0.92f)
             .clip(RoundedCornerShape(30.dp)),
-        color = ShellWhite,
+        color = MaterialTheme.plan92Palette.pageSurface,
         shadowElevation = 18.dp,
     ) {
         Column(
@@ -182,7 +177,10 @@ private fun WidgetPromoCard(
                         .clip(RoundedCornerShape(26.dp))
                         .background(
                             brush = Brush.verticalGradient(
-                                colors = listOf(AzureDepth, NightShade),
+                                colors = listOf(
+                                    MaterialTheme.plan92Palette.sectionSurface,
+                                    MaterialTheme.plan92Palette.surfaceMuted,
+                                ),
                             ),
                         ),
                 ) {
@@ -203,7 +201,7 @@ private fun WidgetPromoCard(
                             Icon(
                                 imageVector = if (label == "Large") Icons.Outlined.PhoneAndroid else Icons.Outlined.Widgets,
                                 contentDescription = null,
-                                tint = CoralAccent,
+                                tint = MaterialTheme.plan92Palette.primaryAccent,
                             )
                         }
                     }
@@ -213,14 +211,14 @@ private fun WidgetPromoCard(
                         .align(Alignment.TopEnd)
                         .size(34.dp)
                         .clip(CircleShape)
-                        .background(Color.White)
+                        .background(MaterialTheme.plan92Palette.fieldSurface)
                         .clickable(onClick = onDismiss),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.Close,
                         contentDescription = "Close",
-                        tint = InkBlack,
+                        tint = MaterialTheme.plan92Palette.titleColor,
                     )
                 }
             }
@@ -231,12 +229,12 @@ private fun WidgetPromoCard(
                 Text(
                     text = "Widgets Now Available for Home Screen!",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                 )
                 Text(
                     text = "Easily view and manage your tasks directly from the home screen with polished, planner-friendly widgets.",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = InkBlack.copy(alpha = 0.68f),
+                    color = MaterialTheme.plan92Palette.bodyColor,
                 )
             }
 
@@ -259,4 +257,3 @@ private fun TemplatesPreview() {
         onOpenPlanner = {},
     )
 }
-

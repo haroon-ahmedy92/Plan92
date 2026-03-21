@@ -19,15 +19,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.plan92.R
-import com.example.plan92.ui.theme.ApricotGlow
-import com.example.plan92.ui.theme.BurntOrange
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.Paper
 import com.example.plan92.ui.theme.Plan92Theme
+import com.example.plan92.ui.theme.plan92Palette
 import kotlinx.coroutines.delay
 
 @Composable
@@ -43,9 +39,7 @@ fun SplashScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(CoralAccent, BurntOrange, ApricotGlow),
-                ),
+                brush = MaterialTheme.plan92Palette.heroBrush,
             ),
         contentAlignment = Alignment.Center,
     ) {
@@ -61,7 +55,7 @@ fun SplashScreen(
                     Box(
                         modifier = Modifier
                             .size((210 - index * 34).dp)
-                            .border(1.dp, Paper.copy(alpha = 0.35f), CircleShape),
+                            .border(1.dp, MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.4f), CircleShape),
                     )
                 }
                 repeat(4) { index ->
@@ -77,20 +71,20 @@ fun SplashScreen(
                                 },
                             )
                             .clip(CircleShape)
-                            .background(Paper.copy(alpha = 0.92f)),
+                            .background(MaterialTheme.plan92Palette.pageSurface.copy(alpha = 0.92f)),
                     )
                 }
                 Box(
                     modifier = Modifier
                         .size(122.dp)
                         .clip(CircleShape)
-                        .background(Paper.copy(alpha = 0.96f)),
+                        .background(MaterialTheme.plan92Palette.pageSurface.copy(alpha = 0.96f)),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = "P92",
                         style = MaterialTheme.typography.displayMedium,
-                        color = CoralAccent,
+                        color = MaterialTheme.plan92Palette.primaryAccent,
                     )
                 }
             }
@@ -101,18 +95,18 @@ fun SplashScreen(
             ) {
                 Text(
                     text = stringResource(R.string.app_name),
-                    color = Paper,
+                    color = MaterialTheme.plan92Palette.titleColor,
                     style = MaterialTheme.typography.displayMedium,
                 )
                 Text(
                     text = "Your Growth Assistant",
-                    color = Paper.copy(alpha = 0.9f),
+                    color = MaterialTheme.plan92Palette.bodyColor,
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Spacer(modifier = Modifier.width(1.dp))
                 Text(
                     text = "Elegant planning, journaling, and reminders in one place.",
-                    color = Paper.copy(alpha = 0.7f),
+                    color = MaterialTheme.plan92Palette.bodyColor.copy(alpha = 0.84f),
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }

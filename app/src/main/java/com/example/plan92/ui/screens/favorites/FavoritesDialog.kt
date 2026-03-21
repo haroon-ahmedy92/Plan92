@@ -22,13 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.unit.dp
-import com.example.plan92.ui.theme.CoralAccent
-import com.example.plan92.ui.theme.InkBlack
-import com.example.plan92.ui.theme.ShellWhite
+import com.example.plan92.ui.theme.plan92Palette
 
 @Composable
 fun FavoritesDialog(
@@ -42,7 +39,7 @@ fun FavoritesDialog(
         Surface(
             modifier = Modifier.fillMaxWidth(0.92f),
             shape = RoundedCornerShape(30.dp),
-            color = ShellWhite,
+            color = MaterialTheme.plan92Palette.pageSurface,
             shadowElevation = 18.dp,
         ) {
             Column(
@@ -56,21 +53,21 @@ fun FavoritesDialog(
                     Text(
                         text = "Favourites",
                         style = MaterialTheme.typography.headlineMedium,
-                        color = InkBlack,
+                        color = MaterialTheme.plan92Palette.titleColor,
                     )
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
                             .size(34.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
+                            .background(MaterialTheme.plan92Palette.fieldSurface)
                             .clickable(onClick = onDismiss),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = "Close",
-                            tint = InkBlack,
+                            tint = MaterialTheme.plan92Palette.titleColor,
                         )
                     }
                 }
@@ -79,13 +76,13 @@ fun FavoritesDialog(
                     modifier = Modifier
                         .size(156.dp)
                         .clip(RoundedCornerShape(28.dp))
-                        .background(CoralAccent.copy(alpha = 0.12f)),
+                        .background(MaterialTheme.plan92Palette.primaryAccent.copy(alpha = 0.12f)),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         imageVector = Icons.Outlined.FavoriteBorder,
                         contentDescription = null,
-                        tint = CoralAccent,
+                        tint = MaterialTheme.plan92Palette.primaryAccent,
                         modifier = Modifier.size(74.dp),
                     )
                 }
@@ -93,12 +90,12 @@ fun FavoritesDialog(
                 Text(
                     text = "Your Favorites Await",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = InkBlack,
+                    color = MaterialTheme.plan92Palette.titleColor,
                 )
                 Text(
                     text = "Your favorites will appear here. Long press on any template and tap the heart to add it to this collection.",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = InkBlack.copy(alpha = 0.66f),
+                    color = MaterialTheme.plan92Palette.bodyColor,
                 )
 
                 Button(
@@ -111,4 +108,3 @@ fun FavoritesDialog(
         }
     }
 }
-
