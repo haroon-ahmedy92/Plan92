@@ -2,6 +2,7 @@ package com.example.plan92.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -487,6 +489,9 @@ private fun CategoryCell(
     lines: Int,
     modifier: Modifier = Modifier,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(lines) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(lines) }
+
     Surface(
         modifier = modifier,
         shape = RoundedCornerShape(18.dp),
@@ -503,13 +508,26 @@ private fun CategoryCell(
                 color = MaterialTheme.plan92Palette.titleColor,
                 fontWeight = FontWeight.SemiBold,
             )
-            repeat(lines) { index ->
+            rowIds.forEach { rowId ->
                 CompactEntryField(
-                    key = "${title}_$index",
+                    key = "${title}_$rowId",
                     label = "Entry",
                     checkable = checkable,
+                    onRemove = if (rowIds.size > 1) {
+                        { rowIds = rowIds - rowId }
+                    } else {
+                        null
+                    },
                 )
             }
+            PlannerSectionAddAction(
+                label = if (checkable) "Add item" else "Add line",
+                onClick = {
+                    rowIds = rowIds + nextRowId
+                    nextRowId += 1
+                },
+                modifier = Modifier.align(Alignment.End),
+            )
         }
     }
 }
@@ -596,6 +614,7 @@ private fun CompactEntryField(
     key: String,
     label: String,
     checkable: Boolean,
+    onRemove: (() -> Unit)? = null,
 ) {
     var text by rememberSaveable("${key}_text") { mutableStateOf("") }
     var checked by rememberSaveable("${key}_checked") { mutableStateOf(false) }
@@ -639,6 +658,9 @@ private fun CompactEntryField(
                 }
             },
         )
+        if (onRemove != null) {
+            PlannerInlineRemoveAction(onClick = onRemove)
+        }
     }
 }
 
@@ -658,7 +680,7 @@ private fun MultilineCardEditor(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .height(minHeight),
+            .heightIn(min = minHeight),
         decorationBox = { innerTextField ->
             Box(
                 modifier = Modifier
@@ -686,10 +708,11 @@ private fun LinedWritingSurface(
     lines: Int,
 ) {
     var text by rememberSaveable(key) { mutableStateOf("") }
+    var visibleLines by rememberSaveable("${key}_lines") { mutableStateOf(lines) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height((lines * 22).dp)
+            .height((visibleLines * 22).dp)
             .clip(RoundedCornerShape(14.dp))
             .background(MaterialTheme.plan92Palette.fieldSurface)
             .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
@@ -713,7 +736,7 @@ private fun LinedWritingSurface(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.spacedBy(19.dp),
                     ) {
-                        repeat(lines) {
+                        repeat(visibleLines) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -727,6 +750,15 @@ private fun LinedWritingSurface(
             },
         )
     }
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End,
+    ) {
+        if (visibleLines > 4) {
+            PlannerSectionAddAction(label = "Less", onClick = { visibleLines -= 1 })
+        }
+        PlannerSectionAddAction(label = "More lines", onClick = { visibleLines += 1 })
+    }
 }
 
 @Composable
@@ -735,54 +767,66 @@ private fun GridWritingSurface(
     lines: Int,
 ) {
     var text by rememberSaveable(key) { mutableStateOf("") }
-    val height = (lines * 22).dp
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(height)
-            .clip(RoundedCornerShape(14.dp))
-            .background(MaterialTheme.plan92Palette.fieldSurface)
-            .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
-            .padding(10.dp),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween,
+    var visibleLines by rememberSaveable("${key}_lines") { mutableStateOf(lines) }
+    val height = (visibleLines * 22).dp
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height)
+                .clip(RoundedCornerShape(14.dp))
+                .background(MaterialTheme.plan92Palette.fieldSurface)
+                .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
+                .padding(10.dp),
         ) {
-            repeat(lines) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(1.dp)
-                        .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.55f)),
-                )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                repeat(visibleLines) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.55f)),
+                    )
+                }
             }
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                repeat(10) {
+                    Box(
+                        modifier = Modifier
+                            .width(1.dp)
+                            .fillMaxSize()
+                            .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.35f)),
+                    )
+                }
+            }
+            BasicTextField(
+                value = text,
+                onValueChange = { text = it },
+                textStyle = TextStyle(
+                    color = MaterialTheme.plan92Palette.titleColor,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                    lineHeight = 20.sp,
+                ),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+            )
         }
         Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End,
         ) {
-            repeat(10) {
-                Box(
-                    modifier = Modifier
-                        .width(1.dp)
-                        .fillMaxSize()
-                        .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.35f)),
-                )
+            if (visibleLines > 4) {
+                PlannerSectionAddAction(label = "Less", onClick = { visibleLines -= 1 })
             }
+            PlannerSectionAddAction(label = "More grid", onClick = { visibleLines += 1 })
         }
-        BasicTextField(
-            value = text,
-            onValueChange = { text = it },
-            textStyle = TextStyle(
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                lineHeight = 20.sp,
-            ),
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-        )
     }
 }
 
@@ -792,47 +836,59 @@ private fun DotGridWritingSurface(
     lines: Int,
 ) {
     var text by rememberSaveable(key) { mutableStateOf("") }
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height((lines * 22).dp)
-            .clip(RoundedCornerShape(14.dp))
-            .background(MaterialTheme.plan92Palette.fieldSurface)
-            .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
-            .padding(10.dp),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly,
+    var visibleLines by rememberSaveable("${key}_lines") { mutableStateOf(lines) }
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height((visibleLines * 22).dp)
+                .clip(RoundedCornerShape(14.dp))
+                .background(MaterialTheme.plan92Palette.fieldSurface)
+                .border(1.dp, MaterialTheme.plan92Palette.lineColor, RoundedCornerShape(14.dp))
+                .padding(10.dp),
         ) {
-            repeat(lines) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    repeat(12) {
-                        Box(
-                            modifier = Modifier
-                                .width(3.dp)
-                                .height(3.dp)
-                                .clip(RoundedCornerShape(999.dp))
-                                .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.75f)),
-                        )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                repeat(visibleLines) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        repeat(12) {
+                            Box(
+                                modifier = Modifier
+                                    .width(3.dp)
+                                    .height(3.dp)
+                                    .clip(RoundedCornerShape(999.dp))
+                                    .background(MaterialTheme.plan92Palette.lineColor.copy(alpha = 0.75f)),
+                            )
+                        }
                     }
                 }
             }
+            BasicTextField(
+                value = text,
+                onValueChange = { text = it },
+                textStyle = TextStyle(
+                    color = MaterialTheme.plan92Palette.titleColor,
+                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                    lineHeight = 20.sp,
+                ),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+            )
         }
-        BasicTextField(
-            value = text,
-            onValueChange = { text = it },
-            textStyle = TextStyle(
-                color = MaterialTheme.plan92Palette.titleColor,
-                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                lineHeight = 20.sp,
-            ),
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End,
+        ) {
+            if (visibleLines > 4) {
+                PlannerSectionAddAction(label = "Less", onClick = { visibleLines -= 1 })
+            }
+            PlannerSectionAddAction(label = "More dots", onClick = { visibleLines += 1 })
+        }
     }
 }

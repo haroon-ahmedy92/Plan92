@@ -24,9 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -772,6 +770,9 @@ private fun TrackerTableCard(
     title: String,
     columns: List<String>,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(5) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(5) }
+
     DailyCardFrame(title = title) {
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             columns.forEach { column ->
@@ -784,16 +785,30 @@ private fun TrackerTableCard(
                 )
             }
         }
-        repeat(5) { row ->
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        rowIds.forEach { rowId ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 columns.forEachIndexed { index, _ ->
                     BasicLineField(
-                        key = "${title}_${row}_$index",
+                        key = "${title}_${rowId}_$index",
                         modifier = Modifier.weight(1f),
                     )
                 }
+                if (rowIds.size > 1) {
+                    PlannerInlineRemoveAction(onClick = { rowIds = rowIds - rowId })
+                }
             }
         }
+        PlannerSectionAddAction(
+            label = "Add row",
+            onClick = {
+                rowIds = rowIds + nextRowId
+                nextRowId += 1
+            },
+            modifier = Modifier.align(Alignment.End),
+        )
     }
 }
 
@@ -803,14 +818,32 @@ private fun QuadrantChecklist(
     lines: Int,
     modifier: Modifier = Modifier,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(lines) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(lines) }
+
     DailyCardFrame(
         title = title,
         modifier = modifier,
         titleColor = MaterialTheme.plan92Palette.primaryAccent,
     ) {
-        repeat(lines) { index ->
-            ChecklistRow("${title}_$index")
+        rowIds.forEach { rowId ->
+            ChecklistRow(
+                key = "${title}_$rowId",
+                onRemove = if (rowIds.size > 1) {
+                    { rowIds = rowIds - rowId }
+                } else {
+                    null
+                },
+            )
         }
+        PlannerSectionAddAction(
+            label = "Add row",
+            onClick = {
+                rowIds = rowIds + nextRowId
+                nextRowId += 1
+            },
+            modifier = Modifier.align(Alignment.End),
+        )
     }
 }
 
@@ -821,12 +854,15 @@ private fun NumberedPriorityCard(
     modifier: Modifier = Modifier,
     tone: DailyCardTone = DailyCardTone.Primary,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(count) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(count) }
+
     DailyCardFrame(
         title = title,
         modifier = modifier,
         tone = tone,
     ) {
-        repeat(count) { index ->
+        rowIds.forEachIndexed { index, rowId ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -846,11 +882,22 @@ private fun NumberedPriorityCard(
                     )
                 }
                 BasicLineField(
-                    key = "${title}_$index",
+                    key = "${title}_$rowId",
                     modifier = Modifier.weight(1f),
                 )
+                if (rowIds.size > 1) {
+                    PlannerInlineRemoveAction(onClick = { rowIds = rowIds - rowId })
+                }
             }
         }
+        PlannerSectionAddAction(
+            label = "Add priority",
+            onClick = {
+                rowIds = rowIds + nextRowId
+                nextRowId += 1
+            },
+            modifier = Modifier.align(Alignment.End),
+        )
     }
 }
 
@@ -881,14 +928,32 @@ private fun DailyChecklistCard(
     modifier: Modifier = Modifier,
     tone: DailyCardTone = DailyCardTone.Primary,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(lines) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(lines) }
+
     DailyCardFrame(
         title = title,
         modifier = modifier,
         tone = tone,
     ) {
-        repeat(lines) { index ->
-            ChecklistRow("${title}_$index")
+        rowIds.forEach { rowId ->
+            ChecklistRow(
+                key = "${title}_$rowId",
+                onRemove = if (rowIds.size > 1) {
+                    { rowIds = rowIds - rowId }
+                } else {
+                    null
+                },
+            )
         }
+        PlannerSectionAddAction(
+            label = "Add task",
+            onClick = {
+                rowIds = rowIds + nextRowId
+                nextRowId += 1
+            },
+            modifier = Modifier.align(Alignment.End),
+        )
     }
 }
 
@@ -899,17 +964,36 @@ private fun DailyNotesCard(
     modifier: Modifier = Modifier,
     tone: DailyCardTone = DailyCardTone.Primary,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(List(lines) { it }) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(lines) }
+
     DailyCardFrame(
         title = title,
         modifier = modifier,
         tone = tone,
     ) {
-        repeat(lines) { index ->
-            BasicLineField(
-                key = "${title}_$index",
-                modifier = Modifier.fillMaxWidth(),
-            )
+        rowIds.forEach { rowId ->
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                BasicLineField(
+                    key = "${title}_$rowId",
+                    modifier = Modifier.weight(1f),
+                )
+                if (rowIds.size > 1) {
+                    PlannerInlineRemoveAction(onClick = { rowIds = rowIds - rowId })
+                }
+            }
         }
+        PlannerSectionAddAction(
+            label = "Add line",
+            onClick = {
+                rowIds = rowIds + nextRowId
+                nextRowId += 1
+            },
+            modifier = Modifier.align(Alignment.End),
+        )
     }
 }
 
@@ -1049,6 +1133,7 @@ private fun SingleLinePrompt(
 @Composable
 private fun ChecklistRow(
     key: String,
+    onRemove: (() -> Unit)? = null,
 ) {
     var checked by rememberSaveable("${key}_check") { mutableStateOf(false) }
     Row(
@@ -1083,6 +1168,9 @@ private fun ChecklistRow(
             key = key,
             modifier = Modifier.weight(1f),
         )
+        if (onRemove != null) {
+            PlannerInlineRemoveAction(onClick = onRemove)
+        }
     }
 }
 

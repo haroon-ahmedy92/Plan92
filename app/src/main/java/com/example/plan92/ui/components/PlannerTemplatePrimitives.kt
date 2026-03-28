@@ -27,7 +27,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.EditNote
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -37,9 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -349,14 +349,66 @@ fun LabelChip(
 }
 
 @Composable
+fun PlannerSectionAddAction(
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clickable(onClick = onClick)
+            .padding(vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Add,
+            contentDescription = null,
+            tint = MaterialTheme.plan92Palette.secondaryAccent,
+            modifier = Modifier.size(14.dp),
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
+            color = MaterialTheme.plan92Palette.secondaryAccent,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+}
+
+@Composable
+fun PlannerInlineRemoveAction(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .size(18.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.plan92Palette.sectionSurface)
+            .border(1.dp, MaterialTheme.plan92Palette.lineColor, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Close,
+            contentDescription = null,
+            tint = MaterialTheme.plan92Palette.bodyColor,
+            modifier = Modifier.size(10.dp),
+        )
+    }
+}
+
+@Composable
 fun PlannerFieldLine(
     label: String,
     modifier: Modifier = Modifier,
     initialValue: String = "",
     singleLine: Boolean = true,
     minLines: Int = 1,
+    stateKey: String = label,
 ) {
-    var value by rememberSaveable(label) { mutableStateOf(initialValue) }
+    var value by rememberSaveable(stateKey) { mutableStateOf(initialValue) }
     OutlinedTextField(
         value = value,
         onValueChange = { value = it },
@@ -440,6 +492,7 @@ fun NotesSection(
             label = "Write here",
             singleLine = false,
             minLines = 6,
+            stateKey = "${title}_notes",
         )
     }
 }
@@ -448,8 +501,10 @@ fun NotesSection(
 fun PlannerCheckboxRow(
     label: String,
     modifier: Modifier = Modifier,
+    rowKey: String = label,
+    onRemove: (() -> Unit)? = null,
 ) {
-    var checked by rememberSaveable(label) { mutableStateOf(false) }
+    var checked by rememberSaveable("${rowKey}_checked") { mutableStateOf(false) }
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -481,7 +536,11 @@ fun PlannerCheckboxRow(
         PlannerFieldLine(
             label = label,
             modifier = Modifier.weight(1f),
+            stateKey = "${rowKey}_text",
         )
+        if (onRemove != null) {
+            PlannerInlineRemoveAction(onClick = onRemove)
+        }
     }
 }
 
@@ -492,6 +551,9 @@ fun ChecklistSection(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
 ) {
+    var rowIds by rememberSaveable(title) { mutableStateOf(items.indices.toList()) }
+    var nextRowId by rememberSaveable("${title}_next") { mutableStateOf(items.size) }
+
     SectionContainer(
         title = title,
         subtitle = subtitle,
@@ -500,9 +562,25 @@ fun ChecklistSection(
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            items.forEach { item ->
-                PlannerCheckboxRow(label = item)
+            rowIds.forEach { rowId ->
+                PlannerCheckboxRow(
+                    label = items.getOrNull(rowId) ?: "Task",
+                    rowKey = "${title}_check_$rowId",
+                    onRemove = if (rowIds.size > 1) {
+                        { rowIds = rowIds - rowId }
+                    } else {
+                        null
+                    },
+                )
             }
+            PlannerSectionAddAction(
+                label = "Add row",
+                onClick = {
+                    rowIds = rowIds + nextRowId
+                    nextRowId += 1
+                },
+                modifier = Modifier.align(Alignment.End),
+            )
         }
     }
 }
@@ -873,6 +951,9 @@ fun HabitTrackerSection(
     days: List<String>,
     modifier: Modifier = Modifier,
 ) {
+    var habitRowIds by rememberSaveable(title) { mutableStateOf(habits.indices.toList()) }
+    var nextHabitId by rememberSaveable("${title}_next") { mutableStateOf(habits.size) }
+
     SectionContainer(
         title = title,
         modifier = modifier,
@@ -898,7 +979,8 @@ fun HabitTrackerSection(
                 }
             }
 
-            habits.forEachIndexed { habitIndex, habit ->
+            habitRowIds.forEachIndexed { _, habitId ->
+                val habit = habits.getOrNull(habitId) ?: "Habit"
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -910,7 +992,7 @@ fun HabitTrackerSection(
                         color = MaterialTheme.plan92Palette.titleColor,
                     )
                     days.forEachIndexed { dayIndex, _ ->
-                        var checked by rememberSaveable("$title-$habitIndex-$dayIndex") { mutableStateOf(false) }
+                        var checked by rememberSaveable("$title-$habitId-$dayIndex") { mutableStateOf(false) }
                         Surface(
                             modifier = Modifier
                                 .weight(1f)
@@ -932,8 +1014,19 @@ fun HabitTrackerSection(
                             }
                         }
                     }
+                    if (habitRowIds.size > 1) {
+                        PlannerInlineRemoveAction(onClick = { habitRowIds = habitRowIds - habitId })
+                    }
                 }
             }
+            PlannerSectionAddAction(
+                label = "Add habit",
+                onClick = {
+                    habitRowIds = habitRowIds + nextHabitId
+                    nextHabitId += 1
+                },
+                modifier = Modifier.align(Alignment.End),
+            )
         }
     }
 }
@@ -1033,6 +1126,9 @@ fun ProgressTimelineSection(
     milestones: List<String>,
     modifier: Modifier = Modifier,
 ) {
+    var milestoneIds by rememberSaveable(title) { mutableStateOf(milestones.indices.toList()) }
+    var nextMilestoneId by rememberSaveable("${title}_next") { mutableStateOf(milestones.size) }
+
     SectionContainer(
         title = title,
         modifier = modifier,
@@ -1040,7 +1136,8 @@ fun ProgressTimelineSection(
         Column(
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
-            milestones.forEachIndexed { index, milestone ->
+            milestoneIds.forEachIndexed { index, milestoneId ->
+                val milestone = milestones.getOrNull(milestoneId) ?: "Milestone"
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalAlignment = Alignment.Top,
@@ -1062,9 +1159,21 @@ fun ProgressTimelineSection(
                     PlannerFieldLine(
                         label = milestone,
                         modifier = Modifier.weight(1f),
+                        stateKey = "${title}_milestone_$milestoneId",
                     )
+                    if (milestoneIds.size > 1) {
+                        PlannerInlineRemoveAction(onClick = { milestoneIds = milestoneIds - milestoneId })
+                    }
                 }
             }
+            PlannerSectionAddAction(
+                label = "Add step",
+                onClick = {
+                    milestoneIds = milestoneIds + nextMilestoneId
+                    nextMilestoneId += 1
+                },
+                modifier = Modifier.align(Alignment.End),
+            )
         }
     }
 }
